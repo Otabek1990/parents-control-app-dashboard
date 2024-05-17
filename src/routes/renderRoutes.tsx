@@ -1,4 +1,4 @@
-import { usePermissions } from '@hooks/usePermissions';
+// import { usePermissions } from '@hooks/usePermissions';
 import { Route, Routes } from 'react-router-dom';
 import { routes } from './routes';
 import CustomComponent from './custom_component';

@@ -37,7 +37,7 @@ const AgentInformation = ({ id }: Props) => {
         width={1000}
       >
         <Row>
-          <Col span={12}>{agent.name}</Col>
+          <Col span={12}>{agent?.name}</Col>
         </Row>
       </Modal>
     </>
