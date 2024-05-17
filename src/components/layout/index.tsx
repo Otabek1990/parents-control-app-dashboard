@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Layout, Menu, Button, theme, Rate, Dropdown, Avatar, notification, Popover, List, Tag, MenuProps } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../../routes/routes";
-import { usePermissions } from "@hooks/usePermissions";
+// import { usePermissions } from "@hooks/usePermissions";
 import CustomComponent from "../../routes/custom_component";
 import { routeType } from "../../routes/types";
 import "./index.scss";

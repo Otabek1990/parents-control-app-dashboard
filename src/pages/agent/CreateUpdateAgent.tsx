@@ -1,7 +1,7 @@
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { genders } from '@assets/data';
 import { errorHandler } from '@config/axios_config';
-import { UseBaseQueryResult } from '@tanstack/react-query';
+// import { UseBaseQueryResult } from '@tanstack/react-query';
 import {
   Button,
   Col,
@@ -129,7 +129,7 @@ const CreateUpdateAgent = ({ id,  }: Props) => {
       form.resetFields();
       message.success(res.message);
       setOpen(false);
-      refetch({ throwOnError: true });
+      // refetch({ throwOnError: true });
     } catch (e: any) {
       errorHandler(e?.body);
     } finally {

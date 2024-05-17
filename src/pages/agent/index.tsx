@@ -1,6 +1,6 @@
 import { Card, Space, Table, Typography } from 'antd';
 import CreateUpdateAgent from './CreateUpdateAgent';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { AgentList, AgentService } from 'services/openapi';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -30,7 +30,7 @@ const Agents = () => {
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: (record) => {
+      render: () => {
         // let index = data?.results?.indexOf(record);
         let index = 0;
         return Number(index) + 1;

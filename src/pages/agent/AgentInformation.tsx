@@ -1,6 +1,6 @@
 import { EyeOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
-import { Button, Card, Col, Modal, Row } from 'antd';
+import { Button,  Col, Modal, Row } from 'antd';
 import { useState } from 'react';
 import { AgentDetail, AgentService } from 'services/openapi';
 
@@ -8,7 +8,7 @@ type Props = {
   id?: string;
 };
 const AgentInformation = ({ id }: Props) => {
-  const [agent, setAgent] = useState<AgentDetail>({});
+  const [agent, setAgent] = useState<AgentDetail>();
   const [open, setOpen] = useState(false);
 
   const handleOpen = async () => {
@@ -21,7 +21,6 @@ const AgentInformation = ({ id }: Props) => {
     }
   };
 
-  console.log('agent', agent);
 
   const handleClose = () => {
     setOpen(false);

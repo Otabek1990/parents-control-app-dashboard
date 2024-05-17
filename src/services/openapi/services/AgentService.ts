@@ -72,7 +72,7 @@ guid: string,
      * @throws ApiError
      */
     public static agentDetailNowRead(
-guid: string,
+guid: string | number | undefined,
 ): CancelablePromise<AgentDetail> {
         return __request(OpenAPI, {
             method: 'GET',

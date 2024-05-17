@@ -5,7 +5,7 @@ import CustomComponent from './custom_component';
 import LayoutCustom from "@components/layout";
 
 const RenderRoutes = () => {
-  const { checkPermission } = usePermissions();
+  // const { checkPermission } = usePermissions();
   return (
     <LayoutCustom>
     
