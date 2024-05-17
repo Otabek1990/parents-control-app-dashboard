@@ -27,7 +27,7 @@ const Language: FC = (): JSX.Element => {
     }
   ];
 
-  console.log(i18next);
+  // console.log(i18next);
   const changeLanguage = (lang: string) => {
     console.log(lang);
     i18next.changeLanguage(lang, (e, t:any) => {

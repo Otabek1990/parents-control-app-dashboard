@@ -15,12 +15,12 @@ const Agents = () => {
   const { t } = useTranslation();
   const { Title } = Typography;
 
-  const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
+  // const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
 
   const deleteAgent = async (guid: string) => {
     try {
       await AgentService.agentDeleteNowDelete(guid);
-      refetch();
+      // refetch();
     } catch (error: any) {
       errorHandler(error?.body?.detail);
     }
@@ -31,7 +31,8 @@ const Agents = () => {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
       render: (record) => {
-        let index = data?.results?.indexOf(record);
+        // let index = data?.results?.indexOf(record);
+        let index = 0;
         return Number(index) + 1;
       },
     },
@@ -82,7 +83,11 @@ const Agents = () => {
       render: (record: AgentList) => (
         <Space size="middle">
           <AgentInformation id={record?.guid} />
-          <CreateUpdateAgent id={record.guid} refetch={refetch} />
+          <CreateUpdateAgent
+            id={record.guid}
+            //  refetch={refetch}
+           
+          />
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
@@ -98,7 +103,7 @@ const Agents = () => {
     <>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <Title level={4}>{t('Table of agents')}</Title>
-        <CreateUpdateAgent refetch={refetch} />
+        {/* <CreateUpdateAgent refetch={refetch} /> */}
       </div>
       <Card>
         <Table
@@ -111,8 +116,10 @@ const Agents = () => {
               </div>
             ),
           }}
-          dataSource={data?.results}
-          loading={isLoading}
+          // dataSource={data?.results}
+          dataSource={[]}
+          // loading={isLoading}
+          loading={false}
           rowKey="id"
           scroll={{ x: 992 }}
           size="small"

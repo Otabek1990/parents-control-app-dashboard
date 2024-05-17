@@ -24,10 +24,10 @@ import dayjs from 'dayjs';
 
 type Props = {
   id?: string;
-  refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseBaseQueryResult>;
+  // refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseBaseQueryResult>;
 };
 
-const CreateUpdateAgent = ({ id, refetch }: Props) => {
+const CreateUpdateAgent = ({ id,  }: Props) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();

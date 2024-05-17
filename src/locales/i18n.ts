@@ -27,7 +27,6 @@ i18n
         lng: localStorage.getItem(I18N_LANGUAGE) || "uz",
 
         keySeparator: false,
-
         interpolation: {
             escapeValue: false,
         },

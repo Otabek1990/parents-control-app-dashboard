@@ -45,7 +45,7 @@ const LayoutCustom = ({ children }: any) => {
   const store: any = useAuthStore((state) => state);
   const location = useLocation();
   const navigate = useNavigate();
-  const { checkPermission } = usePermissions();
+  // const { checkPermission } = usePermissions();
   const [collapsed] = useState(false);
   const [fulled, setFulled] = useState<boolean>(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -112,7 +112,7 @@ const LayoutCustom = ({ children }: any) => {
     localStorage.removeItem(ACCESS_TOKEN);
     notification.success({ message: 'Successfully', description: 'Muvaffaqiyatli tizimdan chiqildi' });
   };
-console.log( "path", location.pathname, openKeys);
+// console.log( "path", location.pathname, openKeys);
 
   return (
     <Layout>
