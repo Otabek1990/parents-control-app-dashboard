@@ -1,0 +1,6 @@
+.label-with-full label {
+  width: 100%;
+}
+.label-with-full label::after {
+  display: none;
+}

@@ -1,0 +1,65 @@
+/* login page css */
+.login-section {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    .indicator-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50vw;
+        inset-inline-start: 25% !important;
+        .circle-json {
+            width: 200px;
+        }
+    }
+    .login-row {
+        height: 100vh;
+        width: 100vw;
+    }
+    .custom-label .ant-form-item-label label {
+        color: #282c32;
+        font-size: large;
+        font-weight: 500;
+    }
+    .ant-btn {
+        width: 100%;
+    }
+    h2 {
+        color: #282c32;
+    }
+    p {
+        text-align: center;
+        margin: 0 0 10px 0;
+        color: #565d6a;
+        font-size: large;
+    }
+
+    .left-side {
+        background-color: #fafbfc;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-side {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 991px) and (min-width: 300px) {
+    .login-section {
+        .left-side {
+            display: none;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }
+}

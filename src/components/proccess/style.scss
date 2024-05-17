@@ -1,0 +1,16 @@
+.proccess-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .animation-json {
+        width: 400px;
+    }
+}
+@media only screen and (max-width: 991px) and (min-width: 300px) {
+    .proccess-page {
+        .animation-json {
+            width: 400px;
+        }
+    }
+}

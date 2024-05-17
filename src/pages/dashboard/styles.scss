@@ -1,0 +1,137 @@
+.dashboard-wrapper {
+  .d-loader {
+    .loader-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      span {
+        color: #8A94A6;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+    }
+
+    .loader {
+      height: 72px;
+      border-radius: 15px;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+
+      .active {
+        width: 40%;
+        height: 72px;
+        border-radius: 15px 0 0 15px;
+        background: linear-gradient(90deg, #12d583 0%, #21eb66 100%);
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding: 15px;
+
+        span {
+          color: white;
+          font-size: 32px;
+          font-weight: 900;
+        }
+      }
+
+      .in-active {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding: 15px;
+
+        span {
+          color: #8a94a6;
+          font-size: 32px;
+          font-weight: 900;
+          margin-left: 60px;
+        }
+      }
+    }
+  }
+
+  .count-info {
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
+    gap: 20px 0;
+    margin-top: 20px;
+
+    .count-card {
+      background: white;
+      border-radius: 15px;
+      padding: 24px;
+
+      .header {
+        margin-bottom: 24px;
+
+        img {
+          width: 32px;
+          height: 32px;
+          margin-right: 18px;
+        }
+        span {
+          opacity: 0.8;
+          color: #4e5d78;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 20px;
+        }
+      }
+
+      .count {
+        display: flex;
+        align-items: center;
+
+        color: #4e5d78;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 32px;
+
+        span {
+          color: #38cb89;
+          font-size: 13px;
+          font-weight: 600;
+          margin-left: 12px;
+        }
+      }
+
+      .more {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 9px;
+
+        .tag {
+          width: 163px;
+          min-height: 34px;
+          padding-left: 14px;
+          padding-right: 14px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          background: #FAFBFC;
+          border-radius: 8px;
+
+          .one{
+            color: #B0B7C3;
+             font-size: 13px;
+            font-weight: 500;
+            line-height: 24px;
+          }
+          .two{
+            color: #4E5D78;
+             font-size: 13px;
+            font-weight: 600;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+  }
+}
