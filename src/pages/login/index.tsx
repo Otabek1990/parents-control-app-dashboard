@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Button, Checkbox, Col, Form, Input, message, Row, Space, Spin, Tooltip } from 'antd';
 import Lottie from 'lottie-react';
 import instance from '@config/axios_config';
-import { ACCESS_TOKEN } from '@config/constants';
+import { ACCESS_TOKEN, USERNAME } from '@config/constants';
 import animatedCircles from '@assets/loaders/loader-three-circle.json';
 import typingPassword from '@assets/loaders/typing-password.json';
 import './login.scss';
@@ -28,6 +28,7 @@ const Login: FC = (): JSX.Element => {
       if (data.success) {
         setAuth({ isAuth: true, role: data.role });
         localStorage.setItem(ACCESS_TOKEN, data.access);
+        localStorage.setItem(USERNAME, data.username);
         OpenAPI.TOKEN = data.access;
       } else {
         throw new Error('Error logging in');

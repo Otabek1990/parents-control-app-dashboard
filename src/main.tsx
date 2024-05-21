@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
 });
 
 OpenAPI.TOKEN = localStorage.getItem(ACCESS_TOKEN) || undefined;
-OpenAPI.BASE = 'https://admin.bosstrackergroup.uz/api/v1';
+OpenAPI.BASE = 'https://location.bosstrackergroup.uz/api/v1';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <QueryClientProvider client={queryClient}>

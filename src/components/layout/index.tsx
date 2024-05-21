@@ -11,7 +11,7 @@ import donIcon from "../../assets/images/load_app_img.svg";
 import rectangle from "../../assets/icons/grid-rectangle.svg";
 import circle from "../../assets/icons/grid-circle.svg";
 import nofiy from "../../assets/icons/notification_5.svg";
-import { ACCESS_TOKEN } from "@config/constants";
+import { ACCESS_TOKEN, USERNAME } from "@config/constants";
 import { useAuthStore } from "../../store/authStore";
 import Language from "@components/layout/header/language";
 import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
@@ -53,6 +53,7 @@ const LayoutCustom = ({ children }: any) => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const username=localStorage.getItem(USERNAME)
   useEffect(() => {
     if(location.pathname === "/"){
       setOpenKeys(["/users"]);
@@ -267,13 +268,13 @@ const LayoutCustom = ({ children }: any) => {
               >
                 <div style={{ cursor: 'pointer' }} className="d-flex align-items-center">
                   <div className="pe-1">
-                    <Avatar>K</Avatar>
+                    <Avatar>{username?.charAt(0)}</Avatar>
                   </div>
                   <div className="d-flex flex-column pt-1 me-4" style={{ lineHeight: '15px' }}>
                     <div style={{ fontSize: '15px', fontWeight: 600 }} className="pt-0">
-                      Kamol Salayev
+                      {username}
                     </div>
-                    <div style={{ fontSize: '12px' }}>Super Admin</div>
+                    <div style={{ fontSize: '12px' }}>{store.role}</div>
                   </div>
                 </div>
               </Dropdown>

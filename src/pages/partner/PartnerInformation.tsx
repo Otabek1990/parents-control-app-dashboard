@@ -1,6 +1,7 @@
 import { EyeOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Card,  Descriptions, Typography } from 'antd';
+import { t } from 'i18next';
 import { useState } from 'react';
 import { PartnerDetail, PartnerService } from 'services/openapi';
 
@@ -30,14 +31,31 @@ const PartnerInformation = ({ id }: Props) => {
   return (
     <>
       <Button type="dashed" size="middle" icon={<EyeOutlined className="mr-0" />} onClick={handleOpen} />
-      <Modal
-        open={open}
-        onCancel={handleClose}
-        okButtonProps={{ style: { display: 'none' } }}
-        title={'Hamkor haqida malumot'}
-        width={1000}
-      >
-        Info
+      <Modal open={open} onCancel={handleClose} okButtonProps={{ style: { display: 'none' } }} width={1000}>
+
+        <Typography.Title level={3} style={{ marginBottom: '15px', textAlign: 'center' }}>
+          {t('Partner infos')}
+        </Typography.Title>
+        <Card
+          style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}
+        
+        >
+          <Descriptions column={1} style={{ marginTop: 20 }}>
+            <Descriptions.Item label={t('Username')}>{partner?.username}</Descriptions.Item>
+            <Descriptions.Item label={t('Name')}>{partner?.name}</Descriptions.Item>
+            <Descriptions.Item label={t('Surname')}>{partner?.surname}</Descriptions.Item>
+            <Descriptions.Item label={t('Middlename')}>{partner?.middle_name}</Descriptions.Item>
+            <Descriptions.Item label={t('Birthday')}>{partner?.birthday}</Descriptions.Item>
+            <Descriptions.Item label={'Pasport'}>
+              {partner?.passport_seria} {partner?.passport_number}
+            </Descriptions.Item>
+            <Descriptions.Item label={t("Work percentage")}>{partner?.percentage_of_work} %</Descriptions.Item>
+            <Descriptions.Item label={"Google play link"}>{partner?.google_play_link} </Descriptions.Item>
+            <Descriptions.Item label={t("Appstore Id")}>{partner?.appstore_id} </Descriptions.Item>
+            <Descriptions.Item label={t("Playstore Id")}>{partner?.playstore_id} </Descriptions.Item>
+            <Descriptions.Item label="Address">{'address'}</Descriptions.Item>
+          </Descriptions>
+        </Card>
       </Modal>
     </>
   );

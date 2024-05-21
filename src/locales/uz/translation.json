@@ -1,14 +1,25 @@
 {
   "Welcome ! Please enter your information": "Xush kelibsiz ! Iltimos, ma'lumotlaringizni kiriting",
   "Username": "Foydalanuvchi nomi",
+  "Name":"Ismi",
+  "Surname":"Familiya",
+  "Middlename":"Otasini ismi",
+  "Birthday":"Tug'gilgan kun",
   "Pasword": "Parol",
+  "Appstore Id":"AppStore Id",
+  "Playstore Id":"PlayStore Id",
   "Save password": "Parolni saqlab qolish",
   "Password reset": "Parolni tiklash",
+  "Passport number":"Pasport raqami",
+  "Passport date":"Pasport sanasi",
+  "Select a region":"Viloyat tanlang",
+  "Select a district":"Tuman tanlang",
+  "Gender":"Jins",
   "Login": "Kirish",
   "Enter your existing system password": "Sizda mavjud tizim parolini kiriting",
   "This option is not available yet": "Bu imkonyat xali mavjud emas",
   "Enter your username": "Foydalanuvchi nomini kiriting",
-
+  "Partner infos":"Hamkor ma'lumotlari",
   "Districts": "Tumanlar",
   "Regions": "Viloyatlar",
   "Region name": "Viloyat nomi",
@@ -56,5 +67,14 @@
   "Yes": "Ha",
   "No": "Yo'q",
   "For a unit": "Dona",
-  "Percentage": "Foiz"
+  "Percentage": "Foiz",
+  "Please fill the field":"Maydonni to'ldiring!",
+  "Cancel":"Bekor qilish",
+  "Save":"Saqlash",
+  "Man":"Erkak",
+  "Woman":"Ayol",
+  "Create partner":"Hamkor yaratish",
+  "Edit partner":"Hamkorni o'zgartirish",
+  "Edit":"O'zgartirish"
+
 }

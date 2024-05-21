@@ -39,15 +39,43 @@ const Partners = () => {
       },
     },
     {
-      title: <span className="text-uppercase">{t('Legal name')}</span>,
+      title: <span className="text-uppercase">{t('Username')}</span>,
       key: 'username',
       dataIndex: 'username',
     },
     {
-      title: <span className="text-uppercase">{t('FIO')}</span>,
-      key: 'name',
+      title: <span className="text-uppercase">{t('Surname')}</span>,
+      key: 'surname',
       render: (record: PartnerList) => {
-        return record?.surname + ' ' + record.name;
+        return record?.surname ;
+      },
+    },
+    {
+      title: <span className="text-uppercase">{t('Middlename')}</span>,
+      key: 'middle_name',
+      render: (record: PartnerList) => {
+        return record?.middle_name ;
+      },
+    },
+    {
+      title: <span className="text-uppercase">{t('Birthday')}</span>,
+      key: 'birthday',
+      render: (record: PartnerList) => {
+        return record?.birthday ;
+      },
+    },
+    {
+      title: <span className="text-uppercase">{t('Appstore Id')}</span>,
+      key: 'appstore_id',
+      render: (record: PartnerList) => {
+        return record?.appstore_id ;
+      },
+    },
+    {
+      title: <span className="text-uppercase">{t('Playstore Id')}</span>,
+      key: 'playstore_id',
+      render: (record: PartnerList) => {
+        return record?.playstore_id ;
       },
     },
     {
@@ -56,20 +84,9 @@ const Partners = () => {
       key: 'percentage_of_work',
       render: (record) => record + '%',
     },
+   
     {
-      title: <span className="text-uppercase">{t('Agents count')}</span>,
-      key: 'agents',
-    },
-    {
-      title: <span className="text-uppercase">{t('Customers')}</span>,
-      key: 'clients',
-    },
-    {
-      title: <span className="text-uppercase">{t('Payments')}</span>,
-      key: 'payment',
-    },
-    {
-      title: <span className="text-uppercase"> {t('Actions')} </span>,
+      title: <span className="text-uppercase "> {t('Actions')} </span>,
       key: 'action',
       render: (record: PartnerList) => (
         <Space size="middle">
@@ -98,7 +115,7 @@ const Partners = () => {
           bordered={false}
           locale={{
             emptyText: (
-              <div className="w-25 m-auto">
+              <div className="w-25 m-auto ">
                 <Lottie animationData={Empty} loop={false}></Lottie>
               </div>
             ),
@@ -108,6 +125,7 @@ const Partners = () => {
           rowKey="id"
           scroll={{ x: 1000 }}
           size="small"
+         
         />
       </Card>
     </>

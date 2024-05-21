@@ -1,6 +1,6 @@
 import { Card, Space, Table, Typography } from 'antd';
 import CreateUpdateAgent from './CreateUpdateAgent';
-// import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { AgentList, AgentService } from 'services/openapi';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -15,8 +15,8 @@ const Agents = () => {
   const { t } = useTranslation();
   const { Title } = Typography;
 
-  // const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
-
+  const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
+console.log(data)
   const deleteAgent = async (guid: string) => {
     try {
       await AgentService.agentDeleteNowDelete(guid);
