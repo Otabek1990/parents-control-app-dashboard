@@ -31,7 +31,7 @@ const Regions: FC = (): JSX.Element => {
       render: (record) => record[i18n?.language]
     }
   ];
-
+console.log(data)
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-4">
