@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import instance from '@config/axios_config';
 import { ACCESS_TOKEN } from '@config/constants';
+import Loading from '@components/core/Loading';
 
 function App() {
   const store: any = useAuthStore((state) => state);
@@ -32,7 +33,7 @@ function App() {
     }
   }, []);
 
-  return loading ? <><h1>LOADING.....</h1></> : store?.isAuth ? <RenderRoutes /> : <Login />;
+  return loading ? <Loading/>: store?.isAuth ? <RenderRoutes /> : <Login />;
 }
 
 export default App;

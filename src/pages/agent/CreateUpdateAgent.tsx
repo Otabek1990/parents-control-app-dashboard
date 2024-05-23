@@ -151,7 +151,7 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? t("Edit agent") : t("Create agent")}
+        {id ? t('Edit agent') : t('Create agent')}
       </Button>
       <Modal
         open={open}
@@ -164,49 +164,53 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
           <Row gutter={8}>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Username'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Username')}
                 name="username"
               >
-                <Input placeholder="username" size="large" />
+                <Input placeholder={t('Username')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: id ? false : true }]}
-                label={'Password'}
+                rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
+                label={t('Password')}
                 name="password"
               >
-                <Input placeholder="Password" size="large" />
-              </Form.Item>
-            </Col>
-            <Col md={8}>
-              <Form.Item rules={[{ message: 'Please fill the field!', required: true }]} label={'Name'} name="name">
-                <Input className="text-capitalize" placeholder="Name" size="large" />
+                <Input placeholder={t('Password')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Middle name'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Name')}
+                name="name"
+              >
+                <Input className="text-capitalize" placeholder={t('Name')} size="large" />
+              </Form.Item>
+            </Col>
+            <Col md={8}>
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Middlename')}
                 name="middle_name"
               >
-                <Input className="text-capitalize" placeholder="Middle name" size="large" />
+                <Input className="text-capitalize" placeholder={t('Middle name')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Surname'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Surname')}
                 name="surname"
               >
-                <Input className="text-capitalize" placeholder="Surname" size="large" />
+                <Input className="text-capitalize" placeholder={t('Surname')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Birthday'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Birthday')}
                 name="birthday"
               >
                 <DatePicker
@@ -221,15 +225,15 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Partner'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Partner')}
                 name="partner"
               >
                 {/* <Input placeholder="Partner" size="large" /> */}
                 <Select
                   size="large"
                   showSearch
-                  placeholder="Select a partner"
+                  placeholder={t('Select a partner')}
                   optionFilterProp="children"
                   onChange={onChangeRegion}
                   filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -245,10 +249,10 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
             <Col md={8}>
               <Form.Item
                 className="label-with-full"
-                rules={[{ message: 'Please fill the field!', required: true }]}
+                rules={[{ message: t('Please fill the field'), required: true }]}
                 label={
                   <div className="w-100 d-flex justify-content-between align-items-center">
-                    <span>{percentage ? 'Percentage of work' : 'Money for each child'}</span>
+                    <span>{percentage ? t('Percentage of work') : t('Money for each child')}</span>
                     <Switch
                       className="ms-2"
                       checkedChildren="Percentage"
@@ -260,12 +264,12 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
                 }
                 name={percentage ? 'percentage_of_work' : 'money_for_each_child'}
               >
-                <Input placeholder={percentage ? 'Percentage of work' : 'Money for each child'} size="large" />
+                <Input placeholder={percentage ? t('Percentage of work') : t('Money for each child')} size="large" />
               </Form.Item>
             </Col>
             {/* <Col md={8} className=""> */}
             {/* <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
+                rules={[{ message: t('Please fill the field'), required: true }]}
                 label={'Percentage of work'}
                 name=""
               >
@@ -274,8 +278,8 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
             {/* </Col> */}
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Passport seria'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Passport seria')}
                 name="passport_seria"
               >
                 <ReactInputMask placeholder="Passport" className="text-uppercase" mask="aa">
@@ -285,19 +289,19 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Passport number'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Passport number')}
                 name="passport_number"
               >
-                <ReactInputMask placeholder="Passport number" className="text-uppercase" mask="9999999">
+                <ReactInputMask placeholder={t('Passport number')} className="text-uppercase" mask="9999999">
                   <Input placeholder="Passport number" size="large" />
                 </ReactInputMask>
               </Form.Item>
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Passport date'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Passport date')}
                 name="passport_data"
               >
                 <DatePicker
@@ -311,11 +315,15 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
             <Col md={8}>
-              <Form.Item rules={[{ message: 'Please fill the field!', required: true }]} label={'Region'} name="region">
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Regions')}
+                name="region"
+              >
                 <Select
                   size="large"
                   showSearch
-                  placeholder="Select a region"
+                  placeholder={t('Select a region')}
                   optionFilterProp="children"
                   onChange={onChangeRegion}
                   filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -330,14 +338,14 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'District'}
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Districts')}
                 name="district"
               >
                 <Select
                   size="large"
                   showSearch
-                  placeholder="Select a district"
+                  placeholder={t('Select a district')}
                   optionFilterProp="children"
                   filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                   options={districts.map((el) => {
@@ -350,11 +358,15 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
             <Col md={8}>
-              <Form.Item rules={[{ message: 'Please fill the field!', required: true }]} label={'Gender'} name="gender">
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Gender')}
+                name="gender"
+              >
                 <Radio.Group size="large" optionType="button" buttonStyle="solid">
                   {genders.map((el) => (
                     <Radio key={el.value} value={el.value}>
-                      {el.label}
+                      {t(`${el.label}`)}
                     </Radio>
                   ))}
                 </Radio.Group>
@@ -364,12 +376,12 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
           <Row key="footer" gutter={16}>
             <Col span="12">
               <Button size="large" className="w-100" onClick={handleCancel}>
-                Bekor qilish
+                {t('Cancel')}{' '}
               </Button>
             </Col>
             <Col span="12">
               <Button size="large" htmlType="submit" className="w-100" type="primary" loading={loading}>
-                Saqlash
+                {id ? t('Edit') : t('Save')}
               </Button>
             </Col>
           </Row>

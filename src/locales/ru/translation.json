@@ -5,7 +5,7 @@
   "Name":"Имя",
   "Middlename":"Отчество",
   "Birthday":"День рождения",
-  "Pasword": "Пароль",
+  "Password": "Пароль",
   "Appstore Id":"AppStore Id",
   "Playstore Id":"PlayStore Id",
   "Save password": "Сохраните пароль",
@@ -79,5 +79,8 @@
   "Create agent":"Создать агента",
   "Edit agent":"Изменить  агента",
   "Edit":"Изменить ",
-  "Search":"Поиск"
+  "Search":"Поиск",
+  "Select a partner":"Выберите партнера",
+  "Money for each child":"Деньги каждому ребенку",
+  "Created Time":"Время создания"
 }

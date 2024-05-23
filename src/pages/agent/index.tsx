@@ -14,10 +14,9 @@ import TitleCard from '@components/core/TitleCard';
 
 const Agents = () => {
   const { t } = useTranslation();
- 
 
-  const { data,isLoading,refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
-  console.log(data,"agents");
+  const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
+  console.log(data, 'agents');
   const deleteAgent = async (guid: string) => {
     try {
       await AgentService.agentDeleteNowDelete(guid);
@@ -31,17 +30,40 @@ const Agents = () => {
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: () => {
-        // let index = data?.results?.indexOf(record);
-        let index = 0;
+      render: (record) => {
+        let index = data?.results?.indexOf(record);
         return Number(index) + 1;
       },
     },
     {
-      title: <span className="text-uppercase">FIO</span>,
+      title: <span className="text-uppercase">{t('Username')}</span>,
+      key: 'username',
+      dataIndex: 'username',
+    },
+    {
+      title: <span className="text-uppercase">{t('Name')}</span>,
       key: 'name',
+      dataIndex: 'name',
+    },
+    {
+      title: <span className="text-uppercase">{t('Surname')}</span>,
+      key: 'surname',
       render: (record: AgentList) => {
-        return record?.surname + ' ' + record.name;
+        return record?.surname;
+      },
+    },
+    {
+      title: <span className="text-uppercase">{t('Middlename')}</span>,
+      key: 'middle_name',
+      render: (record: AgentList) => {
+        return record?.middle_name;
+      },
+    },
+    {
+      title: <span className="text-uppercase">{t('Birthday')}</span>,
+      key: 'birthday',
+      render: (record: AgentList) => {
+        return record?.birthday;
       },
     },
     {
@@ -50,44 +72,54 @@ const Agents = () => {
       key: 'get_partner_full_name',
     },
     {
-      title: <span className="text-uppercase">{t('Work percentage')}</span>,
-      children: [
-        {
-          title: <span className="text-uppercase text-center">{t('Percentage')} %</span>,
-          dataIndex: 'percentage_of_work',
-          key: 'percentage_of_work',
-          render: (record) => record + '%',
-        },
-        {
-          title: <span className="text-uppercase text-center">{t('For a unit')}</span>,
-          dataIndex: 'money_for_each_child',
-          key: 'money_for_each_child',
-        },
-      ],
-      key: 'percentage',
+      title: <span className="text-uppercase">{t('Created Time')}</span>,
+      dataIndex: 'created_at',
+      key: 'created_at',
     },
+
     {
-      title: <span className="text-uppercase">{t('Visited')}</span>,
-      key: 'visitors',
+      title: <span className="text-uppercase text-center">{t('Work percentage')} %</span>,
+      dataIndex: 'percentage_of_work',
+      key: 'percentage_of_work',
+      render: (record) => record + '%',
     },
-    {
-      title: <span className="text-uppercase">{t('Customers')}</span>,
-      key: 'clients',
-    },
-    {
-      title: <span className="text-uppercase">{t('Payments')}</span>,
-      key: 'payment',
-    },
+
+    // {
+    //   title: <span className="text-uppercase">{t('Work percentage')}</span>,
+    //   children: [
+    //     {
+    //       title: <span className="text-uppercase text-center">{t('Percentage')} %</span>,
+    //       dataIndex: 'percentage_of_work',
+    //       key: 'percentage_of_work',
+    //       render: (record) => record + '%',
+    //     },
+    //     {
+    //       title: <span className="text-uppercase text-center">{t('For a unit')}</span>,
+    //       dataIndex: 'money_for_each_child',
+    //       key: 'money_for_each_child',
+    //     },
+    //   ],
+    //   key: 'percentage',
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Visited')}</span>,
+    //   key: 'visitors',
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Customers')}</span>,
+    //   key: 'clients',
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Payments')}</span>,
+    //   key: 'payment',
+    // },
     {
       title: <span className="text-uppercase"> {t('Actions')} </span>,
       key: 'action',
       render: (record: AgentList) => (
         <Space size="middle">
           <AgentInformation id={record?.guid} />
-          <CreateUpdateAgent
-            id={record.guid}
-             refetch={refetch}
-          />
+          <CreateUpdateAgent id={record.guid} refetch={refetch} />
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
@@ -115,12 +147,12 @@ const Agents = () => {
               </div>
             ),
           }}
-          // dataSource={data?.results}
-          dataSource={[]}
+          dataSource={data?.results}
           loading={isLoading}
           rowKey="id"
           scroll={{ x: 992 }}
           size="small"
+          style={{ textTransform: 'capitalize' }}
         />
       </Card>
     </>

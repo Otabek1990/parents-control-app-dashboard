@@ -4,8 +4,8 @@
   "Name":"Ismi",
   "Surname":"Familiya",
   "Middlename":"Otasini ismi",
-  "Birthday":"Tug'gilgan kun",
-  "Pasword": "Parol",
+  "Birthday":"Tug'ilgan kun",
+  "Password": "Parol",
   "Appstore Id":"AppStore Id",
   "Playstore Id":"PlayStore Id",
   "Save password": "Parolni saqlab qolish",
@@ -78,6 +78,9 @@
   "Create agent":"Agent yaratish",
   "Edit agent":"Agentni o'zgartirish",
   "Edit":"O'zgartirish",
-  "Search":"Qidirish"
+  "Search":"Qidirish",
+  "Select a partner":"Hamkor tanlang",
+  "Money for each child":"Har bir bola uchun pul",
+  "Created Time":"Yaratilgan Vaqti"
 
 }
