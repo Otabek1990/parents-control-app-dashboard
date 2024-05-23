@@ -1,7 +1,7 @@
 import { EyeOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
 import { timeConverter } from '@utils/timeConverter';
-import { Button, Card, Col, Descriptions, Modal, Row, Typography } from 'antd';
+import { Button, Card, Descriptions, Modal, Typography } from 'antd';
 import { t } from 'i18next';
 import { useState } from 'react';
 import { AgentDetail, AgentService } from 'services/openapi';
