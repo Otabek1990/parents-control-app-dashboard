@@ -118,7 +118,7 @@ const Agents = () => {
       key: 'action',
       render: (record: AgentList) => (
         <Space size="middle">
-          <AgentInformation id={record?.guid} />
+          <AgentInformation id={record.guid} />
           <CreateUpdateAgent id={record.guid} refetch={refetch} />
           <ConfirmModal
             btnType="dashed"

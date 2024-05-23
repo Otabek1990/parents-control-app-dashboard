@@ -33,6 +33,7 @@
 
   "Home": "Домашняя страница",
   "Partners": "Партнеры",
+  "Partner": "Партнер",
   "Parents": "Родители",
   "Agents": "Агенты",
   "Operators": "Операторы",
@@ -83,6 +84,6 @@
   "Search":"Поиск",
   "Select a partner":"Выберите партнера",
   "Money for each child":"Деньги каждому ребенку",
-  "Created Time":"Время создания",
+  "Created Time":"Время создания"
 
 }

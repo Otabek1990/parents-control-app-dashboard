@@ -1,5 +1,6 @@
 import { EyeOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
+import { timeConverter } from '@utils/timeConverter';
 import { Button, Card, Col, Descriptions, Modal, Row, Typography } from 'antd';
 import { t } from 'i18next';
 import { useState } from 'react';
@@ -11,11 +12,11 @@ type Props = {
 const AgentInformation = ({ id }: Props) => {
   const [agent, setAgent] = useState<AgentDetail>();
   const [open, setOpen] = useState(false);
-
+console.log(id)
   const handleOpen = async () => {
     setOpen(true);
     try {
-      let res = await AgentService.agentDetailNowRead(id);
+      let res = await AgentService.agentDetailNowRead(id as string);
       console.log(res)
       setAgent(res);
     } catch (e: any) {
@@ -47,11 +48,14 @@ console.log(agent)
             <Descriptions.Item label={t('Surname')}>{agent?.surname}</Descriptions.Item>
             <Descriptions.Item label={t('Middlename')}>{agent?.middle_name}</Descriptions.Item>
             <Descriptions.Item label={t('Birthday')}>{agent?.birthday}</Descriptions.Item>
-            <Descriptions.Item label={'Pasport'}>
-              {agent?.passport_seria} {agent?.passport_number}
-            </Descriptions.Item>
+            <Descriptions.Item label={t('Partner')}>{agent?.get_partner_full_name}</Descriptions.Item>
+           
             <Descriptions.Item label={t('Work percentage')}>{agent?.percentage_of_work} %</Descriptions.Item>
-            <Descriptions.Item label="Address">{'address'}</Descriptions.Item>
+            <Descriptions.Item label={t("Passport date")}>{agent?.passport_data}</Descriptions.Item>
+            <Descriptions.Item label={t("Passport seria")}>{agent?.passport_seria}</Descriptions.Item>
+            <Descriptions.Item label={t("Passport number")}>{agent?.passport_number}</Descriptions.Item>
+            <Descriptions.Item label={t("Money for each child")}>{agent?.money_for_each_child}</Descriptions.Item>
+            <Descriptions.Item label={t("Created Time")}>{timeConverter(agent?.created_at || "")}</Descriptions.Item>
           </Descriptions>
         </Card>
       </Modal>
