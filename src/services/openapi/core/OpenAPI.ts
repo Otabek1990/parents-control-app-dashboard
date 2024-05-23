@@ -20,7 +20,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: 'https://location.bosstrackergroup.uz/api/v1',
+  BASE: 'https://admin.bosstrackergroup.uz/api/v1',
   VERSION: '1',
   WITH_CREDENTIALS: false,
   CREDENTIALS: 'same-origin',

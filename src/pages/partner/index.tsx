@@ -1,4 +1,4 @@
-import { Card, Space, Table, Typography } from 'antd';
+import { Card,  Space, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -11,9 +11,11 @@ import PartnerInformation from './PartnerInformation';
 import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 
+import TitleCard from '@components/core/TitleCard';
+
 const Partners = () => {
   const { t } = useTranslation();
-  const { Title } = Typography;
+
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['agents'],
@@ -44,38 +46,43 @@ const Partners = () => {
       dataIndex: 'username',
     },
     {
+      title: <span className="text-uppercase">{t('Name')}</span>,
+      key: 'name',
+      dataIndex: 'name',
+    },
+    {
       title: <span className="text-uppercase">{t('Surname')}</span>,
       key: 'surname',
       render: (record: PartnerList) => {
-        return record?.surname ;
+        return record?.surname;
       },
     },
     {
       title: <span className="text-uppercase">{t('Middlename')}</span>,
       key: 'middle_name',
       render: (record: PartnerList) => {
-        return record?.middle_name ;
+        return record?.middle_name;
       },
     },
     {
       title: <span className="text-uppercase">{t('Birthday')}</span>,
       key: 'birthday',
       render: (record: PartnerList) => {
-        return record?.birthday ;
+        return record?.birthday;
       },
     },
     {
       title: <span className="text-uppercase">{t('Appstore Id')}</span>,
       key: 'appstore_id',
       render: (record: PartnerList) => {
-        return record?.appstore_id ;
+        return record?.appstore_id;
       },
     },
     {
       title: <span className="text-uppercase">{t('Playstore Id')}</span>,
       key: 'playstore_id',
       render: (record: PartnerList) => {
-        return record?.playstore_id ;
+        return record?.playstore_id;
       },
     },
     {
@@ -84,7 +91,7 @@ const Partners = () => {
       key: 'percentage_of_work',
       render: (record) => record + '%',
     },
-   
+
     {
       title: <span className="text-uppercase "> {t('Actions')} </span>,
       key: 'action',
@@ -105,10 +112,10 @@ const Partners = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <Title level={4}>{t('Table of partners')}</Title>
+      <TitleCard titleName="Table of partners">
         <CreateUpdatePartner refetch={refetch} />
-      </div>
+      </TitleCard>
+   
       <Card>
         <Table
           columns={columns}
@@ -125,7 +132,7 @@ const Partners = () => {
           rowKey="id"
           scroll={{ x: 1000 }}
           size="small"
-         
+          style={{ textTransform: 'capitalize' }}
         />
       </Card>
     </>

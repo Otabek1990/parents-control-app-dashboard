@@ -131,7 +131,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? '' : t('Add')}
+        {id ? '' : t('Create partner')}
       </Button>
       <Modal
         open={open}

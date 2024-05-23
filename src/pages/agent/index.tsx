@@ -1,4 +1,4 @@
-import { Card, Space, Table, Typography } from 'antd';
+import { Card, Space, Table } from 'antd';
 import CreateUpdateAgent from './CreateUpdateAgent';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
@@ -10,13 +10,14 @@ import { useTranslation } from 'react-i18next';
 import AgentInformation from './AgentInformation';
 import Empty from '@assets/animated-illusions/empty.json';
 import Lottie from 'lottie-react';
+import TitleCard from '@components/core/TitleCard';
 
 const Agents = () => {
   const { t } = useTranslation();
-  const { Title } = Typography;
+ 
 
-  const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
-console.log(data)
+  const { data,isLoading,refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
+  console.log(data,"agents");
   const deleteAgent = async (guid: string) => {
     try {
       await AgentService.agentDeleteNowDelete(guid);
@@ -85,8 +86,7 @@ console.log(data)
           <AgentInformation id={record?.guid} />
           <CreateUpdateAgent
             id={record.guid}
-            //  refetch={refetch}
-           
+             refetch={refetch}
           />
           <ConfirmModal
             btnType="dashed"
@@ -101,10 +101,9 @@ console.log(data)
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <Title level={4}>{t('Table of agents')}</Title>
-        {/* <CreateUpdateAgent refetch={refetch} /> */}
-      </div>
+      <TitleCard titleName="Table of agents">
+        <CreateUpdateAgent refetch={refetch} />
+      </TitleCard>
       <Card>
         <Table
           columns={columns}
@@ -118,8 +117,7 @@ console.log(data)
           }}
           // dataSource={data?.results}
           dataSource={[]}
-          // loading={isLoading}
-          loading={false}
+          loading={isLoading}
           rowKey="id"
           scroll={{ x: 992 }}
           size="small"

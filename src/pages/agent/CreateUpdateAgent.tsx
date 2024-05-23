@@ -21,13 +21,15 @@ import { AgentCreate, AgentService, BaseApiService, PartnerList, PartnerService 
 import { IDistrict, IRegion } from 'types';
 import ReactInputMask from 'react-input-mask';
 import dayjs from 'dayjs';
+import { UseQueryResult } from '@tanstack/react-query';
+import { t } from 'i18next';
 
 type Props = {
   id?: string;
-  // refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseBaseQueryResult>;
+  refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseQueryResult>;
 };
 
-const CreateUpdateAgent = ({ id,  }: Props) => {
+const CreateUpdateAgent = ({ id, refetch }: Props) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
@@ -129,7 +131,7 @@ const CreateUpdateAgent = ({ id,  }: Props) => {
       form.resetFields();
       message.success(res.message);
       setOpen(false);
-      // refetch({ throwOnError: true });
+      refetch({ throwOnError: true });
     } catch (e: any) {
       errorHandler(e?.body);
     } finally {
@@ -149,7 +151,7 @@ const CreateUpdateAgent = ({ id,  }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? '' : 'Agent yaratish'}
+        {id ? t("Edit agent") : t("Create agent")}
       </Button>
       <Modal
         open={open}

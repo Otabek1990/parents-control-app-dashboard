@@ -32,7 +32,7 @@ function App() {
     }
   }, []);
 
-  return loading ? <></> : store?.isAuth ? <RenderRoutes /> : <Login />;
+  return loading ? <><h1>LOADING.....</h1></> : store?.isAuth ? <RenderRoutes /> : <Login />;
 }
 
 export default App;

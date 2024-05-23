@@ -40,8 +40,8 @@ const PartnerInformation = ({ id }: Props) => {
           style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}
         
         >
-          <Descriptions column={1} style={{ marginTop: 20 }}>
-            <Descriptions.Item label={t('Username')}>{partner?.username}</Descriptions.Item>
+          <Descriptions  column={1} style={{ marginTop: 20 }}>
+            <Descriptions.Item label={t('Username')} >{partner?.username}</Descriptions.Item>
             <Descriptions.Item label={t('Name')}>{partner?.name}</Descriptions.Item>
             <Descriptions.Item label={t('Surname')}>{partner?.surname}</Descriptions.Item>
             <Descriptions.Item label={t('Middlename')}>{partner?.middle_name}</Descriptions.Item>
