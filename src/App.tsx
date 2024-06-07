@@ -20,7 +20,8 @@ function App() {
           setLoading(true);
           await instance({
             method: 'get',
-            url: '/v1/base-api/me/',
+            url: '/v1/admin-panel-auth/me/',
+            // admin-panel-auth/me/
           });
           if (store?.setAuth({ isAuth: true, role: 'ADMIN' })) setLoading(false);
         } catch (e: any) {

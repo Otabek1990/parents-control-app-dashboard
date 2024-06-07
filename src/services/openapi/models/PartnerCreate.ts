@@ -10,13 +10,16 @@ export type PartnerCreate = {
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
     username: string;
-    name: string;
-    middle_name: string;
-    surname: string;
+    // name: string;
+    // middle_name: string;
+    // surname: string;
+    fullname:string;
     birthday?: string | null;
     readonly photo?: string | null;
     appstore_id?: string | null;
     playstore_id?: string | null;
+    flag_google_play?:boolean;
+    download_link?:string;
     percentage_of_work?: number | null;
     google_play_link?: string | null;
     gender?: PartnerCreate.gender;
@@ -27,7 +30,10 @@ export type PartnerCreate = {
     district: PartnerCreate.district;
     password: string;
     created_at?: string;
+    monthly_percentages:{month:string;percentage:number}[]
+    
 };
+
 
 export namespace PartnerCreate {
 

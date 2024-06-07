@@ -18,7 +18,8 @@ export class BaseApiService {
     public static baseApiDistrictListList(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/base-api/district-list/',
+            url: '/admin-panel-auth/district-list/',
+          
         });
     }
 
@@ -76,7 +77,8 @@ search?: string,
     public static baseApiRegionListList(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/base-api/region-list/',
+            url: '/admin-panel-auth/region-list/',
+            
         });
     }
 

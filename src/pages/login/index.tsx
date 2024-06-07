@@ -23,7 +23,8 @@ const Login: FC = (): JSX.Element => {
     setLoading(true);
 
     try {
-      const resp = await instance.post('/v1/base-api/login/', values);
+      const resp = await instance.post('/v1/admin-panel-auth/login/', values);
+      // /admin-panel-auth/login/
       const data = resp.data;
       if (data.success) {
         setAuth({ isAuth: true, role: data.role });

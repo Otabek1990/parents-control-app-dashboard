@@ -151,11 +151,11 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? t('Edit agent') : t('Create agent')}
+        {id ? "": t('Create agent')}
       </Button>
       <Modal
         open={open}
-        title={id ? "Agentni o'zgartirish" : 'Agent yaratish'}
+        title={id ? t("Edit agent") : t('Create agent')}
         onCancel={handleCancel}
         width={1000}
         footer={null}
@@ -252,7 +252,7 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={
                   <div className="w-100 d-flex justify-content-between align-items-center">
-                    <span>{percentage ? t('Percentage of work') : t('Money for each child')}</span>
+                    <span>{percentage ? t('Work percentage') : t('Money for each child')}</span>
                     <Switch
                       className="ms-2"
                       checkedChildren="Percentage"
@@ -264,7 +264,7 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
                 }
                 name={percentage ? 'percentage_of_work' : 'money_for_each_child'}
               >
-                <Input placeholder={percentage ? t('Percentage of work') : t('Money for each child')} size="large" />
+                <Input placeholder={percentage ? t('Work percentage') : t('Money for each child')} size="large" />
               </Form.Item>
             </Col>
             {/* <Col md={8} className=""> */}

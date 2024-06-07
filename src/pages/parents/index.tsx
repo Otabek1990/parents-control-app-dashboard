@@ -27,6 +27,7 @@ const Parents: FC = (): JSX.Element => {
     }
   };
 
+console.log(parentsReq.data)
   const columns: ColumnsType<ParentList> = [
     {
       title: <span className="text-uppercase">№</span>,

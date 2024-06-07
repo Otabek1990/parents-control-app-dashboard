@@ -103,7 +103,8 @@ results: Array<AgentList>;
 }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/agent/list/',
+            url: '/admin-panel-agent/list/',
+          
             query: {
                 'search': search,
                 'limit': limit,

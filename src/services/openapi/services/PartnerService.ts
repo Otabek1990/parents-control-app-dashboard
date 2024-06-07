@@ -24,7 +24,7 @@ data: PartnerCreate,
 ): CancelablePromise<PartnerCreate> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/partner/create/',
+            url: '/admin-panel-partner/create/',
             body: data,
         });
     }
@@ -103,7 +103,8 @@ results: Array<PartnerList>;
 }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/partner/list/',
+            url: '/admin-panel-partner/list/',
+            // /admin-panel-partner/list/
             query: {
                 'search': search,
                 'limit': limit,
