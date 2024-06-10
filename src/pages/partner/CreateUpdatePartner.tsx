@@ -23,12 +23,39 @@ import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
+import { Upload } from 'antd';
+import type { GetProp, UploadFile, UploadProps } from 'antd';
+import ImgCrop from 'antd-img-crop';
+
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+
 type Props = {
   id?: string;
   refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseQueryResult>;
 };
 
 const CreateUpdatePartner = ({ id, refetch }: Props) => {
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as FileType);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+  // -----------------------------------------
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -165,13 +192,13 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
-                label={t('Name')}
-                name="name"
+                label={t('FIO')}
+                name="fullname"
               >
-                <Input className="text-capitalize" placeholder={t('Name')} size="large" />
+                <Input className="text-capitalize" placeholder={t('FIO')} size="large" />
               </Form.Item>
             </Col>
-            <Col md={8}>
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={t('Middlename')}
@@ -179,8 +206,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               >
                 <Input className="text-capitalize" placeholder={t('Middlename')} size="large" />
               </Form.Item>
-            </Col>
-            <Col md={8}>
+            </Col> */}
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={t('Surname')}
@@ -188,7 +215,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               >
                 <Input className="text-capitalize" placeholder={t('Surname')} size="large" />
               </Form.Item>
-            </Col>
+            </Col> */}
+
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
@@ -205,6 +233,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 />
               </Form.Item>
             </Col>
+          </Row>
+          <Row gutter={8}>
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
@@ -232,16 +262,28 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 <Input placeholder={'Google play link'} size="large" />
               </Form.Item>
             </Col>
-            <Col md={8}>
+          </Row>
+          <Row gutter={8}>
+            <Col md={6}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
-                label={t('Work percentage')}
-                name="percentage_of_work"
+                label={'Passport seria'}
+                name="passport_seria"
               >
-                <InputNumber controls={false} placeholder={t('Work percentage')} size="large" className="w-100" />
+                <ImgCrop rotationSlider>
+                  <Upload
+                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                  >
+                    {t('Upload image')}
+                  </Upload>
+                </ImgCrop>
               </Form.Item>
             </Col>
-            <Col md={8}>
+            <Col md={6}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={'Passport seria'}
@@ -252,7 +294,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 </ReactInputMask>
               </Form.Item>
             </Col>
-            <Col md={8}>
+            <Col md={6}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={t('Passport number')}
@@ -263,7 +305,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 </ReactInputMask>
               </Form.Item>
             </Col>
-            <Col md={8}>
+            <Col md={6}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={t('Passport date')}
@@ -277,6 +319,15 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                   format={formatDate}
                   defaultValue={id ? dayjs(form.getFieldsValue(['passport_data']), formatDate) : undefined}
                 />
+              </Form.Item>
+            </Col>
+            <Col md={8}>
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: true }]}
+                label={t('Work percentage')}
+                name="percentage_of_work"
+              >
+                <InputNumber controls={false} placeholder={t('Work percentage')} size="large" className="w-100" />
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -348,7 +399,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
 
             <Col span="12">
               <Button size="large" htmlType="submit" className="w-100" type="primary" loading={loading}>
-               {id ? t('Edit') : t("Save")}
+                {id ? t('Edit') : t('Save')}
               </Button>
             </Col>
           </Row>

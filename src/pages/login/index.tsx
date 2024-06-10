@@ -35,7 +35,8 @@ const Login: FC = (): JSX.Element => {
         throw new Error('Error logging in');
       }
     } catch (error: any) {
-      message.info('Xatolik kodi: ' + error?.message);
+      // message.info('Xatolik kodi: ' + error?.message);
+      message.info('Login yoki parol hato!');
     } finally {
       setLoading(false);
     }
