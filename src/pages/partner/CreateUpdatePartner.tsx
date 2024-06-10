@@ -270,7 +270,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 label={'Passport seria'}
                 name="passport_seria"
               >
-                <ImgCrop rotationSlider>
+                <ImgCrop  rotationSlider>
                   <Upload
                     action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
                     listType="picture-card"
