@@ -11,6 +11,7 @@ import AgentInformation from './AgentInformation';
 import Empty from '@assets/animated-illusions/empty.json';
 import Lottie from 'lottie-react';
 import TitleCard from '@components/core/TitleCard';
+import { timeConverter } from '@utils/timeConverter';
 
 const Agents = () => {
   const { t } = useTranslation();
@@ -35,54 +36,65 @@ const Agents = () => {
         return Number(index) + 1;
       },
     },
+
     {
       title: <span className="text-uppercase">{t('Username')}</span>,
       key: 'username',
       dataIndex: 'username',
     },
     {
-      title: <span className="text-uppercase">{t('Name')}</span>,
-      key: 'name',
-      dataIndex: 'name',
+      title: <span className="text-uppercase">{t('F.I.O')}</span>,
+      key: 'fullname',
+      dataIndex: 'fullname',
     },
-    {
-      title: <span className="text-uppercase">{t('Surname')}</span>,
-      key: 'surname',
-      render: (record: AgentList) => {
-        return record?.surname;
-      },
-    },
-    {
-      title: <span className="text-uppercase">{t('Middlename')}</span>,
-      key: 'middle_name',
-      render: (record: AgentList) => {
-        return record?.middle_name;
-      },
-    },
+    // {
+    //   title: <span className="text-uppercase">{t('Name')}</span>,
+    //   key: 'name',
+    //   dataIndex: 'name',
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Surname')}</span>,
+    //   key: 'surname',
+    //   render: (record: AgentList) => {
+    //     return record?.surname;
+    //   },
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Middlename')}</span>,
+    //   key: 'middle_name',
+    //   render: (record: AgentList) => {
+    //     return record?.middle_name;
+    //   },
+    // },
     {
       title: <span className="text-uppercase">{t('Birthday')}</span>,
       key: 'birthday',
       render: (record: AgentList) => {
-        return record?.birthday;
+        return record?.birthday || '-';
       },
     },
     {
       title: <span className="text-uppercase">{t('Partners')}</span>,
-      dataIndex: 'get_partner_full_name',
-      key: 'get_partner_full_name',
+      dataIndex: 'partner',
+      key: 'partner',
+      render: (record: AgentList) => {
+        return record?.partner || '-';
+      },
+      
     },
     {
       title: <span className="text-uppercase">{t('Created Time')}</span>,
       dataIndex: 'created_at',
       key: 'created_at',
+      render: (record) => timeConverter(record),
     },
 
-    {
-      title: <span className="text-uppercase text-center">{t('Work percentage')} %</span>,
-      dataIndex: 'percentage_of_work',
-      key: 'percentage_of_work',
-      render: (record) => record + '%',
-    },
+    // {
+    //   title: <span className="text-uppercase text-center">{t('Work percentage')} %</span>,
+    //   dataIndex: 'percentage_of_work',
+    //   key: 'percentage_of_work',
+    //   render: (record) => record + '%',
+    // },
 
     // {
     //   title: <span className="text-uppercase">{t('Work percentage')}</span>,

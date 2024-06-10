@@ -142,20 +142,21 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
   const handleChangeSwitch = (checked: boolean) => {
     setPercentage(checked);
   };
-
+console.log(id)
   return (
     <>
       <Button
-        type={id ? 'dashed' : 'primary'}
-        size={id ? 'middle' : 'large'}
-        icon={id ? <EditOutlined /> : <PlusOutlined />}
+        type={!id ? 'dashed' : 'primary'}
+        size={!id ? 'middle' : 'large'}
+        icon={id ?  <PlusOutlined />: <EditOutlined /> }
         onClick={showModal}
       >
-        {id ? "": t('Create agent')}
+        {id ? t('Create agent'):  "" }
+     
       </Button>
       <Modal
         open={open}
-        title={id ? t("Edit agent") : t('Create agent')}
+        title={!id ? t("Edit agent") : t('Create agent')}
         onCancel={handleCancel}
         width={1000}
         footer={null}

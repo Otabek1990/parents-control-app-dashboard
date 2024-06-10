@@ -219,7 +219,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
 
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Birthday')}
                 name="birthday"
               >
@@ -237,7 +237,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
           <Row gutter={8}>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Appstore Id')}
                 name="appstore_id"
               >
@@ -246,7 +246,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Playstore Id')}
                 name="playstore_id"
               >
@@ -255,48 +255,55 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Google play link'}
                 name="google_play_link"
               >
                 <Input placeholder={'Google play link'} size="large" />
               </Form.Item>
             </Col>
+            <Col md={8}>
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: false }]}
+                label={'Download link'}
+                name="download_link"
+              >
+                <Input placeholder={'Download link'} size="large" />
+              </Form.Item>
+            </Col>
           </Row>
           <Row gutter={8}>
-            <Col md={6}>
-              <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
-                label={'Passport seria'}
-                name="passport_seria"
-              >
-                <ImgCrop  rotationSlider>
+            <Col md={4}>
+              <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} label={''} name="">
+                <ImgCrop rotationSlider>
                   <Upload
                     action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
                     listType="picture-card"
                     fileList={fileList}
                     onChange={onChange}
                     onPreview={onPreview}
+                    disabled
+                    
                   >
                     {t('Upload image')}
                   </Upload>
                 </ImgCrop>
               </Form.Item>
             </Col>
-            <Col md={6}>
+            <Col md={4}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Passport seria'}
                 name="passport_seria"
               >
                 <ReactInputMask placeholder="Passport" className="text-uppercase" mask="aa">
-                  <Input placeholder="Passport" size="large" />
+                  <Input placeholder="Passport seria" size="large" />
                 </ReactInputMask>
               </Form.Item>
             </Col>
-            <Col md={6}>
+            <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Passport number')}
                 name="passport_number"
               >
@@ -305,9 +312,9 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 </ReactInputMask>
               </Form.Item>
             </Col>
-            <Col md={6}>
+            <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Passport date')}
                 name="passport_data"
               >

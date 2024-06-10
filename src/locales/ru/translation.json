@@ -4,6 +4,7 @@
   "Surname":"Фамилия",
   "Name":"Имя",
   "Middlename":"Отчество",
+  "F.I.O":"Ф.И.О",
   "Birthday":"День рождения",
   "Password": "Пароль",
   "Appstore Id":"AppStore Id",
