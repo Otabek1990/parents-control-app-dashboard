@@ -94,11 +94,11 @@ guid: string,
      * @throws ApiError
      */
     public static parentDetailNowRead(
-guid: string,
+guid: string | number,
 ): CancelablePromise<ParentDetail> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/parent/detail/{guid}/now/',
+            url: '/admin-panel-parent/detail/{guid}/',
             path: {
                 'guid': guid,
             },
@@ -125,7 +125,7 @@ results: Array<ParentList>;
 }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/parent/list/',
+            url: '/admin-panel-parent/list/',
             query: {
                 'search': search,
                 'limit': limit,

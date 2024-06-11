@@ -7,7 +7,7 @@ import { PartnerDetail, PartnerService } from 'services/openapi';
 import { timeConverter } from '@utils/timeConverter';
 
 type Props = {
-  id?: string;
+  id?: string | undefined | number;
 };
 const PartnerInformation = ({ id }: Props) => {
   const [partner, setPartner] = useState<PartnerDetail>();
@@ -42,19 +42,20 @@ const PartnerInformation = ({ id }: Props) => {
         
         >
           <Descriptions  column={1} style={{ marginTop: 20 }}>
-            <Descriptions.Item label={t('Username')} >{partner?.username}</Descriptions.Item>
-            <Descriptions.Item label={t('Name')}>{partner?.name}</Descriptions.Item>
+            <Descriptions.Item label={t('Username')} >{partner?.username || "-"}</Descriptions.Item>
+            <Descriptions.Item label={t('F.I.O')} >{partner?.fullname}</Descriptions.Item>
+            {/* <Descriptions.Item label={t('Name')}>{partner?.name}</Descriptions.Item>
             <Descriptions.Item label={t('Surname')}>{partner?.surname}</Descriptions.Item>
-            <Descriptions.Item label={t('Middlename')}>{partner?.middle_name}</Descriptions.Item>
-            <Descriptions.Item label={t('Birthday')}>{partner?.birthday}</Descriptions.Item>
+            <Descriptions.Item label={t('Middlename')}>{partner?.middle_name}</Descriptions.Item> */}
+            <Descriptions.Item label={t('Birthday')}>{partner?.birthday || "-"}</Descriptions.Item>
      
             <Descriptions.Item label={t("Work percentage")}>{partner?.percentage_of_work} %</Descriptions.Item>
-            <Descriptions.Item label={"Google play link"}>{partner?.google_play_link} </Descriptions.Item>
-            <Descriptions.Item label={t("Appstore Id")}>{partner?.appstore_id} </Descriptions.Item>
-            <Descriptions.Item label={t("Playstore Id")}>{partner?.playstore_id} </Descriptions.Item>
-            <Descriptions.Item label={t("Passport date")}>{partner?.passport_data}</Descriptions.Item>
-            <Descriptions.Item label={t("Passport seria")}>{partner?.passport_seria}</Descriptions.Item>
-            <Descriptions.Item label={t("Passport number")}>{partner?.passport_number}</Descriptions.Item>
+            <Descriptions.Item label={"Google play link"}>{partner?.google_play_link || "-"} </Descriptions.Item>
+            <Descriptions.Item label={t("Appstore Id")}>{partner?.appstore_id || "-"} </Descriptions.Item>
+            <Descriptions.Item label={t("Playstore Id")}>{partner?.playstore_id || "-"} </Descriptions.Item>
+            <Descriptions.Item label={t("Passport date")}>{partner?.passport_data || "-"}</Descriptions.Item>
+            <Descriptions.Item label={t("Passport seria")}>{partner?.passport_seria || "-"}</Descriptions.Item>
+            <Descriptions.Item label={t("Passport number")}>{partner?.passport_number || "-"}</Descriptions.Item>
             <Descriptions.Item label={t("Created Time")}>{timeConverter(partner?.created_at || "")}</Descriptions.Item>
           </Descriptions>
         </Card>

@@ -54,11 +54,11 @@ guid: string,
      * @throws ApiError
      */
     public static agentDeleteNowDelete(
-guid: string,
+guid: string | number,
 ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/agent/delete/{guid}/now/',
+            url: '/admin-panel-agent/delete/{guid}/',
             path: {
                 'guid': guid,
             },
@@ -76,7 +76,7 @@ guid: string | number | undefined,
 ): CancelablePromise<AgentDetail> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/agent/detail/{guid}/now/',
+            url: '/admin-panel-agent/detail/{guid}/',
             path: {
                 'guid': guid,
             },
@@ -120,11 +120,11 @@ results: Array<AgentList>;
      * @throws ApiError
      */
     public static agentUpdateNowRead(
-guid: string,
+guid: string | number,
 ): CancelablePromise<AgentUpdate> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/agent/update/{guid}/now/',
+            url: '/admin-panel-agent/update/{guid}/now/',
             path: {
                 'guid': guid,
             },
@@ -139,7 +139,7 @@ guid: string,
      * @throws ApiError
      */
     public static agentUpdateNowUpdate(
-guid: string,
+guid: string | number,
 data: AgentUpdate,
 ): CancelablePromise<AgentUpdate> {
         return __request(OpenAPI, {
@@ -160,7 +160,7 @@ data: AgentUpdate,
      * @throws ApiError
      */
     public static agentUpdateNowPartialUpdate(
-guid: string,
+guid: string | number,
 data: AgentUpdate,
 ): CancelablePromise<AgentUpdate> {
         return __request(OpenAPI, {

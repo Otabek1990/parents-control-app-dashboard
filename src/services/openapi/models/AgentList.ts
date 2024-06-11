@@ -9,6 +9,7 @@ export type AgentList = {
     /**
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
+    fullname:string;
     username: string;
     name: string;
     middle_name: string;

@@ -6,7 +6,7 @@ import { type ReactNode } from 'react';
 
 type TitleCardProps = {
   titleName: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 function TitleCard({ titleName, children }: TitleCardProps) {

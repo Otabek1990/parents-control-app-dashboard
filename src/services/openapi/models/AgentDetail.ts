@@ -9,6 +9,8 @@ export type AgentDetail = {
     /**
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
+    fullname:string;
+    agent_partner:string;
     username: string;
     password: string;
     name: string;

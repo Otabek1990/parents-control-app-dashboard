@@ -17,8 +17,8 @@ const Agents = () => {
   const { t } = useTranslation();
 
   const { data, isLoading, refetch } = useQuery({ queryKey: ['agents'], queryFn: () => AgentService.agentListList() });
-  console.log(data, 'agents');
-  const deleteAgent = async (guid: string) => {
+ 
+  const deleteAgent = async (guid: string | number) => {
     try {
       await AgentService.agentDeleteNowDelete(guid);
       // refetch();
@@ -130,12 +130,12 @@ const Agents = () => {
       key: 'action',
       render: (record: AgentList) => (
         <Space size="middle">
-          <AgentInformation id={record.guid} />
-          <CreateUpdateAgent id={record.guid} refetch={refetch} />
+          <AgentInformation id={record?.id} />
+          <CreateUpdateAgent id={record?.id} refetch={refetch} />
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
-            handleSubmit={() => deleteAgent(record.guid as string)}
+            handleSubmit={() => deleteAgent(record.id as (string | number))}
             title={t('Delete the agent')}
           />
         </Space>

@@ -58,6 +58,7 @@
   "Child code": "Дочерний код",
   "Profile": "Профиль",
   "Table of parents": "Таблица родителей",
+  "Table of children": "Таблица детей",
   "Add": "Добавлять",
   "Delete parental data?": "Удалить родительские данные?",
   "Deleted parental data!": "Удалены родительские данные!",
@@ -86,6 +87,11 @@
   "Select a partner":"Выберите партнера",
   "Money for each child":"Деньги каждому ребенку",
   "Created Time":"Время создания",
-   "Upload image":"Загрузить изображение"
+   "Upload image":"Загрузить изображение",
+   "User phone number":"Номер телефона пользователя",
+   "Status":"Статус",
+   "Tariff name":"Название тарифа",
+   "Tariff expire time":"Срок действия тарифа",
+   "Last visit":"Последнее посещение"
 
 }

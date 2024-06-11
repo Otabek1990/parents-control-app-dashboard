@@ -30,7 +30,7 @@ import ImgCrop from 'antd-img-crop';
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 type Props = {
-  id?: string;
+  id?: string | number | undefined;
   refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseQueryResult>;
 };
 

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 
 const { Title } = Typography;
-const Parents: FC = (): JSX.Element => {
+const Children: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const [open, setOpen] = useState<{ o: boolean; data: ParentList | undefined }>({ o: false, data: undefined });
@@ -18,7 +18,7 @@ const Parents: FC = (): JSX.Element => {
     queryFn: () => ParentService.parentListList(),
   });
 
-  const deleteParents = async (id: string) => {
+  const deleteChildren = async (id: string) => {
     try {
       await ParentService.parentDeleteNowDelete(id);
       message.success(t('Deleted parental data!'));
@@ -27,6 +27,7 @@ const Parents: FC = (): JSX.Element => {
       message.error(e?.response?.data?.message);
     }
   };
+
 
   console.log(parentsReq.data);
   const columns: ColumnsType<ParentList> = [
@@ -44,7 +45,7 @@ const Parents: FC = (): JSX.Element => {
     //   // render: (record) => record[i18n?.language]
     // },
     {
-      title: <span className="text-uppercase">{t('User phone number')}</span>,
+      title: <span className="text-uppercase">{t("Child's name")}</span>,
       dataIndex: 'phone_number',
       key: 'phone_number',
     },
@@ -104,7 +105,7 @@ const Parents: FC = (): JSX.Element => {
     //         }}
     //         icon={<EditOutlined />}
     //       />
-    //       <Popconfirm title={t('Delete parental data?')} onConfirm={() => deleteParents(data?.guid ?? '')}>
+    //       <Popconfirm title={t('Delete parental data?')} onConfirm={() => deleteChildren(data?.guid ?? '')}>
     //         <Button type="dashed" icon={<DeleteOutlined />} />
     //       </Popconfirm>
     //     </Space>
@@ -121,7 +122,7 @@ const Parents: FC = (): JSX.Element => {
         setOpen={() => setOpen({ o: false, data: undefined })}
         form={form}
       />
-        <TitleCard titleName={t('Table of parents')} />
+        <TitleCard titleName={t('Table of children')} />
       <div className="d-flex justify-content-between align-items-center mb-4">
 
         {/* <CreateUpdatePartner refetch={refetch} /> */}
@@ -144,4 +145,4 @@ const Parents: FC = (): JSX.Element => {
   );
 };
 
-export default Parents;
+export default Children;

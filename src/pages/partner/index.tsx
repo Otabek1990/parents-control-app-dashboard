@@ -22,7 +22,7 @@ const Partners = () => {
     queryFn: () => PartnerService.partnerListList(),
   });
 
-  const deleteAgent = async (guid: string) => {
+  const deleteAgent = async (guid: string | number) => {
     try {
       await PartnerService.partnerDeleteNowDelete(guid);
       refetch();
@@ -46,43 +46,48 @@ const Partners = () => {
       dataIndex: 'username',
     },
     {
-      title: <span className="text-uppercase">{t('Name')}</span>,
-      key: 'name',
-      dataIndex: 'name',
+      title: <span className="text-uppercase">{t('F.I.O')}</span>,
+      key: 'fullname',
+      dataIndex: 'fullname',
     },
-    {
-      title: <span className="text-uppercase">{t('Surname')}</span>,
-      key: 'surname',
-      render: (record: PartnerList) => {
-        return record?.surname;
-      },
-    },
-    {
-      title: <span className="text-uppercase">{t('Middlename')}</span>,
-      key: 'middle_name',
-      render: (record: PartnerList) => {
-        return record?.middle_name;
-      },
-    },
+    // {
+    //   title: <span className="text-uppercase">{t('Name')}</span>,
+    //   key: 'name',
+    //   dataIndex: 'name',
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Surname')}</span>,
+    //   key: 'surname',
+    //   render: (record: PartnerList) => {
+    //     return record?.surname;
+    //   },
+    // },
+    // {
+    //   title: <span className="text-uppercase">{t('Middlename')}</span>,
+    //   key: 'middle_name',
+    //   render: (record: PartnerList) => {
+    //     return record?.middle_name;
+    //   },
+    // },
     {
       title: <span className="text-uppercase">{t('Birthday')}</span>,
       key: 'birthday',
       render: (record: PartnerList) => {
-        return record?.birthday;
+        return record?.birthday || "-";
       },
     },
     {
       title: <span className="text-uppercase">{t('Appstore Id')}</span>,
       key: 'appstore_id',
       render: (record: PartnerList) => {
-        return record?.appstore_id;
+        return record?.appstore_id || "-";
       },
     },
     {
       title: <span className="text-uppercase">{t('Playstore Id')}</span>,
       key: 'playstore_id',
       render: (record: PartnerList) => {
-        return record?.playstore_id;
+        return record?.playstore_id || "-";
       },
     },
     {
@@ -97,12 +102,12 @@ const Partners = () => {
       key: 'action',
       render: (record: PartnerList) => (
         <Space size="middle">
-          <PartnerInformation id={record.guid} />
-          <CreateUpdatePartner id={record.guid} refetch={refetch} />
+          <PartnerInformation id={record?.id} />
+          <CreateUpdatePartner id={record?.id} refetch={refetch} />
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
-            handleSubmit={() => deleteAgent(record.guid as string)}
+            handleSubmit={() => deleteAgent(record?.id as (string | number))}
             title="Delete partner"
           />
         </Space>

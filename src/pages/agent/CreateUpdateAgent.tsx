@@ -25,7 +25,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { t } from 'i18next';
 
 type Props = {
-  id?: string;
+  id?: string | number | undefined;
   refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseQueryResult>;
 };
 
@@ -142,21 +142,21 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
   const handleChangeSwitch = (checked: boolean) => {
     setPercentage(checked);
   };
-console.log(id)
+
   return (
     <>
       <Button
-        type={!id ? 'dashed' : 'primary'}
-        size={!id ? 'middle' : 'large'}
-        icon={id ?  <PlusOutlined />: <EditOutlined /> }
+        type={id ? 'dashed' : 'primary'}
+        size={id ? 'middle' : 'large'}
+        icon={id ? <EditOutlined />:  <PlusOutlined /> }
         onClick={showModal}
       >
-        {id ? t('Create agent'):  "" }
+        {id ? "": t('Create agent')}
      
       </Button>
       <Modal
         open={open}
-        title={!id ? t("Edit agent") : t('Create agent')}
+        title={id ? t("Edit agent") : t('Create agent')}
         onCancel={handleCancel}
         width={1000}
         footer={null}

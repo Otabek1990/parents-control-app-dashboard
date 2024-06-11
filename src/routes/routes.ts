@@ -4,6 +4,7 @@ import { HomeFilled } from '@ant-design/icons';
 import { InProggressPage } from '@components/proccess';
 import Parents from '@pages/parents';
 import Dashboard from '@pages/dashboard';
+import Children from '@pages/children';
 
 export const routes: Array<routeType> = [
   {
@@ -64,7 +65,7 @@ export const routes: Array<routeType> = [
       {
         name: 'Children',
         path: '/children',
-        element: InProggressPage,
+        element: Children,
         icon: { name: 'bola' },
         config: {
           key: 'agents_page',

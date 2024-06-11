@@ -36,7 +36,7 @@ data: PartnerCreate,
      * @throws ApiError
      */
     public static partnerDeleteNowRead(
-guid: string,
+guid: string | number,
 ): CancelablePromise<PartnerList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -58,7 +58,7 @@ guid: string,
 ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/partner/delete/{guid}/now/',
+            url: '/admin-panel-partner/delete/{guid}/',
             path: {
                 'guid': guid,
             },
@@ -76,7 +76,7 @@ guid: string,
 ): CancelablePromise<PartnerDetail> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/partner/detail/{guid}/now/',
+            url: '/admin-panel-partner/detail/{guid}/',
             path: {
                 'guid': guid,
             },

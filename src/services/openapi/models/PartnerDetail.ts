@@ -9,6 +9,7 @@ export type PartnerDetail = {
     /**
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
+    fullname:string;
     username: string;
     password: string;
     name: string;

@@ -57,6 +57,8 @@
   "Child code": "Farzand kodi",
   "Profile": "Profil",
   "Table of parents": "Ota-onalar jadvali",
+  "Table of children": "Bolalar jadvali",
+
   "Add": "Qo'shish",
   "Delete parental data?": "Ota ona ma'lumotlari o'chirilsinmi?",
   "Deleted parental data!": "Ota ona ma'lumotlari o'chirildi!",
@@ -85,5 +87,12 @@
   "Select a partner": "Hamkor tanlang",
   "Money for each child": "Har bir bola uchun pul",
   "Created Time": "Yaratilgan Vaqti",
-  "Upload image": "Rasm yuklash"
+  "Upload image": "Rasm yuklash",
+  "User phone number":"Foydalanuvchi tel nomeri",
+  "Status":"Status",
+  "Tariff name":"Tarif turi",
+  "Tariff expire time":"Tarif muddati",
+  "Last visit":"Oxirgi kirish"
+
+
 }
