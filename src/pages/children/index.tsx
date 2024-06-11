@@ -33,28 +33,28 @@ const Children: FC = (): JSX.Element => {
 
     {
       title: <span className="text-uppercase">{t("Child's name")}</span>,
-      dataIndex: 'phone_number',
-      key: 'phone_number',
+      dataIndex: 'fullname',
+      key: 'fullname',
     },
     {
       title: <span className="text-uppercase">{t('The amount of devices')}</span>,
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'device_count',
+      key: 'device_count',
     },
     {
       title: <span className="text-uppercase">{t("Parents' phone number")}</span>,
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'parent_phone',
+      key: 'parent_phone',
     },
     {
       title: <span className="text-uppercase">{t("Partner")}</span>,
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'partner',
+      key: 'partner',
     },
     {
-      title: <span className="text-uppercase">{t("Agents")}</span>,
-      dataIndex: 'status',
-      key: 'status',
+      title: <span className="text-uppercase">{t("Agent")}</span>,
+      dataIndex: 'agent',
+      key: 'agent',
     },
    
 
