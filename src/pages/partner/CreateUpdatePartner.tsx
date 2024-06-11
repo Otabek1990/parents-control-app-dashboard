@@ -137,7 +137,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
       values['birthday'] = dayjs(values.birthday).format(formatDate);
       values['passport_data'] = dayjs(values.passport_data).format(formatDate);
       const res: any = await (id
-        ? PartnerService.partnerUpdateNowUpdate(id as string, values)
+        ? PartnerService.partnerUpdateNowUpdate(id as string)
         : PartnerService.partnerCreateCreate(values));
       form.resetFields();
       message.success(res.message);

@@ -91,7 +91,7 @@ guid: string,
      * @returns any 
      * @throws ApiError
      */
-    public static childListList(
+    public static childList(
 search?: string,
 limit?: number,
 offset?: number,
@@ -103,7 +103,8 @@ results: Array<ChildList>;
 }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/child/list/',
+            url: '/admin-panel-child/list/',
+            // admin-panel-child/list/
             query: {
                 'search': search,
                 'limit': limit,

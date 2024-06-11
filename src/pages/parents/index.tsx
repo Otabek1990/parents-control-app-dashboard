@@ -1,14 +1,14 @@
 import { FC, useState } from 'react';
-import { Button, Card, Form, message, Popconfirm, Space, Table, Typography } from 'antd';
+import {  Card, Form, message,  Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
-import { DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
+// import { DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
 import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 
-const { Title } = Typography;
+// const { Title } = Typography;
 const Parents: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
@@ -18,15 +18,15 @@ const Parents: FC = (): JSX.Element => {
     queryFn: () => ParentService.parentListList(),
   });
 
-  const deleteParents = async (id: string) => {
-    try {
-      await ParentService.parentDeleteNowDelete(id);
-      message.success(t('Deleted parental data!'));
-      parentsReq?.refetch();
-    } catch (e: any) {
-      message.error(e?.response?.data?.message);
-    }
-  };
+  // const deleteParents = async (id: string) => {
+  //   try {
+  //     await ParentService.parentDeleteNowDelete(id);
+  //     message.success(t('Deleted parental data!'));
+  //     parentsReq?.refetch();
+  //   } catch (e: any) {
+  //     message.error(e?.response?.data?.message);
+  //   }
+  // };
 
   console.log(parentsReq.data);
   const columns: ColumnsType<ParentList> = [

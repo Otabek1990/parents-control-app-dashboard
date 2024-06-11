@@ -54,7 +54,7 @@ guid: string | number,
      * @throws ApiError
      */
     public static partnerDeleteNowDelete(
-guid: string,
+guid: string | number,
 ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',

@@ -92,6 +92,9 @@
    "Status":"Статус",
    "Tariff name":"Название тарифа",
    "Tariff expire time":"Срок действия тарифа",
-   "Last visit":"Последнее посещение"
+   "Last visit":"Последнее посещение",
+   "Child's name":"Имя детей",
+   "The amount of devices":"Количество устройств",
+   "Parents' phone number":"Номер телефона родители"
 
 }

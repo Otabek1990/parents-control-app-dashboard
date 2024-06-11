@@ -92,7 +92,10 @@
   "Status":"Status",
   "Tariff name":"Tarif turi",
   "Tariff expire time":"Tarif muddati",
-  "Last visit":"Oxirgi kirish"
+  "Last visit":"Oxirgi kirish",
+  "Child's name":"Bolaning ismi",
+  "The amount of devices":"Devayslar soni",
+  "Parents' phone number":"Ota ona nomerlari"
 
 
 }
