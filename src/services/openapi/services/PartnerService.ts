@@ -72,7 +72,7 @@ guid: string | number,
      * @throws ApiError
      */
     public static partnerDetailNowRead(
-guid: string,
+guid: string | number,
 ): CancelablePromise<PartnerDetail> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -139,12 +139,12 @@ guid: string,
      * @throws ApiError
      */
     public static partnerUpdateNowUpdate(
-guid: string,
+guid: string | number,
 data: PartnerUpdate,
 ): CancelablePromise<PartnerUpdate> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/partner/update/{guid}/now/',
+            url: '/partner/update/{guid}/',
             path: {
                 'guid': guid,
             },

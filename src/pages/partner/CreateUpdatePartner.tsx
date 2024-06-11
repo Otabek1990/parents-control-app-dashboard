@@ -24,10 +24,10 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import { Upload } from 'antd';
-import type { GetProp, UploadFile, UploadProps } from 'antd';
+import type { UploadFile, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+// type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 type Props = {
   id?: string | number | undefined;
@@ -46,7 +46,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     if (!src) {
       src = await new Promise((resolve) => {
         const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj as FileType);
+        // reader.readAsDataURL(file.originFileObj as FileType);
         reader.onload = () => resolve(reader.result as string);
       });
     }
@@ -137,7 +137,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
       values['birthday'] = dayjs(values.birthday).format(formatDate);
       values['passport_data'] = dayjs(values.passport_data).format(formatDate);
       const res: any = await (id
-        ? PartnerService.partnerUpdateNowUpdate(id as string)
+        ? PartnerService.partnerUpdateNowUpdate(id as (string | number),values)
         : PartnerService.partnerCreateCreate(values));
       form.resetFields();
       message.success(res.message);

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import {  Card, Form, message,  Table } from 'antd';
+import {  Card, Form,Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
