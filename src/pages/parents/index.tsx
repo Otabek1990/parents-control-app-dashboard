@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import {  Card, Form,Table } from 'antd';
+import { Card, Form, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -7,6 +7,7 @@ import { ColumnsType } from 'antd/es/table';
 import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
+import { timeConverter } from '@utils/timeConverter';
 
 // const { Title } = Typography;
 const Parents: FC = (): JSX.Element => {
@@ -28,7 +29,7 @@ const Parents: FC = (): JSX.Element => {
   //   }
   // };
 
-  console.log(parentsReq.data);
+  
   const columns: ColumnsType<ParentList> = [
     {
       title: <span className="text-uppercase">№</span>,
@@ -45,29 +46,32 @@ const Parents: FC = (): JSX.Element => {
     // },
     {
       title: <span className="text-uppercase">{t('User phone number')}</span>,
-      dataIndex: 'phone_number',
-      key: 'phone_number',
+      dataIndex: 'username',
+      key: 'username',
     },
     {
       title: <span className="text-uppercase">{t('Status')}</span>,
       dataIndex: 'status',
       key: 'status',
+      render: (record) => record ? t("Active") : t("Disactive")
     },
     {
       title: <span className="text-uppercase">{t('Tariff name')}</span>,
       dataIndex: 'tariff_name',
       key: 'tariff_name',
+      render: (record) => record  || "-"
     },
     {
       title: <span className="text-uppercase">{t('Tariff expire time')}</span>,
       dataIndex: 'tariff_expiry_time',
       key: 'tariff_expiry_time',
-      // render: (record) => record[i18n?.language]
+      render: (record) => record ? timeConverter(record):"-"
     },
     {
       title: <span className="text-uppercase">{t('Last visit')}</span>,
-      dataIndex: 'last_visit',
-      key: 'last_visit',
+      dataIndex: 'last_login',
+      key: 'last_login',
+        render: (record) => record ? timeConverter(record):""
       // render: (record) =>
       //   new Date(record).toLocaleDateString('uz-UZ', {
       //     year: 'numeric',
@@ -83,7 +87,7 @@ const Parents: FC = (): JSX.Element => {
     //   key: 'child_code',
     //   // render: (record) => record[i18n?.language]
     // },
- 
+
     // {
     //   title: <span className="text-uppercase">{t('Profile')}</span>,
     //   dataIndex: 'profile',
@@ -121,9 +125,8 @@ const Parents: FC = (): JSX.Element => {
         setOpen={() => setOpen({ o: false, data: undefined })}
         form={form}
       />
-        <TitleCard titleName={t('Table of parents')} />
+      <TitleCard titleName={t('Table of parents')} />
       <div className="d-flex justify-content-between align-items-center mb-4">
-
         {/* <CreateUpdatePartner refetch={refetch} /> */}
 
         {/* <Title level={4}>{t("Table of parents")}</Title> */}
