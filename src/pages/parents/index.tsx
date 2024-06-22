@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Card, Form, Table } from 'antd';
+import { Button, Card, Form, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -29,7 +29,6 @@ const Parents: FC = (): JSX.Element => {
   //   }
   // };
 
-  
   const columns: ColumnsType<ParentList> = [
     {
       title: <span className="text-uppercase">№</span>,
@@ -53,25 +52,27 @@ const Parents: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('Status')}</span>,
       dataIndex: 'status',
       key: 'status',
-      render: (record) => record ? t("Active") : t("Disactive")
+      render: (record) => (record ? <Button style={{backgroundColor:"#00E67F",color:"white",textTransform:"uppercase",fontSize:"12px",fontWeight:"600"}}>{t('Active')}</Button> 
+      : <Button style={{backgroundColor:"#F63409",color:"white",textTransform:"uppercase",fontSize:"12px",fontWeight:"600"}}>{t('DisActive')}</Button>),
+      //   : t("Disactive")
     },
     {
       title: <span className="text-uppercase">{t('Tariff name')}</span>,
       dataIndex: 'tariff_name',
       key: 'tariff_name',
-      render: (record) => record  || "-"
+      render: (record) => record || '-',
     },
     {
       title: <span className="text-uppercase">{t('Tariff expire time')}</span>,
       dataIndex: 'tariff_expiry_time',
       key: 'tariff_expiry_time',
-      render: (record) => record ? timeConverter(record):"-"
+      render: (record) => (record ? timeConverter(record) : '-'),
     },
     {
       title: <span className="text-uppercase">{t('Last visit')}</span>,
       dataIndex: 'last_login',
       key: 'last_login',
-        render: (record) => record ? timeConverter(record):""
+      render: (record) => (record ? timeConverter(record) : ''),
       // render: (record) =>
       //   new Date(record).toLocaleDateString('uz-UZ', {
       //     year: 'numeric',
@@ -141,6 +142,7 @@ const Parents: FC = (): JSX.Element => {
           // rowKey="id"
           scroll={{ x: 1400 }}
           size="small"
+          className="text-uppercase"
         />
       </Card>
     </>
