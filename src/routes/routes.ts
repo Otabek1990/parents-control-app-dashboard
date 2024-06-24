@@ -1,10 +1,9 @@
-import { Agents, Districts, Main, Operators, Partners, Regions } from 'pages';
+import {  Districts, Main, Operators, Partners,Parents, Regions,Children,Payme,Dashboard,PaymentToPartner } from 'pages';
 import { routeType } from './types';
 import { HomeFilled } from '@ant-design/icons';
 import { InProggressPage } from '@components/proccess';
-import Parents from '@pages/parents';
-import Dashboard from '@pages/dashboard';
-import Children from '@pages/children';
+
+
 
 export const routes: Array<routeType> = [
   {
@@ -40,17 +39,17 @@ export const routes: Array<routeType> = [
         },
         children: [],
       },
-      {
-        name: 'Agents',
-        path: '/agents',
-        element: Agents,
-        icon: { name: 'agent' },
-        config: {
-          key: 'agents_page',
-          isShowInMenu: true,
-        },
-        children: [],
-      },
+      // {
+      //   name: 'Agents',
+      //   path: '/agents',
+      //   element: Agents,
+      //   icon: { name: 'agent' },
+      //   config: {
+      //     key: 'agents_page',
+      //     isShowInMenu: true,
+      //   },
+      //   children: [],
+      // },
       {
         name: 'Parents',
         path: '/parents',
@@ -158,25 +157,50 @@ export const routes: Array<routeType> = [
       {
         name: 'Payme',
         path: '/payme',
-        element: InProggressPage,
+        element: Payme,
         icon: { name: 'payme' },
         config: {
-          key: 'districts_page',
+          key: 'payme_page',
           isShowInMenu: true,
         },
         children: [],
       },
       {
         name: 'Paynet',
-        path: '/paynet]',
+        path: '/paynet',
         element: InProggressPage,
         icon: { name: 'paynet' },
         config: {
-          key: 'districts_page',
+          key: 'paynet_page',
           isShowInMenu: true,
         },
         children: [],
       },
+    ],
+  },
+  {
+    name: 'Payment to partner',
+    path: '/payment',
+    element: PaymentToPartner,
+    icon: { },
+    config: {
+      key: 'main_page',
+      // isLabel: true,
+      isShowInMenu: true,
+    },
+    children: [
+      {
+        name: 'Payments',
+        path: '/paymentToPartner',
+        element: PaymentToPartner,
+        icon: { name: 'payment' },
+        config: {
+          key: 'payment_page',
+          isShowInMenu: true,
+        },
+        children: [],
+      },
+  
     ],
   },
 
