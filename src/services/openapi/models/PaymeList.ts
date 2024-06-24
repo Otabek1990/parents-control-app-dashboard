@@ -5,11 +5,9 @@
 
 export type PaymeList = {
     readonly id?: number;
-    readonly guid?: string;
-    /**
-     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-     */
-    username: string;
-    child_code: string;
-    created_at?: string;
+    abonent_code:string;
+    phone_number: string;
+    tariff_price: number;
+    amount:number;
+    created?: string;
 };

@@ -180,7 +180,7 @@ export const routes: Array<routeType> = [
   },
   {
     name: 'Payment to partner',
-    path: '/payment',
+    path: '/payments',
     element: PaymentToPartner,
     icon: { },
     config: {

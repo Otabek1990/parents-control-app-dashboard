@@ -99,6 +99,11 @@
   "Parents' phone number": "Номер телефона родители",
   "Active": "Активный",
   "Disactive": "Не активен",
-  "Payment to partner":"Оплата партнеру"
+  "Payment to partner":"Оплата партнеру",
+  "Phone number":"Номер телефона",
+  "Tariff price": "Цена тарифа",
+   "Payed money":"Заплатил",
+   "Date":"Дата",
+   "Create payment": "Создать платежа"
 
 }

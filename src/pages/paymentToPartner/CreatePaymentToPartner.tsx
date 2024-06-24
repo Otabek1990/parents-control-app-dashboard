@@ -158,7 +158,7 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? '' : t('Create partner')}
+        {id ? '' : t('Create payment')}
       </Button>
       <Modal
         open={open}

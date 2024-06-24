@@ -117,7 +117,7 @@ const PaymentToPartner = () => {
 
   return (
     <>
-      <TitleCard titleName="Table of partners">
+      <TitleCard titleName="Payments">
         <CreatePaymentToPartner refetch={refetch} />
       </TitleCard>
    

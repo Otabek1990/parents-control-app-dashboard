@@ -89,17 +89,20 @@
   "Money for each child": "Har bir bola uchun pul",
   "Created Time": "Yaratilgan Vaqti",
   "Upload image": "Rasm yuklash",
-  "User phone number":"Foydalanuvchi tel nomeri",
-  "Status":"Status",
-  "Tariff name":"Tarif turi",
-  "Tariff expire time":"Tarif muddati",
-  "Last visit":"Oxirgi kirish",
-  "Child's name":"Bolaning ismi",
-  "The amount of devices":"Devayslar soni",
-  "Parents' phone number":"Ota ona nomerlari",
-   "Active":"Faol",
-   "Disactive":"Faol emas",
-   "Payment to partner":"Hamkorga to'lov"
-
-
+  "User phone number": "Foydalanuvchi tel nomeri",
+  "Status": "Status",
+  "Tariff name": "Tarif turi",
+  "Tariff expire time": "Tarif muddati",
+  "Last visit": "Oxirgi kirish",
+  "Child's name": "Bolaning ismi",
+  "The amount of devices": "Devayslar soni",
+  "Parents' phone number": "Ota ona nomerlari",
+  "Active": "Faol",
+  "Disactive": "Faol emas",
+  "Payment to partner": "Hamkorga to'lov",
+  "Phone number": "Telefon raqami",
+  "Tariff price": "Tarif narxi",
+  "Payed money": "To'langan summa",
+  "Date": "Sana",
+  "Create payment": "To'lov yaratish"
 }

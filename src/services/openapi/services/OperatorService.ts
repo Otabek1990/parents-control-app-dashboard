@@ -103,7 +103,8 @@ results: Array<OperatorList>;
 }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/operator/list/',
+            url: '/admin-panel-operator/list/',
+            // admin-panel-operator/list/
             query: {
                 'search': search,
                 'limit': limit,

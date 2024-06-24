@@ -28,6 +28,7 @@ export type { ParentCheckSms } from './models/ParentCheckSms';
 export type { ParentCreate } from './models/ParentCreate';
 export type { ParentDetail } from './models/ParentDetail';
 export type { ParentList } from './models/ParentList';
+export type { PaymeList } from './models/PaymeList';
 export type { ParentLogin } from './models/ParentLogin';
 export { ParentProfileList } from './models/ParentProfileList';
 export { ParentProfileUpdate } from './models/ParentProfileUpdate';
