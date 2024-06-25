@@ -29,6 +29,7 @@ export type { ParentCreate } from './models/ParentCreate';
 export type { ParentDetail } from './models/ParentDetail';
 export type { ParentList } from './models/ParentList';
 export type { PaymeList } from './models/PaymeList';
+export type {PaymentToPartnerList} from "./models/PaymentToPartnerList"
 export type { ParentLogin } from './models/ParentLogin';
 export { ParentProfileList } from './models/ParentProfileList';
 export { ParentProfileUpdate } from './models/ParentProfileUpdate';
@@ -58,4 +59,5 @@ export { OperatorService } from './services/OperatorService';
 export { ParentService } from './services/ParentService';
 export { PartnerService } from './services/PartnerService';
 export { StatisticsService } from './services/StatisticsService';
-export { SubscriptionService } from './services/SubscriptionService';
+export { PaymentToPartnerService } from './services/PaymentToPartnerService';
+

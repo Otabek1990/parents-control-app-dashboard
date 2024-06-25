@@ -21,7 +21,7 @@ const Children: FC = (): JSX.Element => {
 
 
 
-  console.log(childrenReq.data);
+ 
   const columns: ColumnsType<ChildList> = [
     {
       title: <span className="text-uppercase">№</span>,

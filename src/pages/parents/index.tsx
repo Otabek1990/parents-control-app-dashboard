@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
 // import { DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
-import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
+// import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
@@ -12,8 +12,8 @@ import { timeConverter } from '@utils/timeConverter';
 // const { Title } = Typography;
 const Parents: FC = (): JSX.Element => {
   const { t } = useTranslation();
-  const [form] = Form.useForm();
-  const [open, setOpen] = useState<{ o: boolean; data: ParentList | undefined }>({ o: false, data: undefined });
+  // const [form] = Form.useForm();
+  // const [open, setOpen] = useState<{ o: boolean; data: ParentList | undefined }>({ o: false, data: undefined });
   const parentsReq: any = useQuery({
     queryKey: ['parents'],
     queryFn: () => ParentService.parentListList(),
@@ -37,12 +37,7 @@ const Parents: FC = (): JSX.Element => {
         return index + 1;
       },
     },
-    // {
-    //   title: <span className="text-uppercase">{t('Username')}</span>,
-    //   dataIndex: 'username',
-    //   key: 'username',
-    //   // render: (record) => record[i18n?.language]
-    // },
+ 
     {
       title: <span className="text-uppercase">{t('User phone number')}</span>,
       dataIndex: 'username',
@@ -54,7 +49,7 @@ const Parents: FC = (): JSX.Element => {
       key: 'status',
       render: (record) => (record ? <Button style={{backgroundColor:"#00E67F",color:"white",textTransform:"uppercase",fontSize:"12px",fontWeight:"600"}}>{t('Active')}</Button> 
       : <Button style={{backgroundColor:"#F63409",color:"white",textTransform:"uppercase",fontSize:"12px",fontWeight:"600"}}>{t('DisActive')}</Button>),
-      //   : t("Disactive")
+     
     },
     {
       title: <span className="text-uppercase">{t('Tariff name')}</span>,
@@ -73,14 +68,7 @@ const Parents: FC = (): JSX.Element => {
       dataIndex: 'last_login',
       key: 'last_login',
       render: (record) => (record ? timeConverter(record) : ''),
-      // render: (record) =>
-      //   new Date(record).toLocaleDateString('uz-UZ', {
-      //     year: 'numeric',
-      //     month: '2-digit',
-      //     day: '2-digit',
-      //     hour: '2-digit',
-      //     minute: '2-digit',
-      //   }),
+    
     },
     // {
     //   title: <span className="text-uppercase">{t('Child code')}</span>,
@@ -119,13 +107,13 @@ const Parents: FC = (): JSX.Element => {
 
   return (
     <>
-      <CreateOrEditParents
+      {/* <CreateOrEditParents
         refetch={() => parentsReq?.refetch()}
         open={open.o}
         data={open.data}
         setOpen={() => setOpen({ o: false, data: undefined })}
         form={form}
-      />
+      /> */}
       <TitleCard titleName={t('Table of parents')} />
       <div className="d-flex justify-content-between align-items-center mb-4">
         {/* <CreateUpdatePartner refetch={refetch} /> */}

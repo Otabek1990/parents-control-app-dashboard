@@ -1,9 +1,9 @@
-import { Card,  Space, Table } from 'antd';
+import { Card, Space, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@ant-design/icons';
-import { errorHandler } from '@config/axios_config';
-import { PartnerList, PartnerService } from 'services/openapi';
+// import { errorHandler } from '@config/axios_config';
+import { PaymentToPartnerList, PaymentToPartnerService } from 'services/openapi';
 import ConfirmModal from '@components/core/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 import PaymentToPartnerInformation from './PaymentToPartnerInformation';
@@ -12,102 +12,76 @@ import Empty from '@assets/animated-illusions/empty.json';
 
 import TitleCard from '@components/core/TitleCard';
 import CreatePaymentToPartner from './CreatePaymentToPartner';
+import { timeConverter } from '@utils/timeConverter';
 
 const PaymentToPartner = () => {
   const { t } = useTranslation();
 
-
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ['agents'],
-    queryFn: () => PartnerService.partnerListList(),
+  const {
+    data: paymentsToPartner,
+    isLoading,
+    refetch,
+    isSuccess
+  } = useQuery({
+    queryKey: ['paymentToPartner'],
+    queryFn: () => PaymentToPartnerService.paymentToPartnerGetList(),
   });
 
-  const deleteAgent = async (guid: string | number) => {
-    try {
-      await PartnerService.partnerDeleteNowDelete(guid);
-      refetch();
-    } catch (error: any) {
-      errorHandler(error?.body?.detail);
-    }
-  };
+  // const deleteAgent = async (guid: string | number) => {
+  //   try {
+  //     await PartnerService.partnerDeleteNowDelete(guid);
+  //     refetch();
+  //   } catch (error: any) {
+  //     errorHandler(error?.body?.detail);
+  //   }
+  // };
+  console.log(paymentsToPartner);
 
-  const columns: ColumnsType<PartnerList> = [
+  const columns: ColumnsType<PaymentToPartnerList> = [
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: (record) => {
-        let index = data?.results?.indexOf(record);
+      render: ({},{},index) => {
+      
         return Number(index) + 1;
       },
     },
     {
-      title: <span className="text-uppercase">{t('Username')}</span>,
-      key: 'username',
-      dataIndex: 'username',
+      title: <span className="text-uppercase">{t('Partner')}</span>,
+      key: 'company_partner',
+      dataIndex: 'company_partner',
     },
     {
-      title: <span className="text-uppercase">{t('F.I.O')}</span>,
-      key: 'fullname',
-      dataIndex: 'fullname',
+      title: <span className="text-uppercase">{t('Money amount')}</span>,
+      key: 'amount',
+      dataIndex: 'amount',
     },
-    // {
-    //   title: <span className="text-uppercase">{t('Name')}</span>,
-    //   key: 'name',
-    //   dataIndex: 'name',
-    // },
-    // {
-    //   title: <span className="text-uppercase">{t('Surname')}</span>,
-    //   key: 'surname',
-    //   render: (record: PartnerList) => {
-    //     return record?.surname;
-    //   },
-    // },
-    // {
-    //   title: <span className="text-uppercase">{t('Middlename')}</span>,
-    //   key: 'middle_name',
-    //   render: (record: PartnerList) => {
-    //     return record?.middle_name;
-    //   },
-    // },
     {
-      title: <span className="text-uppercase">{t('Birthday')}</span>,
-      key: 'birthday',
-      render: (record: PartnerList) => {
-        return record?.birthday || "-";
+      title: <span className="text-uppercase">{t('Date')}</span>,
+      key: 'created_at',
+      dataIndex:"created_at",
+      render: (record) => {
+        console.log(record)
+        return record ? timeConverter(record) : '-';
       },
     },
     {
-      title: <span className="text-uppercase">{t('Appstore Id')}</span>,
-      key: 'appstore_id',
-      render: (record: PartnerList) => {
-        return record?.appstore_id || "-";
-      },
-    },
-    {
-      title: <span className="text-uppercase">{t('Playstore Id')}</span>,
-      key: 'playstore_id',
-      render: (record: PartnerList) => {
-        return record?.playstore_id || "-";
-      },
-    },
-    {
-      title: <span className="text-uppercase">{t('Work percentage')}</span>,
-      dataIndex: 'percentage_of_work',
-      key: 'percentage_of_work',
-      render: (record) => record + '%',
+      title: <span className="text-uppercase">{t('Currency')}</span>,
+      key: 'currency',
+      dataIndex: 'currency',
     },
 
     {
       title: <span className="text-uppercase "> {t('Actions')} </span>,
       key: 'action',
-      render: (record: PartnerList) => (
+      render: (record: PaymentToPartnerList) => (
         <Space size="middle">
           <PaymentToPartnerInformation id={record?.id} />
           <CreatePaymentToPartner id={record?.id} refetch={refetch} />
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
-            handleSubmit={() => deleteAgent(record?.id as (string | number))}
+            // handleSubmit={() => deleteAgent(record?.id as string | number)}
             title="Delete partner"
           />
         </Space>
@@ -120,7 +94,7 @@ const PaymentToPartner = () => {
       <TitleCard titleName="Payments">
         <CreatePaymentToPartner refetch={refetch} />
       </TitleCard>
-   
+
       <Card>
         <Table
           columns={columns}
@@ -132,7 +106,7 @@ const PaymentToPartner = () => {
               </div>
             ),
           }}
-          dataSource={data?.results}
+          dataSource={paymentsToPartner}
           loading={isLoading}
           rowKey="id"
           scroll={{ x: 1000 }}

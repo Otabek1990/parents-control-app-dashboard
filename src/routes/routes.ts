@@ -23,7 +23,7 @@ export const routes: Array<routeType> = [
     element: InProggressPage,
     icon: {},
     config: {
-      key: 'main_page',
+      key: 'users_page',
       // isLabel: true,
       isShowInMenu: true,
     },
@@ -67,7 +67,7 @@ export const routes: Array<routeType> = [
         element: Children,
         icon: { name: 'bola' },
         config: {
-          key: 'agents_page',
+          key: 'children_page',
           isShowInMenu: true,
         },
         children: [],
@@ -149,7 +149,7 @@ export const routes: Array<routeType> = [
     element: InProggressPage,
     icon: { },
     config: {
-      key: 'main_page',
+      key: 'payment_type_page',
       // isLabel: true,
       isShowInMenu: true,
     },
@@ -184,7 +184,7 @@ export const routes: Array<routeType> = [
     element: PaymentToPartner,
     icon: { },
     config: {
-      key: 'main_page',
+      key: 'payment_to_partner_page',
       // isLabel: true,
       isShowInMenu: true,
     },

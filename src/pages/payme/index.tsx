@@ -16,7 +16,7 @@ const Payme: FC = (): JSX.Element => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState<{ o: boolean; data: PaymeList | undefined }>({ o: false, data: undefined });
   const paymesReq: any = useQuery({
-    queryKey: ['parents'],
+    queryKey: ['payme'],
     queryFn: () => PaymeService.PaymeGetList()
   });
 
