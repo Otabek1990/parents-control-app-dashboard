@@ -163,7 +163,7 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
       <Modal
         open={open}
         // title={show ? 'Hamkor haqida malumot' : id ? "Hamkorni o'zgartirish" : 'Hamkor yaratish'}
-        title={id ? t('Edit partner') : t('Create partner')}
+        title={id ? t('Edit payment') : t('Create payment')}
         onCancel={handleCancel}
         width={1000}
         footer={null}

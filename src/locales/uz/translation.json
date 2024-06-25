@@ -104,5 +104,8 @@
   "Tariff price": "Tarif narxi",
   "Payed money": "To'langan summa",
   "Date": "Sana",
-  "Create payment": "To'lov yaratish"
+  "Create payment": "To'lov yaratish",
+  "Money amount":"Summa",
+  "Currency":"Valyuta",
+   "Edit payment": "To'lovni o'zgartirish"
 }

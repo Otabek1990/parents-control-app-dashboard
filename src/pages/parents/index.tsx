@@ -37,7 +37,7 @@ const Parents: FC = (): JSX.Element => {
         return index + 1;
       },
     },
- 
+
     {
       title: <span className="text-uppercase">{t('User phone number')}</span>,
       dataIndex: 'username',
@@ -47,9 +47,32 @@ const Parents: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('Status')}</span>,
       dataIndex: 'status',
       key: 'status',
-      render: (record) => (record ? <Button style={{backgroundColor:"#00E67F",color:"white",textTransform:"uppercase",fontSize:"12px",fontWeight:"600"}}>{t('Active')}</Button> 
-      : <Button style={{backgroundColor:"#F63409",color:"white",textTransform:"uppercase",fontSize:"12px",fontWeight:"600"}}>{t('DisActive')}</Button>),
-     
+      render: (record) =>
+        record ? (
+          <Button
+            style={{
+              backgroundColor: '#00E67F',
+              color: 'white',
+              textTransform: 'uppercase',
+              fontSize: '12px',
+              fontWeight: '600',
+            }}
+          >
+            {t('Active')}
+          </Button>
+        ) : (
+          <Button
+            style={{
+              backgroundColor: '#F63409',
+              color: 'white',
+              textTransform: 'uppercase',
+              fontSize: '12px',
+              fontWeight: '600',
+            }}
+          >
+            {t('DisActive')}
+          </Button>
+        ),
     },
     {
       title: <span className="text-uppercase">{t('Tariff name')}</span>,
@@ -68,7 +91,6 @@ const Parents: FC = (): JSX.Element => {
       dataIndex: 'last_login',
       key: 'last_login',
       render: (record) => (record ? timeConverter(record) : ''),
-    
     },
     // {
     //   title: <span className="text-uppercase">{t('Child code')}</span>,
@@ -125,7 +147,7 @@ const Parents: FC = (): JSX.Element => {
         <Table
           columns={columns}
           bordered={false}
-          dataSource={parentsReq?.data?.results}
+          dataSource={parentsReq?.isSuccess ? parentsReq?.data?.results : []}
           loading={parentsReq?.isLoading}
           // rowKey="id"
           scroll={{ x: 1400 }}
