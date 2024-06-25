@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import { Button, Card, Form, Table } from 'antd';
+import { Card, Form, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { PaymeList } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
 // import { DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
-import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
+
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
@@ -13,8 +13,6 @@ import { PaymeService } from 'services/openapi/services/PaymeService';
 // const { Title } = Typography;
 const Payme: FC = (): JSX.Element => {
   const { t } = useTranslation();
-  const [form] = Form.useForm();
-  const [open, setOpen] = useState<{ o: boolean; data: PaymeList | undefined }>({ o: false, data: undefined });
   const paymesReq: any = useQuery({
     queryKey: ['payme'],
     queryFn: () => PaymeService.PaymeGetList()
@@ -64,7 +62,7 @@ const Payme: FC = (): JSX.Element => {
     },
 
   ];
-  console.log(paymesReq?.data)
+
 
   return (
     <>

@@ -229,7 +229,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                   placeholder="01.01.2000"
                   size="large"
                   format={formatDate}
-                  defaultValue={id ? dayjs(form.getFieldsValue(['birthday']), formatDate) : undefined}
+                  // defaultValue={id ? dayjs(form?.getFieldsValue(['birthday']), formatDate) : undefined}
                 />
               </Form.Item>
             </Col>
@@ -324,7 +324,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                   placeholder="01.01.2000"
                   size="large"
                   format={formatDate}
-                  defaultValue={id ? dayjs(form.getFieldsValue(['passport_data']), formatDate) : undefined}
+                  // defaultValue={id ? dayjs(form.getFieldsValue(['passport_data']), formatDate) : undefined}
                 />
               </Form.Item>
             </Col>

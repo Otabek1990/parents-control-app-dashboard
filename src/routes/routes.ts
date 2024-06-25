@@ -56,7 +56,7 @@ export const routes: Array<routeType> = [
         element: Parents,
         icon: { name: 'ota_ona' },
         config: {
-          key: 'agents_page',
+          key: 'parents_page',
           isShowInMenu: true,
         },
         children: [],

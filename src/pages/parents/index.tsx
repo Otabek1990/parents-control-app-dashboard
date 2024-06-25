@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Button, Card, Form, Table } from 'antd';
+import { FC } from 'react';
+import { Button, Card,  Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -149,7 +149,7 @@ const Parents: FC = (): JSX.Element => {
           bordered={false}
           dataSource={parentsReq?.isSuccess ? parentsReq?.data?.results : []}
           loading={parentsReq?.isLoading}
-          // rowKey="id"
+          rowKey="id"
           scroll={{ x: 1400 }}
           size="small"
           className="text-uppercase"

@@ -6,7 +6,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { PaymentToPartnerList, PaymentToPartnerService } from 'services/openapi';
 import ConfirmModal from '@components/core/ConfirmModal';
 import { useTranslation } from 'react-i18next';
-import PaymentToPartnerInformation from './PaymentToPartnerInformation';
+// import PaymentToPartnerInformation from './PaymentToPartnerInformation';
 import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 
@@ -36,7 +36,7 @@ const PaymentToPartner = () => {
       errorHandler(error?.body?.detail);
     }
   };
-  console.log(paymentsToPartner);
+
 
   const columns: ColumnsType<PaymentToPartnerList> = [
     {
@@ -62,7 +62,7 @@ const PaymentToPartner = () => {
       key: 'created_at',
       dataIndex:"created_at",
       render: (record) => {
-        console.log(record)
+       
         return record ? timeConverter(record) : '-';
       },
     },
@@ -77,7 +77,7 @@ const PaymentToPartner = () => {
       key: 'action',
       render: (record: PaymentToPartnerList) => (
         <Space size="middle">
-          <PaymentToPartnerInformation id={record?.id} />
+          {/* <PaymentToPartnerInformation id={record?.id} /> */}
           <CreatePaymentToPartner id={record?.id} refetch={refetch} />
           <ConfirmModal
             btnType="dashed"

@@ -17,6 +17,7 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 import { PaymentToPartnerCreate } from '../models/PaymentToPartnerCreate';
+import { PaymentToPartnerDetail } from '../models/PaymentToPartnerDetail';
 import { PaymentToPartnerList } from '../models/PaymentToPartnerList';
 
 export class PaymentToPartnerService {
@@ -36,7 +37,7 @@ export class PaymentToPartnerService {
 
   /**
    * Parent Delete(Delete) API view
-   * @param guid
+   * @param id
    * @returns ParentList
    * @throws ApiError
    */
@@ -52,21 +53,21 @@ export class PaymentToPartnerService {
 
   /**
    * Parent Detail(Detail) API view
-   * @param guid
+   * @param id
    * @returns ParentDetail
    * @throws ApiError
    */
-  //     public static parentDetailNowRead(
-  // guid: string | number,
-  // ): CancelablePromise<ParentDetail> {
-  //         return __request(OpenAPI, {
-  //             method: 'GET',
-  //             url: '/admin-panel-parent/detail/{guid}/',
-  //             path: {
-  //                 'guid': guid,
-  //             },
-  //         });
-  //     }
+      public static paymentToPartnerDetail(
+  id: number,
+  ): CancelablePromise<PaymentToPartnerDetail> {
+          return __request(OpenAPI, {
+              method: 'GET',
+              url: `/admin-panel-parent/detail/${id}/`,
+              path: {
+                  'id': id,
+              },
+          });
+      }
 
   /**
      * Parent List(List) API view
@@ -88,22 +89,22 @@ export class PaymentToPartnerService {
 
   /**
    * Parent Child Code Create(Put) api view
-   * @param guid
+   * @param id
    * @param data
    * @returns ParenChildCodeCreate
    * @throws ApiError
    */
-  //     public static parentParentChildAddUpdate(
-  // guid: string,
-  // data: ParenChildCodeCreate,
-  // ): CancelablePromise<ParenChildCodeCreate> {
-  //         return __request(OpenAPI, {
-  //             method: 'PUT',
-  //             url: '/parent/parent/{guid}/child-add/',
-  //             path: {
-  //                 'guid': guid,
-  //             },
-  //             body: data,
-  //         });
-  //     }
+      public static paymentToPartnerUpdate(
+  id: number,
+  data: PaymentToPartnerCreate,
+  ): CancelablePromise<PaymentToPartnerCreate> {
+          return __request(OpenAPI, {
+              method: 'PUT',
+              url: `/admin-panel-payment/to-partner/${id}`,
+              path: {
+                  'id': id,
+              },
+              body: data,
+          });
+      }
 }

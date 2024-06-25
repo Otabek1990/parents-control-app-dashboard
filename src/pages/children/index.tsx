@@ -80,7 +80,7 @@ const Children: FC = (): JSX.Element => {
           bordered={false}
           dataSource={childrenReq?.data?.results}
           loading={childrenReq?.isLoading}
-          // rowKey="id"
+          rowKey="id"
           scroll={{ x: 1400 }}
           size="small"
         />

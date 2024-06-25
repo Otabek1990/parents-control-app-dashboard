@@ -23,7 +23,6 @@ const PartnerInformation = ({ id }: Props) => {
     }
   };
 
-  console.log('partner', partner);
 
   const handleClose = () => {
     setOpen(false);
