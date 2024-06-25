@@ -241,7 +241,7 @@ const CreateUpdateAgent = ({ id, refetch }: Props) => {
                   options={partners.map((el) => {
                     return {
                       value: el.id,
-                      label: el.name,
+                      label: el.fullname,
                     };
                   })}
                 />

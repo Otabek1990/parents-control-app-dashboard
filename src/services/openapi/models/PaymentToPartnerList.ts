@@ -4,15 +4,10 @@
 /* eslint-disable */
 
 export type PaymentToPartnerList = {
-    readonly id?: number;
-    company_partner:number;
-    amount:string;
-    currency:string;
-    created_at:string;
-    user:number
-   
-    /**
-     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-     */
-  
+  readonly id?: number;
+  company_partner: number;
+  amount: string;
+  currency: string;
+  created_at: string;
+  user: number;
 };

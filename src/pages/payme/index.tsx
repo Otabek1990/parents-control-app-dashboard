@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Card, Form, Table } from 'antd';
+import { FC} from 'react';
+import { Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { PaymeList } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -17,6 +17,7 @@ const Payme: FC = (): JSX.Element => {
     queryKey: ['payme'],
     queryFn: () => PaymeService.PaymeGetList()
   });
+  console.log(paymesReq.data)
 
 
 
@@ -84,7 +85,7 @@ const Payme: FC = (): JSX.Element => {
         <Table
           columns={columns}
           bordered={false}
-          dataSource={paymesReq?.data?.results}
+          dataSource={paymesReq?.data}
           loading={paymesReq?.isLoading}
           // rowKey="id"
           scroll={{ x: 1400 }}

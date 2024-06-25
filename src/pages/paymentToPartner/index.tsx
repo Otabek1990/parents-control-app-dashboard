@@ -22,7 +22,7 @@ const PaymentToPartner = () => {
     data: paymentsToPartner,
     isLoading,
     refetch,
-  
+    
   } = useQuery({
     queryKey: ['paymentToPartner'],
     queryFn: () => PaymentToPartnerService.paymentToPartnerGetList(),
@@ -37,13 +37,11 @@ const PaymentToPartner = () => {
     }
   };
 
-
   const columns: ColumnsType<PaymentToPartnerList> = [
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: ({},{},index) => {
-      
+      render: ({}, {}, index) => {
         return Number(index) + 1;
       },
     },
@@ -60,9 +58,8 @@ const PaymentToPartner = () => {
     {
       title: <span className="text-uppercase">{t('Date')}</span>,
       key: 'created_at',
-      dataIndex:"created_at",
+      dataIndex: 'created_at',
       render: (record) => {
-       
         return record ? timeConverter(record) : '-';
       },
     },
@@ -83,7 +80,7 @@ const PaymentToPartner = () => {
             btnType="dashed"
             icon={<DeleteOutlined />}
             handleSubmit={() => deletePaymentToPartner(record?.id as number)}
-            title={t("Delete payment")}
+            title={t('Delete payment')}
           />
         </Space>
       ),

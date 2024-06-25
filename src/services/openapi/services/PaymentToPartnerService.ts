@@ -75,12 +75,7 @@ export class PaymentToPartnerService {
      * @returns any 
      * @throws ApiError
      */
-  public static paymentToPartnerGetList(): CancelablePromise<{
-    count: number;
-    next?: string | null;
-    previous?: string | null;
-    results: Array<PaymentToPartnerList>;
-  }> {
+  public static paymentToPartnerGetList(): CancelablePromise<Array<PaymentToPartnerList>> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/admin-panel-payment/to-partners/',
