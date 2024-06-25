@@ -13,6 +13,7 @@ import Empty from '@assets/animated-illusions/empty.json';
 import TitleCard from '@components/core/TitleCard';
 import CreatePaymentToPartner from './CreatePaymentToPartner';
 import { timeConverter } from '@utils/timeConverter';
+import { errorHandler } from '@config/axios_config';
 
 const PaymentToPartner = () => {
   const { t } = useTranslation();
@@ -21,20 +22,20 @@ const PaymentToPartner = () => {
     data: paymentsToPartner,
     isLoading,
     refetch,
-    isSuccess
+  
   } = useQuery({
     queryKey: ['paymentToPartner'],
     queryFn: () => PaymentToPartnerService.paymentToPartnerGetList(),
   });
 
-  // const deleteAgent = async (guid: string | number) => {
-  //   try {
-  //     await PartnerService.partnerDeleteNowDelete(guid);
-  //     refetch();
-  //   } catch (error: any) {
-  //     errorHandler(error?.body?.detail);
-  //   }
-  // };
+  const deletePaymentToPartner = async (id: number) => {
+    try {
+      await PaymentToPartnerService.paymentToPartnerDelete(id);
+      refetch();
+    } catch (error: any) {
+      errorHandler(error?.body?.detail);
+    }
+  };
   console.log(paymentsToPartner);
 
   const columns: ColumnsType<PaymentToPartnerList> = [
@@ -81,8 +82,8 @@ const PaymentToPartner = () => {
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
-            // handleSubmit={() => deleteAgent(record?.id as string | number)}
-            title="Delete partner"
+            handleSubmit={() => deletePaymentToPartner(record?.id as number)}
+            title={t("Delete payment")}
           />
         </Space>
       ),

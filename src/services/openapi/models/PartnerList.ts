@@ -10,9 +10,10 @@ export type PartnerList = {
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
     username: string;
-    name: string;
-    middle_name: string;
-    surname: string;
+    // name: string;
+    // middle_name: string;
+    // surname: string;
+    fullname:string;
     birthday?: string | null;
     readonly photo?: string | null;
     appstore_id?: string | null;
