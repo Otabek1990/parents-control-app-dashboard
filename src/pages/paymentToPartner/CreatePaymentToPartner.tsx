@@ -100,6 +100,7 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
                   showSearch
                   placeholder={t('Select a partner')}
                   optionFilterProp="children"
+                  
                   // onChange={onChangeRegion}
                   filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                   options={partners?.results?.map((el) => {
