@@ -5,8 +5,9 @@
 
 export type PaymentToPartnerDetail = {
     readonly id?: number;
-  company_partner: number;
+  company_partner: string;
   amount: string;
   currency: string;
   user: number;
+  partner_id:number;
 };

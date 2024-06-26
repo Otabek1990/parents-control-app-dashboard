@@ -34,7 +34,7 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
         let res = await PaymentToPartnerService.paymentToPartnerDetail(id as number);
         form.setFieldsValue({
           ...res,
-          company_partner: res?.company_partner,
+          company_partner: res?.partner_id,
           amount: res?.amount,
           currency: res?.currency,
         });
@@ -117,7 +117,7 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
                 label={t('Money amount')}
                 name="amount"
               >
-                <Input placeholder={t('Money amount')} size="large" />
+                <Input type='number' placeholder={t('Money amount')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
