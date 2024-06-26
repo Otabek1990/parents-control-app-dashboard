@@ -26,23 +26,22 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
     queryKey: ['partners'],
     queryFn: () => PartnerService.partnerListList(),
   });
- 
+
   const showModal = async () => {
     setOpen(true);
-    // if (id) {
-    //   try {
-    //     let res = await PartnerService.partnerDetailNowRead(id);
-    //     form.setFieldsValue({
-    //       ...res,
-    //       birthday: dayjs(res.birthday, formatDate),
-    //       passport_data: dayjs(res.passport_data, formatDate),
-    //       passport_number: res.passport_number?.toString(),
-    //     });
-    //     getDistricts(res.region);
-    //   } catch (e: any) {
-    //     console.log(e?.body);
-    //   }
-    // }
+    if (id) {
+      try {
+        let res = await PaymentToPartnerService.paymentToPartnerDetail(id as number);
+        form.setFieldsValue({
+          ...res,
+          company_partner: res?.company_partner,
+          amount: res?.amount,
+          currency: res?.currency,
+        });
+      } catch (e: any) {
+        console.log(e?.body);
+      }
+    }
   };
 
   const handleCancel = () => {
@@ -50,7 +49,6 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
     setLoading(false);
     form.resetFields();
   };
- 
 
   const onFinish = async (values: PaymentToPartnerCreate) => {
     console.log(values);
@@ -96,10 +94,8 @@ const CreatePaymentToPartner = ({ id, refetch }: Props) => {
                 rules={[{ message: t('Please fill the field'), required: true }]}
                 label={t('Partner')}
                 name="company_partner"
-                
               >
                 <Select
-              
                   size="large"
                   showSearch
                   placeholder={t('Select a partner')}

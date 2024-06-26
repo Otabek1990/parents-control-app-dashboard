@@ -96,7 +96,7 @@ export class PaymentToPartnerService {
   ): CancelablePromise<PaymentToPartnerCreate> {
           return __request(OpenAPI, {
               method: 'PUT',
-              url: `/admin-panel-payment/to-partner/${id}`,
+              url: `/admin-panel-payment/to-partner/${id}/`,
               path: {
                   'id': id,
               },
