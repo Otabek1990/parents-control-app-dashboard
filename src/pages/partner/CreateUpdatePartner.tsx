@@ -87,7 +87,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     getLegions();
     if (id) {
       try {
-        let res = await PartnerService.partnerDetailNowRead(id);
+        let res = await PartnerService.partnerDetailNowRead(id as number);
         form.setFieldsValue({
           ...res,
           birthday: dayjs(res.birthday, formatDate),
