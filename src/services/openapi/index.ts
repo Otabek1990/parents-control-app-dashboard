@@ -29,7 +29,7 @@ export type { ParentCreate } from './models/ParentCreate';
 export type { ParentDetail } from './models/ParentDetail';
 export type { ParentList } from './models/ParentList';
 export type { PaymeList } from './models/PaymeList';
-export type {PaymentToPartnerList} from "./models/PaymentToPartnerList"
+export type { PaymentToPartnerList } from './models/PaymentToPartnerList';
 export type { ParentLogin } from './models/ParentLogin';
 export { ParentProfileList } from './models/ParentProfileList';
 export { ParentProfileUpdate } from './models/ParentProfileUpdate';
@@ -50,6 +50,9 @@ export type { TariffCreate } from './models/TariffCreate';
 export type { TariffList } from './models/TariffList';
 export type { TariffUpdate } from './models/TariffUpdate';
 export { UserLogin } from './models/UserLogin';
+// export { PaymentToPartnerDetail } from './models/PaymentToPartnerDetail';
+
+// services exports
 
 export { AccountantService } from './services/AccountantService';
 export { AgentService } from './services/AgentService';
@@ -60,4 +63,3 @@ export { ParentService } from './services/ParentService';
 export { PartnerService } from './services/PartnerService';
 export { StatisticsService } from './services/StatisticsService';
 export { PaymentToPartnerService } from './services/PaymentToPartnerService';
-

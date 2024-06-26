@@ -5,12 +5,8 @@
 
 export type PaymentToPartnerDetail = {
     readonly id?: number;
-    readonly guid?: string;
-    /**
-     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-     */
-    username: string;
-    password: string;
-    child_code: string;
-    created_at?: string;
+  company_partner: number;
+  amount: string;
+  currency: string;
+  user: number;
 };

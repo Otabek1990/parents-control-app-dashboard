@@ -107,5 +107,6 @@
   "Create payment": "Создать платежа",
   "Money amount": "Сумма",
   "Currency": "Валюта",
-  "Edit payment": "Изменить платежа"
+  "Edit payment": "Изменить платежа",
+  "Payment infos": "Информация о платежа"
 }
