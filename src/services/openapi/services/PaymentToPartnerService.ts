@@ -2,16 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-// import type { ParenChildCodeCreate } from '../models/ParenChildCodeCreate';
-// import type { ParentCheckSms } from '../models/ParentCheckSms';
-// import type { ParentCreate } from '../models/ParentCreate';
-// import type { ParentDetail } from '../models/ParentDetail';
-// import type { ParentList } from '../models/ParentList';
-// import type { ParentLogin } from '../models/ParentLogin';
-// import type { ParentProfileList } from '../models/ParentProfileList';
-// import type { ParentProfileUpdate } from '../models/ParentProfileUpdate';
-// import type { ParentSignUp } from '../models/ParentSignUp';
-// import type { ParentUpdate } from '../models/ParentUpdate';
+
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -44,7 +35,7 @@ export class PaymentToPartnerService {
   public static paymentToPartnerDelete(id: number): CancelablePromise<PaymentToPartnerList> {
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: `/admin-panel-payment/to-partner/${id}`,
+      url: `/admin-panel-payment/to-partner/${id}/`,
       path: {
         id: id,
       },

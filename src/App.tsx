@@ -7,12 +7,14 @@ import { message } from 'antd';
 import instance from '@config/axios_config';
 import { ACCESS_TOKEN } from '@config/constants';
 import Loading from '@components/core/Loading';
+import axios from 'axios';
 
 function App() {
   const store: any = useAuthStore((state) => state);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    
     let token = localStorage.getItem(ACCESS_TOKEN);
     if (token) {
       (async () => {

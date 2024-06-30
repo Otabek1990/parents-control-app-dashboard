@@ -1,4 +1,4 @@
-import {  Districts, Main, Operators, Partners,Parents, Regions,Children,Payme,Dashboard,PaymentToPartner } from 'pages';
+import {  Districts, Main, Operators, Partners,Parents, Regions,Children,Payme,Dashboard,PaymentToPartner, Banner } from 'pages';
 import { routeType } from './types';
 import { HomeFilled } from '@ant-design/icons';
 import { InProggressPage } from '@components/proccess';
@@ -196,6 +196,31 @@ export const routes: Array<routeType> = [
         icon: { name: 'payment' },
         config: {
           key: 'payment_page',
+          isShowInMenu: true,
+        },
+        children: [],
+      },
+  
+    ],
+  },
+  {
+    name: 'Others',
+    path: '/others',
+    element: Banner,
+    icon: { },
+    config: {
+      key: 'others',
+      // isLabel: true,
+      isShowInMenu: true,
+    },
+    children: [
+      {
+        name: 'Banners',
+        path: '/banner',
+        element: Banner,
+        icon: { name: 'main' },
+        config: {
+          key: 'banner',
           isShowInMenu: true,
         },
         children: [],

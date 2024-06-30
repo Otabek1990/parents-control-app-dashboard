@@ -108,5 +108,10 @@
   "Money amount": "Сумма",
   "Currency": "Валюта",
   "Edit payment": "Изменить платежа",
-  "Payment infos": "Информация о платежа"
+  "Payment infos": "Информация о платежа",
+  "Banners": "Баннеры",
+  "Create banner": "Создать баннер",
+  "Edit banner": "Изменить баннер",
+  "Title":"Названия",
+  "Description":"Описание"
 }

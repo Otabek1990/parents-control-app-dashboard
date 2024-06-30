@@ -108,5 +108,10 @@
   "Money amount": "Summa",
   "Currency": "Valyuta",
   "Edit payment": "To'lovni o'zgartirish",
-  "Payment infos": "To'lov ma'lumotlari"
+  "Payment infos": "To'lov ma'lumotlari",
+  "Banners": "Bannerlar",
+  "Create banner": "Banner yaratish",
+  "Edit banner": "Bannerni o'zgartirish",
+  "Title": "Nomlanishi",
+  "Description": "Tavsifi"
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout, Menu, Button, theme, Rate, Dropdown, Avatar, notification, Popover, List, Tag, MenuProps } from "antd";
+import { Layout, Menu, theme, Rate, Dropdown, Avatar, notification, Popover, List, Tag, MenuProps } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../../routes/routes";
 // import { usePermissions } from "@hooks/usePermissions";
@@ -170,11 +170,11 @@ const LayoutCustom = ({ children }: any) => {
         />
         <div style={{ backgroundColor: ' #FAFBFC' }} className="d-flex justify-content-center flex-column px-0 py-5">
           <img height={'100%'} width={239} src={donIcon} alt="" />
-          <div className="d-flex justify-content-center pt-3">
+          {/* <div className="d-flex justify-content-center pt-3">
             <Button style={{ borderRadius: "14px", fontSize: "15px", height: "48px", width: "200px" }} type="primary">
               {t("Download the program")}
             </Button>
-          </div>
+          </div> */}
         </div>
       </Sider>
       <Layout>

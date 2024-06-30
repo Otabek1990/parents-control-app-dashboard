@@ -39,7 +39,7 @@ const Dashboard: React.FC = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <div className="col-xl-6 col-xxl-3">
+        {/* <div className="col-xl-6 col-xxl-3">
           <div className="count-card">
             <div className="header">
               <img src={video_cal} alt="" />
@@ -54,7 +54,7 @@ const Dashboard: React.FC = (): JSX.Element => {
               <div className='tag' ><span className='one' >Kelishuvlar soni: </span> <span className='two' >1.704</span></div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="col-xl-6 col-xxl-3">
           <div className="count-card">
             <div className="header">
