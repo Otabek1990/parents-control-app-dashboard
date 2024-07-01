@@ -81,11 +81,13 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         let res = await PartnerService.partnerDetailNowRead(id as number);
         form.setFieldsValue({
           ...res,
+          username: res.username,
+          fullname: res.fullname,
           birthday: dayjs(res.birthday, formatDate),
           passport_data: dayjs(res.passport_data, formatDate),
           passport_number: res.passport_number?.toString(),
         });
-        getDistricts(res.region);
+        // getDistricts(res.region?.uz);
       } catch (e: any) {
         console.log(e?.body);
       }
@@ -126,32 +128,27 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     setLoading(true);
     console.log(formData.photo);
     const formDat = new FormData();
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        const value = values[key] as any;
+        if (value !== undefined && value !== null) {
+          if (key === 'birthday' || key === 'passport_data') {
+            formDat.append(key, dayjs(value).format(formatDate));
+          } else {
+            formDat.append(key, value.toString());
+          }
+        }
+      }
+    }
 
-    formDat.append('appstore_id', values?.appstore_id);
-    formDat.append('birthday', dayjs(values.birthday).format(formatDate));
-    formDat.append('district', values.district.toString());
-    formDat.append('download_link', values.download_link);
-    formDat.append('fullname', values.fullname);
-    formDat.append('gender', values.gender?.toString());
-    formDat.append('google_play_link', values.google_play_link);
-    formDat.append('passport_data', dayjs(values.passport_data).format(formatDate));
-    formDat.append('passport_number', values.passport_number);
-    formDat.append('passport_seria', values.passport_seria);
-    formDat.append('password', values.password);
-    formDat.append('percentage_of_work', values.percentage_of_work?.toString());
     if (formData.photo) {
       formDat.append('photo', formData.photo);
     }
-    formDat.append('playstore_id', values.playstore_id);
-    formDat.append('region', values.region.toString());
-    formDat.append('username', values.username);
     for (let [key, value] of formDat.entries()) {
       console.log(`${key}: ${value}`);
     }
 
     try {
-      // values['birthday'] = dayjs(values.birthday).format(formatDate);
-      // values['passport_data'] = dayjs(values.passport_data).format(formatDate);
       const res: any = await (id
         ? PartnerService.partnerUpdateNowUpdate(id as string | number, formDat)
         : PartnerService.partnerCreateCreate(formDat));
@@ -165,7 +162,6 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
       setLoading(false);
     }
   };
- 
 
   return (
     <>
@@ -175,7 +171,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? 'Edit Partner' : t('Create partner')}
+        {id ? t('Edit partner') : t('Create partner')}
       </Button>
       <Modal
         open={open}
@@ -359,7 +355,13 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 label={t('Work percentage')}
                 name="percentage_of_work"
               >
-                <InputNumber type='number' controls={false} placeholder={t('Work percentage')} size="large" className="w-100" />
+                <InputNumber
+                  type="number"
+                  controls={false}
+                  placeholder={t('Work percentage')}
+                  size="large"
+                  className="w-100"
+                />
               </Form.Item>
             </Col>
             <Col md={8}>

@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import { useState } from 'react';
 import { PartnerDetail, PartnerService } from 'services/openapi';
 import { timeConverter } from '@utils/timeConverter';
-import { I18N_LANGUAGE } from '@config/constants';
+// import { I18N_LANGUAGE } from '@config/constants';
 
 type Props = {
   id?: string | undefined | number;
@@ -24,7 +24,7 @@ const PartnerInformation = ({ id }: Props) => {
     }
   };
 
-  const language = localStorage.getItem(I18N_LANGUAGE);
+  // const language = localStorage.getItem(I18N_LANGUAGE) ;
   const handleClose = () => {
     setOpen(false);
   };
@@ -52,8 +52,8 @@ const PartnerInformation = ({ id }: Props) => {
             <Descriptions.Item label={t('Passport date')}>{partner?.passport_data || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('Passport seria')}>{partner?.passport_seria || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('Passport number')}>{partner?.passport_number || '-'}</Descriptions.Item>
-            <Descriptions.Item label={t('Region name')}>{(partner && partner.region[language]) || '-'}</Descriptions.Item>
-            <Descriptions.Item label={t('District name')}>{(partner && partner.district[language]) || '-'}</Descriptions.Item>
+            {/* <Descriptions.Item label={t('Region name')}>{(partner && partner.region[language]) || '-'}</Descriptions.Item> */}
+            {/* <Descriptions.Item label={t('District name')}>{(partner && partner.district[language]) || '-'}</Descriptions.Item> */}
             <Descriptions.Item label={t('Created Time')}>{timeConverter(partner?.created_at || '')}</Descriptions.Item>
           </Descriptions>
         </Card>

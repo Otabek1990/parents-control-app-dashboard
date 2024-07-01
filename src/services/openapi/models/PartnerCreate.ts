@@ -2,30 +2,49 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
-export type PartnerCreate = {
-  readonly id?: number;
-  readonly guid?: string;
-  username: string;
+type PartnerCreate = {
+  appstore_id: string;
+  birthday: string | null;
+  district: number;
+  download_link: string;
   fullname: string;
-  birthday?: string | null;
-  readonly photo?: File | null;
-  appstore_id?: string | null;
-  playstore_id?: string | null;
-  flag_google_play?: boolean;
-  download_link?: string;
-  percentage_of_work?: number | null;
-  google_play_link?: string | null;
-  gender?: PartnerCreate.gender;
-  passport_seria?: string | null;
-  passport_number?: number | null;
-  passport_data?: string | null;
-  region: PartnerCreate.region;
-  district: PartnerCreate.district;
+  gender: number;
+  google_play_link: string;
+  passport_data: string | null;
+  passport_number: string;
+  passport_seria: string;
   password: string;
-  created_at?: string;
-//   monthly_percentages: { month: string; percentage: number }[];
+  percentage_of_work: number;
+  photo: File | undefined; // Adjust based on actual type
+  playstore_id: string;
+  region: number;
+  username: string;
 };
+
+
+// export type PartnerCreate = {
+//   readonly id?: number;
+//   readonly guid?: string;
+//   username: string;
+//   fullname: string;
+//   birthday?: string | null;
+//   readonly photo?: File | null;
+//   appstore_id?: string | null;
+//   playstore_id?: string | null;
+//   flag_google_play?: boolean;
+//   download_link?: string;
+//   percentage_of_work?: number | null;
+//   google_play_link?: string | null;
+//   gender?: PartnerCreate.gender;
+//   passport_seria?: string | null;
+//   passport_number?: number | null;
+//   passport_data?: string | null;
+//   region: PartnerCreate.region;
+//   district: PartnerCreate.district;
+//   password: string;
+//   created_at?: string;
+// //   monthly_percentages: { month: string; percentage: number }[];
+// };
 
 export namespace PartnerCreate {
   export enum gender {
