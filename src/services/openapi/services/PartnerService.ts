@@ -18,7 +18,7 @@ export class PartnerService {
    * @returns PartnerCreate
    * @throws ApiError
    */
-  public static partnerCreateCreate(data: PartnerCreate): CancelablePromise<PartnerCreate> {
+  public static partnerCreateCreate(data: FormData): CancelablePromise<PartnerCreate> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/admin-panel-partner/create/',
@@ -68,7 +68,7 @@ export class PartnerService {
     return __request(OpenAPI, {
       method: 'GET',
       url: `/admin-panel-partner/detail/${id}/`,
-    //   
+      //
       path: {
         id: id,
       },
@@ -128,7 +128,7 @@ export class PartnerService {
    * @returns PartnerUpdate
    * @throws ApiError
    */
-  public static partnerUpdateNowUpdate(guid: string | number, data: PartnerUpdate): CancelablePromise<PartnerUpdate> {
+  public static partnerUpdateNowUpdate(guid: string | number, data: FormData): CancelablePromise<PartnerUpdate> {
     return __request(OpenAPI, {
       method: 'PUT',
       url: '/partner/update/{guid}/',
@@ -146,7 +146,7 @@ export class PartnerService {
    * @returns PartnerUpdate
    * @throws ApiError
    */
-  public static partnerUpdateNowPartialUpdate(guid: string, data: PartnerUpdate): CancelablePromise<PartnerUpdate> {
+  public static partnerUpdateNowPartialUpdate(guid: string, data: FormData): CancelablePromise<PartnerUpdate> {
     return __request(OpenAPI, {
       method: 'PATCH',
       url: '/partner/update/{guid}/now/',

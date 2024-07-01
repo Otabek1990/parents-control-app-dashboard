@@ -7,4 +7,5 @@ export type BannerCreate = {
   title: string;
   description: string;
   url: string;
+  photo: File | null;
 };

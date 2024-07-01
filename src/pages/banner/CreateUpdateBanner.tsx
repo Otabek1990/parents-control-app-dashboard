@@ -1,13 +1,13 @@
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
-import { Button, Col, Form, Input, Modal, Row, Select, message } from 'antd';
+import { UseQueryResult } from '@tanstack/react-query';
+import { Button, Col, Form, Input, Modal, Row, message } from 'antd';
 import { useState } from 'react';
-import { PartnerService, PaymentToPartnerService } from 'services/openapi';
 
 import { useTranslation } from 'react-i18next';
 
-import { PaymentToPartnerCreate } from 'services/openapi/models/PaymentToPartnerCreate';
+import { BannerCreate } from 'services/openapi/models/BannerCreate';
+import { BannerService } from 'services/openapi/services/BannerService';
 
 // type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -17,31 +17,28 @@ type Props = {
 };
 
 const CreateUpdateBanner = ({ id, refetch }: Props) => {
+  const [formData, setFormData] = useState({
+    photo: null as File | null,
+  });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({
+        ...formData,
+        photo: e.target.files[0],
+      });
+      setImagePreview(URL.createObjectURL(e.target.files[0]));
+    }
+  };
   // -----------------------------------------
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
-  const { data: partners } = useQuery({
-    queryKey: ['partners'],
-    queryFn: () => PartnerService.partnerListList(),
-  });
 
   const showModal = async () => {
     setOpen(true);
-    if (id) {
-      try {
-        let res = await PaymentToPartnerService.paymentToPartnerDetail(id as number);
-        form.setFieldsValue({
-          ...res,
-          company_partner: res?.partner_id,
-          amount: res?.amount,
-          currency: res?.currency,
-        });
-      } catch (e: any) {
-        console.log(e?.body);
-      }
-    }
   };
 
   const handleCancel = () => {
@@ -50,13 +47,19 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
     form.resetFields();
   };
 
-  const onFinish = async (values: PaymentToPartnerCreate) => {
-    console.log(values);
+  const onFinish = async (values: BannerCreate) => {
+    // console.log(values);
+    const formdata = new FormData();
+    console.log(formData);
+    formdata.append('title', values.title);
+    formdata.append('description', values.description);
+    formdata.append('url', values.url);
+    if (formData.photo) {
+      formdata.append('photo', formData.photo);
+    }
     setLoading(true);
     try {
-      const res: any = await (id
-        ? PaymentToPartnerService.paymentToPartnerUpdate(id as number, values)
-        : PaymentToPartnerService.paymentToPartnerCreate(values));
+      const res: any = await BannerService.bannerCreate(formdata);
       form.resetFields();
       message.success(res.message);
       setOpen(false);
@@ -96,7 +99,6 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
                 name="title"
               >
                 <Input className="text-capitalize" placeholder={t('Title')} size="large" />
-               
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -105,16 +107,32 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
                 label={t('Description')}
                 name="description"
               >
-                <Input type='text' className="text-capitalize" placeholder={t('Description')} size="large" />
+                <Input type="text" className="text-capitalize" placeholder={t('Description')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
-              <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
-                label={t('Url')}
-                name="url"
-              >
+              <Form.Item rules={[{ message: t('Please fill the field'), required: true }]} label={t('Url')} name="url">
                 <Input className="text-capitalize" placeholder={t('Url')} size="large" />
+              </Form.Item>
+            </Col>
+            <Col md={8}>
+              <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} name="photo">
+                <label className="custom-file-upload" htmlFor="photo">
+                  {t(' Upload Photo')}
+                </label>
+                <Input
+                  onChange={handlePhotoChange}
+                  type="file"
+                  name="photo"
+                  id="photo"
+                  style={{ display: 'none' }}
+                  size="large"
+                />
+                {imagePreview && (
+                  <div>
+                    <img src={imagePreview} alt="Image Preview" style={{ maxWidth: '200px', marginTop: '10px' }} />
+                  </div>
+                )}
               </Form.Item>
             </Col>
           </Row>

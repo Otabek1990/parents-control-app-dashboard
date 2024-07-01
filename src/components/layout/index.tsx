@@ -229,11 +229,11 @@ const LayoutCustom = ({ children }: any) => {
                   <img width={25} src={nofiy} alt="" style={{ cursor: "pointer" }} />
                 </Popover>
               </div>
-              <div className="px-2 pt-1">
+              {/* <div className="px-2 pt-1">
                 <span style={{ borderRadius: '15px', width: '100px' }} className="bg-success text-light px-3 py-1">
                   34
                 </span>
-              </div>
+              </div> */}
               <Dropdown
                 trigger={['click']}
                 placement={'bottomRight'}

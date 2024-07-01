@@ -6,6 +6,7 @@ import access from 'assets/icons/accessibility.svg';
 import './styles.scss';
 import { useQuery } from '@tanstack/react-query';
 import { StatisticsService } from 'services/openapi';
+import { PlanService } from 'services/openapi/services/PlanService';
 
 const Dashboard: React.FC = (): JSX.Element => {
   const {
@@ -16,23 +17,30 @@ const Dashboard: React.FC = (): JSX.Element => {
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  console.log(statistics);
+  const {
+    data: plans,
+    isSuccess:isSuccessPlans,
+  } = useQuery({
+    queryKey: ['plans'],
+    queryFn: () => PlanService.planList(),
+  });
+  console.log(plans);
 
   return (
     <div className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
       <div className="d-loader">
         <div className="loader-header">
-          <span>43 kun</span>
-          <span>321 kun</span>
-          <span>11170 / 100,000</span>
+          <span>0 kun</span>
+          <span>{isSuccessPlans && plans?.length && plans[0].total_days || 365} kun</span>
+          <span>0 / {isSuccessPlans && plans?.length && plans[0].total_clients }</span>
         </div>
         <div className="loader">
           <div className="active">
-            <span>1170 ta</span>
+            <span>0 ta</span>
           </div>
           <div className="in-active">
-            <span>98930</span>
+            <span>{isSuccessPlans && plans?.length && plans[0].total_clients }</span>
           </div>
         </div>
       </div>
@@ -48,11 +56,11 @@ const Dashboard: React.FC = (): JSX.Element => {
             <div className="more">
               <div className="tag">
                 <span className="one">Olib kelgan:</span>
-                <span className='two' >0&nbsp;ta</span>
+                <span className="two">0&nbsp;ta</span>
               </div>
               <div className="tag">
                 <span className="one">Jami daromad:</span>
-                <span className='two' > {isSuccess && statistics?.overall_statistics?.total_profit}</span>
+                <span className="two"> {isSuccess && statistics?.overall_statistics?.total_profit}</span>
               </div>
             </div>
           </div>
@@ -86,12 +94,11 @@ const Dashboard: React.FC = (): JSX.Element => {
             <div className="more">
               <div className="tag">
                 <span className="one">To'landi: </span>
-                <span className='two' >
-                {isSuccess && statistics?.overall_statistics?.total_parents_paid}  ta</span>
+                <span className="two">{isSuccess && statistics?.overall_statistics?.total_parents_paid} ta</span>
               </div>
               <div className="tag">
                 <span className="one">To'lanmadi: </span>
-                <span className='two' >{isSuccess && statistics?.overall_statistics?.total_parents_unpaid}</span>
+                <span className="two">{isSuccess && statistics?.overall_statistics?.total_parents_unpaid}</span>
               </div>
             </div>
           </div>

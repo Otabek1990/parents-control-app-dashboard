@@ -17,11 +17,14 @@ export class BannerService {
    * @returns ParentCreate
    * @throws ApiError
    */
-  public static bannerCreate(data: BannerCreate): CancelablePromise<BannerCreate> {
+  public static bannerCreate(data: FormData): CancelablePromise<BannerCreate> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/banners/',
       body: data,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
   }
 
@@ -63,7 +66,7 @@ export class BannerService {
      * @returns any 
      * @throws ApiError
      */
-  public static bannerList(): CancelablePromise<Array<BannerList>> {
+  public static bannerList(): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/banners/',
@@ -77,7 +80,7 @@ export class BannerService {
    * @returns ParenChildCodeCreate
    * @throws ApiError
    */
-  public static bannerUpdate(id: number, data: BannerCreate): CancelablePromise<BannerCreate> {
+  public static bannerUpdate(id: number, data: FormData): CancelablePromise<BannerCreate> {
     return __request(OpenAPI, {
       method: 'PUT',
       url: `/banner/${id}/`,

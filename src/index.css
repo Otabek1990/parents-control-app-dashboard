@@ -5,3 +5,19 @@
   display: none;
 }
 
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 8px;
+  cursor: pointer;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  text-align: center;
+  height: 90px;
+  aspect-ratio: 1/1;
+}
+
+.custom-file-upload:hover {
+  transition: 0.3s all;
+ 
+  border-style: solid;
+}

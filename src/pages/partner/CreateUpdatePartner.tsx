@@ -23,10 +23,7 @@ import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
-import { Upload } from 'antd';
-import type { UploadFile, UploadProps } from 'antd';
-import ImgCrop from 'antd-img-crop';
-
+import uploadImageIcon from '@assets/icons/image-download.svg';
 // type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 type Props = {
@@ -35,26 +32,10 @@ type Props = {
 };
 
 const CreateUpdatePartner = ({ id, refetch }: Props) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
-  const onPreview = async (file: UploadFile) => {
-    let src = file.url as string;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        // reader.readAsDataURL(file.originFileObj as FileType);
-        reader.onload = () => resolve(reader.result as string);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
+  const [formData, setFormData] = useState({
+    photo: null as File | null,
+  });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   // -----------------------------------------
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -62,6 +43,16 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
   const [form] = Form.useForm();
   const [regions, setRegions] = useState<IRegion[]>([]);
   const [districts, setDistricts] = useState<IDistrict[]>([]);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({
+        ...formData,
+        photo: e.target.files[0],
+      });
+      setImagePreview(URL.createObjectURL(e.target.files[0]));
+    }
+  };
 
   const getDistricts = async (value: number) => {
     try {
@@ -117,7 +108,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     getDistricts(value);
   };
 
-  const formatDate = 'DD.MM.YYYY';
+  const formatDate = 'YYYY-MM-DD';
 
   const onChangeBirthdayPicker: DatePickerProps['onChange'] = (_, dateString) => {
     form.setFieldsValue({
@@ -133,12 +124,37 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
   const onFinish = async (values: PartnerCreate) => {
     console.log(values);
     setLoading(true);
+    console.log(formData.photo);
+    const formDat = new FormData();
+
+    formDat.append('appstore_id', values?.appstore_id);
+    formDat.append('birthday', dayjs(values.birthday).format(formatDate));
+    formDat.append('district', values.district.toString());
+    formDat.append('download_link', values.download_link);
+    formDat.append('fullname', values.fullname);
+    formDat.append('gender', values.gender?.toString());
+    formDat.append('google_play_link', values.google_play_link);
+    formDat.append('passport_data', dayjs(values.passport_data).format(formatDate));
+    formDat.append('passport_number', values.passport_number);
+    formDat.append('passport_seria', values.passport_seria);
+    formDat.append('password', values.password);
+    formDat.append('percentage_of_work', values.percentage_of_work?.toString());
+    if (formData.photo) {
+      formDat.append('photo', formData.photo);
+    }
+    formDat.append('playstore_id', values.playstore_id);
+    formDat.append('region', values.region.toString());
+    formDat.append('username', values.username);
+    for (let [key, value] of formDat.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     try {
-      values['birthday'] = dayjs(values.birthday).format(formatDate);
-      values['passport_data'] = dayjs(values.passport_data).format(formatDate);
+      // values['birthday'] = dayjs(values.birthday).format(formatDate);
+      // values['passport_data'] = dayjs(values.passport_data).format(formatDate);
       const res: any = await (id
-        ? PartnerService.partnerUpdateNowUpdate(id as (string | number),values)
-        : PartnerService.partnerCreateCreate(values));
+        ? PartnerService.partnerUpdateNowUpdate(id as string | number, formDat)
+        : PartnerService.partnerCreateCreate(formDat));
       form.resetFields();
       message.success(res.message);
       setOpen(false);
@@ -149,6 +165,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
       setLoading(false);
     }
   };
+ 
 
   return (
     <>
@@ -158,7 +175,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         icon={id ? <EditOutlined /> : <PlusOutlined />}
         onClick={showModal}
       >
-        {id ? '' : t('Create partner')}
+        {id ? 'Edit Partner' : t('Create partner')}
       </Button>
       <Modal
         open={open}
@@ -274,21 +291,29 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
           </Row>
           <Row gutter={8}>
             <Col md={4}>
-              <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} label={''} name="">
-                <ImgCrop rotationSlider>
-                  <Upload
-                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
-                    disabled
-                    
-                  >
-                    {t('Upload image')}
-                  </Upload>
-                </ImgCrop>
-              </Form.Item>
+              {/* <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} name="photo"> */}
+              <label
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                className="custom-file-upload"
+                htmlFor="photo"
+              >
+                <img src={uploadImageIcon} alt="upload icon" />
+                <span>{t('Upload image')}</span>
+              </label>
+              <Input
+                onChange={handlePhotoChange}
+                type="file"
+                name="photo"
+                id="photo"
+                style={{ display: 'none' }}
+                size="large"
+              />
+              {imagePreview && (
+                <div>
+                  <img src={imagePreview} alt="Image Preview" style={{ maxWidth: '100px', marginTop: '5px' }} />
+                </div>
+              )}
+              {/* </Form.Item> */}
             </Col>
             <Col md={4}>
               <Form.Item
@@ -334,7 +359,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 label={t('Work percentage')}
                 name="percentage_of_work"
               >
-                <InputNumber controls={false} placeholder={t('Work percentage')} size="large" className="w-100" />
+                <InputNumber type='number' controls={false} placeholder={t('Work percentage')} size="large" className="w-100" />
               </Form.Item>
             </Col>
             <Col md={8}>
