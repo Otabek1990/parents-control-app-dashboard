@@ -2,7 +2,7 @@ import React from 'react';
 import briefcase from "assets/icons/briefcase.svg";
 import user from "assets/icons/user.svg";
 import access from "assets/icons/accessibility.svg";
-import video_cal from "assets/icons/video_call.svg";
+// import video_cal from "assets/icons/video_call.svg";
 import "./styles.scss";
 
 const Dashboard: React.FC = (): JSX.Element => {
@@ -29,13 +29,19 @@ const Dashboard: React.FC = (): JSX.Element => {
               <img src={briefcase} alt="" />
               <span>Barcha Hamkorlar</span>
             </div>
-            <div className="count">
+            {/* <div className="count">
               16.120
               <span>+2,4% </span>
-            </div>
+            </div> */}
             <div className="more">
-              <div className='tag' ><span className='one' >Olib kelgan:</span> <span className='two' >100&nbsp;ta</span></div>
-              <div className='tag' ><span className='one' >Jami daromad:</span> <span className='two' >23&nbsp;mln</span></div>
+              <div className='tag' ><span className='one' >Olib kelgan:</span> 
+              {/* <span className='two' >100&nbsp;ta</span> */}
+              </div>
+              <div className='tag' ><span className='one' >
+                Jami daromad:</span>
+                 {/* <span className='two' > 23&nbsp;mln</span> */}
+                 
+                  </div>
             </div>
           </div>
         </div>
@@ -61,13 +67,17 @@ const Dashboard: React.FC = (): JSX.Element => {
               <img src={user} alt="" color='#38cb89' />
               <span>Barcha Ota-Onalar</span>
             </div>
-            <div className="count">
+            {/* <div className="count">
               15.318
               <span>+2,4% </span>
-            </div>
+            </div> */}
             <div className="more">
-              <div className='tag' ><span className='one' >To'landi: </span> <span className='two' >2.150 ta</span></div>
-              <div className='tag' ><span className='one' >To'lanmadi: </span> <span className='two' >340</span></div>
+              <div className='tag' ><span className='one' >To'landi: </span> 
+              {/* <span className='two' >2.150 ta</span> */}
+              </div>
+              <div className='tag' ><span className='one' >To'lanmadi: </span>
+               {/* <span className='two' >340</span> */}
+               </div>
             </div>
           </div>
         </div>
@@ -77,13 +87,17 @@ const Dashboard: React.FC = (): JSX.Element => {
               <img src={access} alt="" color='#38cb89' />
               <span>Barcha Bolalar</span>
             </div>
-            <div className="count">
+            {/* <div className="count">
               29.481
               <span>+2,4% </span>
-            </div>
+            </div> */}
             <div className="more">
-              <div className='tag' ><span className='one' >Bolalar: </span> <span className='two' >840 ta</span></div>
-              <div className='tag' ><span className='one' >Qiz bolalar: </span> <span className='two' >230 ta</span></div>
+              <div className='tag' ><span className='one' >Bolalar: </span> 
+              {/* <span className='two' >840 ta</span> */}
+              </div>
+              <div className='tag' ><span className='one' >Qiz bolalar: </span> 
+              {/* <span className='two' >230 ta</span> */}
+              </div>
             </div>
           </div>
         </div>

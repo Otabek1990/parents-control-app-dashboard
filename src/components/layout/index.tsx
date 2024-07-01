@@ -182,13 +182,13 @@ const LayoutCustom = ({ children }: any) => {
           <div className="d-flex justify-content-between">
             <div className="d-flex px-3">
               <div style={{ fontSize: '25px', fontWeight: '600', color: '#4E5D78' }} className="pe-3">
-                4.3
+                0
               </div>
               <div style={{ lineHeight: '20px' }} className="d-flex flex-column pt-2">
                 <div>
-                  <Rate allowHalf defaultValue={4.3} />
+                  <Rate allowHalf defaultValue={0} />
                 </div>
-                <div style={{ color: '#8A94A6' }}>119 {t("comment")} - 192 {t("ball")}</div>
+                <div style={{ color: '#8A94A6' }}>0 {t("comment")} - 0 {t("ball")}</div>
               </div>
             </div>
             <div className="d-flex justify-content-evenly">
