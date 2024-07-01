@@ -17,7 +17,7 @@ import {
   message,
 } from 'antd';
 import { useState } from 'react';
-import { BaseApiService, PartnerCreate, PartnerService } from 'services/openapi';
+import { BaseApiService,  PartnerService } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
 import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
@@ -123,7 +123,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     });
   };
 
-  const onFinish = async (values: PartnerCreate) => {
+  const onFinish = async (values: any) => {
     console.log(values);
     setLoading(true);
     console.log(formData.photo);

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-type PartnerCreate = {
+export type PartnerCreate = {
   appstore_id: string;
   birthday: string | null;
   district: number;
