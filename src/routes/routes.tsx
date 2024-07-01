@@ -1,9 +1,20 @@
-import {  Districts, Main, Operators, Partners,Parents, Regions,Children,Payme,Dashboard,PaymentToPartner, Banner } from 'pages';
+import {
+  Districts,
+  Main,
+  Operators,
+  Partners,
+  Parents,
+  Regions,
+  Children,
+  Payme,
+  Dashboard,
+  PaymentToPartner,
+  Banner,
+  AddPlan,
+} from 'pages';
 import { routeType } from './types';
 import { HomeFilled } from '@ant-design/icons';
 import { InProggressPage } from '@components/proccess';
-
-
 
 export const routes: Array<routeType> = [
   {
@@ -147,7 +158,7 @@ export const routes: Array<routeType> = [
     name: 'Payment types',
     path: '/payment',
     element: InProggressPage,
-    icon: { },
+    icon: {},
     config: {
       key: 'payment_type_page',
       // isLabel: true,
@@ -182,7 +193,7 @@ export const routes: Array<routeType> = [
     name: 'Payment to partner',
     path: '/payments',
     element: PaymentToPartner,
-    icon: { },
+    icon: {},
     config: {
       key: 'payment_to_partner_page',
       // isLabel: true,
@@ -200,14 +211,13 @@ export const routes: Array<routeType> = [
         },
         children: [],
       },
-  
     ],
   },
   {
     name: 'Others',
     path: '/others',
     element: Banner,
-    icon: { },
+    icon: {},
     config: {
       key: 'others',
       // isLabel: true,
@@ -225,8 +235,17 @@ export const routes: Array<routeType> = [
         },
         children: [],
       },
-  
+      {
+        name: 'Add plan',
+        path: '/addPlan',
+        element: AddPlan,
+        icon: { name: 'main' },
+        config: {
+          key: 'addPlan',
+          isShowInMenu: true,
+        },
+        children: [],
+      },
     ],
   },
-
 ];

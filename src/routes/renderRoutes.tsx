@@ -2,13 +2,19 @@
 import { Route, Routes } from 'react-router-dom';
 import { routes } from './routes';
 import CustomComponent from './custom_component';
-import LayoutCustom from "@components/layout";
+import LayoutCustom from '@components/layout';
+import { useAuthStore } from 'store/authStore';
 
 const RenderRoutes = () => {
   // const { checkPermission } = usePermissions();
+  // const role = localStorage.getItem('role');
+  // console.log(role);
+  const store: any = useAuthStore((state) => state);
+  console.log(store?.role);
+
   return (
     <LayoutCustom>
-    
+      
       <Routes>
         {routes
           .flatMap((item) => (item.children.length ? [item, ...item.children] : item))

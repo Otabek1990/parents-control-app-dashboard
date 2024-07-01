@@ -12,3 +12,4 @@ export { default as Operators } from './operator';
 export { default as Payme } from './payme';
 export { default as PaymentToPartner } from './paymentToPartner';
 export { default as Banner } from './banner';
+export { default as AddPlan } from './addPlan';

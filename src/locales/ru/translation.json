@@ -113,5 +113,10 @@
   "Create banner": "Создать баннер",
   "Edit banner": "Изменить баннер",
   "Title":"Названия",
-  "Description":"Описание"
+  "Description":"Описание",
+  "Add plan":"Добавить план",
+  "Total days":"Количество дней",
+  "Total clients":"Количество клиентов",
+  "Create plan": "Создать план",
+  "Edit plan": "Изменить план"
 }

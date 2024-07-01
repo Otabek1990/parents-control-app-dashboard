@@ -7,7 +7,6 @@ import { message } from 'antd';
 import instance from '@config/axios_config';
 import { ACCESS_TOKEN } from '@config/constants';
 import Loading from '@components/core/Loading';
-import axios from 'axios';
 
 function App() {
   const store: any = useAuthStore((state) => state);
@@ -23,7 +22,7 @@ function App() {
           await instance({
             method: 'get',
             url: '/v1/admin-panel-auth/me/',
-            // admin-panel-auth/me/
+          
           });
           if (store?.setAuth({ isAuth: true, role: 'ADMIN' })) setLoading(false);
         } catch (e: any) {

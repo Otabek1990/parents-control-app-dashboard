@@ -1,24 +1,39 @@
 import React from 'react';
-import briefcase from "assets/icons/briefcase.svg";
-import user from "assets/icons/user.svg";
-import access from "assets/icons/accessibility.svg";
+import briefcase from 'assets/icons/briefcase.svg';
+import user from 'assets/icons/user.svg';
+import access from 'assets/icons/accessibility.svg';
 // import video_cal from "assets/icons/video_call.svg";
-import "./styles.scss";
+import './styles.scss';
+import { useQuery } from '@tanstack/react-query';
+import { StatisticsService } from 'services/openapi';
 
 const Dashboard: React.FC = (): JSX.Element => {
+  const {
+    data: statistics,
+
+    isSuccess,
+  } = useQuery({
+    queryKey: ['statistics'],
+    queryFn: () => StatisticsService.statisticsList(),
+  });
+  console.log(statistics);
 
   return (
     <div className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
-      <div className='d-loader' >
+      <div className="d-loader">
         <div className="loader-header">
           <span>43 kun</span>
           <span>321 kun</span>
           <span>11170 / 100,000</span>
         </div>
         <div className="loader">
-          <div className="active"><span>1170 ta</span></div>
-          <div className='in-active' ><span>98930</span></div>
+          <div className="active">
+            <span>1170 ta</span>
+          </div>
+          <div className="in-active">
+            <span>98930</span>
+          </div>
         </div>
       </div>
 
@@ -29,19 +44,16 @@ const Dashboard: React.FC = (): JSX.Element => {
               <img src={briefcase} alt="" />
               <span>Barcha Hamkorlar</span>
             </div>
-            {/* <div className="count">
-              16.120
-              <span>+2,4% </span>
-            </div> */}
+            <div className="count">0{/* <span>+2,4% </span> */}</div>
             <div className="more">
-              <div className='tag' ><span className='one' >Olib kelgan:</span> 
-              {/* <span className='two' >100&nbsp;ta</span> */}
+              <div className="tag">
+                <span className="one">Olib kelgan:</span>
+                <span className='two' >0&nbsp;ta</span>
               </div>
-              <div className='tag' ><span className='one' >
-                Jami daromad:</span>
-                 {/* <span className='two' > 23&nbsp;mln</span> */}
-                 
-                  </div>
+              <div className="tag">
+                <span className="one">Jami daromad:</span>
+                <span className='two' > {isSuccess && statistics?.overall_statistics?.total_profit}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -64,39 +76,44 @@ const Dashboard: React.FC = (): JSX.Element => {
         <div className="col-xl-6 col-xxl-3">
           <div className="count-card">
             <div className="header">
-              <img src={user} alt="" color='#38cb89' />
+              <img src={user} alt="" color="#38cb89" />
               <span>Barcha Ota-Onalar</span>
             </div>
-            {/* <div className="count">
-              15.318
-              <span>+2,4% </span>
-            </div> */}
+            <div className="count">
+              {isSuccess && statistics?.overall_statistics?.total_parents}
+              <span>{isSuccess && statistics?.daily_statistics?.parent_growth}% </span>
+            </div>
             <div className="more">
-              <div className='tag' ><span className='one' >To'landi: </span> 
-              {/* <span className='two' >2.150 ta</span> */}
+              <div className="tag">
+                <span className="one">To'landi: </span>
+                <span className='two' >
+                {isSuccess && statistics?.overall_statistics?.total_parents_paid}  ta</span>
               </div>
-              <div className='tag' ><span className='one' >To'lanmadi: </span>
-               {/* <span className='two' >340</span> */}
-               </div>
+              <div className="tag">
+                <span className="one">To'lanmadi: </span>
+                <span className='two' >{isSuccess && statistics?.overall_statistics?.total_parents_unpaid}</span>
+              </div>
             </div>
           </div>
         </div>
         <div className="col-xl-6 col-xxl-3">
           <div className="count-card">
             <div className="header">
-              <img src={access} alt="" color='#38cb89' />
+              <img src={access} alt="" color="#38cb89" />
               <span>Barcha Bolalar</span>
             </div>
-            {/* <div className="count">
-              29.481
-              <span>+2,4% </span>
-            </div> */}
+            <div className="count">
+              {isSuccess && statistics?.overall_statistics?.total_children}
+              <span>{isSuccess && statistics?.daily_statistics?.parent_growth}% </span>
+            </div>
             <div className="more">
-              <div className='tag' ><span className='one' >Bolalar: </span> 
-              {/* <span className='two' >840 ta</span> */}
+              <div className="tag">
+                <span className="one">Bolalar: </span>
+                <span className="two">{isSuccess && statistics?.overall_statistics?.total_boys} ta</span>
               </div>
-              <div className='tag' ><span className='one' >Qiz bolalar: </span> 
-              {/* <span className='two' >230 ta</span> */}
+              <div className="tag">
+                <span className="one">Qiz bolalar: </span>
+                <span className="two">{isSuccess && statistics?.overall_statistics?.total_girls} ta</span>
               </div>
             </div>
           </div>

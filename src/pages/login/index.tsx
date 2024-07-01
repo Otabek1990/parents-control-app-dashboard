@@ -30,6 +30,7 @@ const Login: FC = (): JSX.Element => {
         setAuth({ isAuth: true, role: data.role });
         localStorage.setItem(ACCESS_TOKEN, data.access);
         localStorage.setItem(USERNAME, data.username);
+        localStorage.setItem("role", data.role);
         OpenAPI.TOKEN = data.access;
       } else {
         throw new Error('Error logging in');
