@@ -34,7 +34,7 @@ export class BannerService {
    * @returns ParentList
    * @throws ApiError
    */
-  public static bannerDelete(id: number): CancelablePromise<BannerList> {
+  public static bannerDelete(id: number | undefined): CancelablePromise<BannerList> {
     return __request(OpenAPI, {
       method: 'DELETE',
       url: `/banner/${id}/`,

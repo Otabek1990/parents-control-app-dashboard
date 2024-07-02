@@ -112,6 +112,7 @@
   "Banners": "Bannerlar",
   "Create banner": "Banner yaratish",
   "Edit banner": "Bannerni o'zgartirish",
+  "Delete banner": "Bannerni o'chirish",
   "Title": "Nomlanishi",
   "Description": "Tavsifi",
   "Add plan": "Plan kiritish",
@@ -120,6 +121,7 @@
   "Create plan": "Plan yaratish",
   "Edit plan": "Planni o'zgartirish",
   "Upload Photo": "Rasm yuklash",
-   "Abonent code":"Abonent kodi"
+   "Abonent code":"Abonent kodi",
+   "Please upload Photo":"Iltimos rasm yuklang"
  
 }

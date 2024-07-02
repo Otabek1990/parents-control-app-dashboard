@@ -103,7 +103,7 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
+                rules={[{ message: t('Please fill the field'), required: true }]}
                 label={t('Description')}
                 name="description"
               >
@@ -116,8 +116,9 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
             <Col md={8}>
-              <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} name="photo">
+              <Form.Item rules={[{ message: t('Please upload Photo'), required: true }]} name="photo">
                 <label className="custom-file-upload" htmlFor="photo">
+               
                   {t(' Upload Photo')}
                 </label>
                 <Input

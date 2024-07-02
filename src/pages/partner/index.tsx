@@ -1,4 +1,4 @@
-import { Card,  Space, Table } from 'antd';
+import { Card, Space, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -15,7 +15,6 @@ import TitleCard from '@components/core/TitleCard';
 
 const Partners = () => {
   const { t } = useTranslation();
-
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['agents'],
@@ -73,21 +72,21 @@ const Partners = () => {
       title: <span className="text-uppercase">{t('Birthday')}</span>,
       key: 'birthday',
       render: (record: PartnerList) => {
-        return record?.birthday || "-";
+        return record?.birthday || '-';
       },
     },
     {
       title: <span className="text-uppercase">{t('Appstore Id')}</span>,
       key: 'appstore_id',
       render: (record: PartnerList) => {
-        return record?.appstore_id || "-";
+        return record?.appstore_id || '-';
       },
     },
     {
       title: <span className="text-uppercase">{t('Playstore Id')}</span>,
       key: 'playstore_id',
       render: (record: PartnerList) => {
-        return record?.playstore_id || "-";
+        return record?.playstore_id || '-';
       },
     },
     {
@@ -107,8 +106,8 @@ const Partners = () => {
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
-            handleSubmit={() => deleteAgent(record?.id as (string | number))}
-            title="Delete partner"
+            handleSubmit={() => deleteAgent(record?.id as string | number)}
+            title={t('Delete partner')}
           />
         </Space>
       ),
@@ -120,7 +119,7 @@ const Partners = () => {
       <TitleCard titleName="Table of partners">
         <CreateUpdatePartner refetch={refetch} />
       </TitleCard>
-   
+
       <Card>
         <Table
           columns={columns}

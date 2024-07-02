@@ -5,8 +5,6 @@ import { UseQueryResult } from '@tanstack/react-query';
 import {
   Button,
   Col,
-  DatePicker,
-  DatePickerProps,
   Form,
   Input,
   InputNumber,
@@ -80,11 +78,13 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         let res = await PartnerService.partnerDetailNowRead(id as number);
         form.setFieldsValue({
           ...res,
-          birthday: '2000-01-01',
-          passport_data: '2000-01-01',
+          birthday: res?.birthday || '2000-01-01',
+          passport_data: res?.passport_data || '2000-01-01',
           username: res.username,
           fullname: res.fullname,
           passport_number: res.passport_number?.toString(),
+          region: 1,
+          
         });
         // getDistricts(res.region?.uz);
       } catch (e: any) {
@@ -111,16 +111,16 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
 
   const formatDate = 'YYYY-MM-DD';
 
-  const onChangeBirthdayPicker: DatePickerProps['onChange'] = (_, dateString) => {
-    form.setFieldsValue({
-      birthday: dayjs(dateString, formatDate),
-    });
-  };
-  const onChangePasswordPicker: DatePickerProps['onChange'] = (_, dateString) => {
-    form.setFieldsValue({
-      passport_data: dayjs(dateString, formatDate),
-    });
-  };
+  // const onChangeBirthdayPicker: DatePickerProps['onChange'] = (_, dateString) => {
+  //   form.setFieldsValue({
+  //     birthday: dayjs(dateString, formatDate),
+  //   });
+  // };
+  // const onChangePasswordPicker: DatePickerProps['onChange'] = (_, dateString) => {
+  //   form.setFieldsValue({
+  //     passport_data: dayjs(dateString, formatDate),
+  //   });
+  // };
 
   const onFinish = async (values: any) => {
     console.log(values);
@@ -185,7 +185,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
           <Row gutter={8}>
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
                 label={t('Username')}
                 name="username"
               >
@@ -211,24 +211,33 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
 
-            {!id && (
-              <Col md={8}>
-                <Form.Item
-                  rules={[{ message: t('Please fill the field'), required: false }]}
-                  label={t('Birthday')}
-                  name="birthday"
-                >
-                  <DatePicker
+            <Col md={8}>
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: false }]}
+                label={t('Birthday')}
+                name="birthday"
+              >
+                {/* <DatePicker
                     className="w-100"
                     onChange={onChangeBirthdayPicker}
                     placeholder="2000-01-01"
                     size="large"
                     format={'YYYY-MM-DD'}
                     // defaultValue={id ? dayjs(form?.getFieldsValue(['birthday']), formatDate) : undefined}
-                  />
-                </Form.Item>
-              </Col>
-            )}
+                  /> */}
+                <input
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    borderRadius: '5px',
+                    border: '0.5px solid rgba(0,0,0,0.12)',
+                  }}
+                  type="date"
+                  name="birthday"
+                  defaultValue={form?.getFieldsValue(['birthday'])}
+                />
+              </Form.Item>
+            </Col>
           </Row>
           <Row gutter={8}>
             <Col md={8}>
@@ -316,24 +325,35 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 </ReactInputMask>
               </Form.Item>
             </Col>
-            {!id && (
-              <Col md={8}>
-                <Form.Item
-                  rules={[{ message: t('Please fill the field'), required: false }]}
-                  label={t('Passport date')}
+
+            <Col md={8}>
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: false }]}
+                label={t('Passport date')}
+                name="passport_data"
+              >
+                <input
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    borderRadius: '5px',
+                    border: '0.5px solid rgba(0,0,0,0.12)',
+                  }}
+                  type="date"
                   name="passport_data"
-                >
-                  <DatePicker
+                  defaultValue={form?.getFieldsValue(['passport_data'])}
+                />
+                {/* <DatePicker
                     className="w-100"
                     onChange={onChangePasswordPicker}
                     placeholder="2000-01-01"
                     size="large"
                     format={'YYYY-MM-DD'}
                     // defaultValue={id ? dayjs(form?.getFieldsValue(['passport_data']), formatDate) : undefined}
-                  />
-                </Form.Item>
-              </Col>
-            )}
+                  /> */}
+              </Form.Item>
+            </Col>
+
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}

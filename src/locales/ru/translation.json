@@ -112,6 +112,7 @@
   "Banners": "Баннеры",
   "Create banner": "Создать баннер",
   "Edit banner": "Изменить баннер",
+  "Delete banner": "Удалить баннер",
   "Title":"Названия",
   "Description":"Описание",
   "Add plan":"Добавить план",
@@ -120,6 +121,7 @@
   "Create plan": "Создать план",
   "Edit plan": "Изменить план",
   "Upload Photo":"Загрузить изображение",
-  "Abonent code":"Код абонента"
+  "Abonent code":"Код абонента",
+  "Please upload Photo":"Загрузите изображение"
 
 }
