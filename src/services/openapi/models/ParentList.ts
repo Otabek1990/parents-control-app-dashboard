@@ -12,4 +12,6 @@ export type ParentList = {
     username: string;
     child_code: string;
     created_at?: string;
+    abonent_code?:string
+
 };

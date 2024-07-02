@@ -44,6 +44,11 @@ const Parents: FC = (): JSX.Element => {
       key: 'username',
     },
     {
+      title: <span className="text-uppercase">{t('Abonent code')}</span>,
+      dataIndex: 'abonent_code',
+      key: 'abonent_code',
+    },
+    {
       title: <span className="text-uppercase">{t('Status')}</span>,
       dataIndex: 'status',
       key: 'status',
