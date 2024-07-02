@@ -14,7 +14,7 @@ const RenderRoutes = () => {
 
   const filteredRoutes = filterRoutesByRole(routes, role);
 
-  console.log(filteredRoutes);
+ 
   return (
     <LayoutCustom>
       

@@ -9,6 +9,7 @@ import { StatisticsService } from 'services/openapi';
 import { PlanService } from 'services/openapi/services/PlanService';
 
 const Dashboard: React.FC = (): JSX.Element => {
+  
   const {
     data: statistics,
 
@@ -24,7 +25,6 @@ const Dashboard: React.FC = (): JSX.Element => {
     queryKey: ['plans'],
     queryFn: () => PlanService.planList(),
   });
-  console.log(plans);
 
   return (
     <div className="dashboard-wrapper">

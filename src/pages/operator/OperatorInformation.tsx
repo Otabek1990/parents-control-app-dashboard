@@ -21,10 +21,10 @@ const OperatorInformation = ({ id }: Props) => {
     }
   };
 
-  console.log('Operator', operator);
 
   const handleClose = () => {
     setOpen(false);
+    console.log(operator)
   };
 
   return (

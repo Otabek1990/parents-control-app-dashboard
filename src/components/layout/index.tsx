@@ -44,10 +44,10 @@ const LayoutCustom = ({ children }: any) => {
   const { t } = useTranslation();
   const store: any = useAuthStore((state) => state);
   const role = localStorage.getItem('role') || "ADMIN";
-  console.log(role);
+
   const filteredRoutes = filterRoutesByRole(routes, role);
 
-  console.log(filteredRoutes);
+
   const location = useLocation();
   const navigate = useNavigate();
   // const { checkPermission } = usePermissions();

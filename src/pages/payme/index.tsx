@@ -17,7 +17,7 @@ const Payme: FC = (): JSX.Element => {
     queryKey: ['payme'],
     queryFn: () => PaymeService.PaymeGetList()
   });
-  console.log(paymesReq.data)
+
 
 
 

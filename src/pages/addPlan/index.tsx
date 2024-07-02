@@ -1,4 +1,4 @@
-import { Card, } from 'antd';
+// import { Card, } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 // import { ColumnsType } from 'antd/es/table';
 // import { errorHandler } from '@config/axios_config';
@@ -19,14 +19,13 @@ const AddPlan = () => {
 
   const {
     data: plans,
-    
     refetch,
   } = useQuery({
     queryKey: ['banner'],
     queryFn: () => PlanService.planList(),
   });
-  console.log(plans);
 
+console.log(plans?.length)
   // const columns: ColumnsType<PlanList> = [
   //   {
   //     title: <span className="text-uppercase">id</span>,
@@ -61,8 +60,8 @@ const AddPlan = () => {
         <CreatePlan refetch={refetch} />
       </TitleCard>
 
-      <Card>
-        {/* <Table
+      {/* <Card>
+        <Table
           columns={columns}
           bordered={false}
           locale={{
@@ -78,8 +77,8 @@ const AddPlan = () => {
           scroll={{ x: 1000 }}
           size="small"
           style={{ textTransform: 'capitalize' }}
-        /> */}
-      </Card>
+        />
+      </Card> */}
     </>
   );
 };
