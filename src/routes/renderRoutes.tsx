@@ -1,6 +1,6 @@
 // import { usePermissions } from '@hooks/usePermissions';
 import { Route, Routes } from 'react-router-dom';
-import { routes } from './routes';
+import { filterRoutesByRole, routes } from './routes';
 import CustomComponent from './custom_component';
 import LayoutCustom from '@components/layout';
 import { useAuthStore } from 'store/authStore';
@@ -12,11 +12,14 @@ const RenderRoutes = () => {
   const store: any = useAuthStore((state) => state);
   console.log(store?.role);
 
+  const filteredRoutes = filterRoutesByRole(routes, store?.role);
+
+  console.log(filteredRoutes);
   return (
     <LayoutCustom>
       
       <Routes>
-        {routes
+        {filteredRoutes
           .flatMap((item) => (item.children.length ? [item, ...item.children] : item))
           // .filter((item) => checkPermission(item.config.key))
           .map((item, index) => (

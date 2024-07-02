@@ -27,6 +27,7 @@ export const routes: Array<routeType> = [
       isShowInMenu: true,
     },
     children: [],
+    roles:['ADMIN','PARTNER']
   },
   {
     name: 'Users',
@@ -49,6 +50,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
       // {
       //   name: 'Agents',
@@ -71,6 +73,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN','PARTNER']
       },
       {
         name: 'Children',
@@ -82,6 +85,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN','PARTNER']
       },
       {
         name: 'Operators',
@@ -93,6 +97,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
     ],
   },
@@ -140,6 +145,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
       {
         name: 'Districts',
@@ -151,8 +157,10 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
     ],
+    roles:['ADMIN']
   },
   {
     name: 'Payment types',
@@ -175,6 +183,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
       {
         name: 'Paynet',
@@ -186,8 +195,10 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
     ],
+    roles:['ADMIN']
   },
   {
     name: 'Payment to partner',
@@ -210,8 +221,10 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
     ],
+    roles:['ADMIN']
   },
   {
     name: 'Others',
@@ -234,6 +247,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
       {
         name: 'Add plan',
@@ -245,7 +259,17 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
+        roles:['ADMIN']
       },
     ],
+    roles:['ADMIN']
   },
 ];
+export const filterRoutesByRole = (routes: Array<routeType>, role: string): Array<routeType> => {
+  return routes
+    .filter(route => !route.roles || route.roles.includes(role))
+    .map(route => ({
+      ...route,
+      children: filterRoutesByRole(route.children, role),
+    }));
+};

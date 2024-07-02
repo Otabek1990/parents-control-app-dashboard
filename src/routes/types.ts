@@ -9,4 +9,5 @@ export type routeType = {
     isShowInMenu: boolean;
   };
   children: Array<routeType>;
+  roles?: Array<string>;
 };
