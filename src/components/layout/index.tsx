@@ -43,8 +43,9 @@ const notData = [
 const LayoutCustom = ({ children }: any) => {
   const { t } = useTranslation();
   const store: any = useAuthStore((state) => state);
-
-  const filteredRoutes = filterRoutesByRole(routes, store?.role);
+  const role = localStorage.getItem('role') || "ADMIN";
+  console.log(role);
+  const filteredRoutes = filterRoutesByRole(routes, role);
 
   console.log(filteredRoutes);
   const location = useLocation();
@@ -114,6 +115,7 @@ const LayoutCustom = ({ children }: any) => {
   const logOut = () => {
     store?.setAuth({ isAuth: false, role: '' });
     localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem('role')
     notification.success({ message: 'Successfully', description: 'Muvaffaqiyatli tizimdan chiqildi' });
   };
   // console.log( "path", location.pathname, openKeys);
@@ -285,7 +287,7 @@ const LayoutCustom = ({ children }: any) => {
                     <div style={{ fontSize: '15px', fontWeight: 600 }} className="pt-0">
                       {username}
                     </div>
-                    <div style={{ fontSize: '12px' }}>{store.role}</div>
+                    <div style={{ fontSize: '12px' }}>{role} </div>
                   </div>
                 </div>
               </Dropdown>

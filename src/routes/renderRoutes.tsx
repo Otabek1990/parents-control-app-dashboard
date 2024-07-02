@@ -3,16 +3,16 @@ import { Route, Routes } from 'react-router-dom';
 import { filterRoutesByRole, routes } from './routes';
 import CustomComponent from './custom_component';
 import LayoutCustom from '@components/layout';
-import { useAuthStore } from 'store/authStore';
 
 const RenderRoutes = () => {
   // const { checkPermission } = usePermissions();
   // const role = localStorage.getItem('role');
   // console.log(role);
-  const store: any = useAuthStore((state) => state);
-  console.log(store?.role);
+  // const store: any = useAuthStore((state) => state);
+  // console.log(store?.role);
+  const role=localStorage.getItem("role") || "ADMIN"
 
-  const filteredRoutes = filterRoutesByRole(routes, store?.role);
+  const filteredRoutes = filterRoutesByRole(routes, role);
 
   console.log(filteredRoutes);
   return (

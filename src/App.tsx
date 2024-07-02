@@ -11,6 +11,7 @@ import Loading from '@components/core/Loading';
 function App() {
   const store: any = useAuthStore((state) => state);
   const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => {
     
