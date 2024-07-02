@@ -71,7 +71,7 @@ const LayoutCustom = ({ children }: any) => {
   const getChildren = (item: routeType) => {
     // let routeTypes = item.children.filter((child) => checkPermission(child.config.key) && child.config.isShowInMenu);
     let routeTypes = item.children;
-    return routeTypes.length
+    return routeTypes?.length
       ? routeTypes.map((child) => ({
           key: child.path,
           label: t(child.name),

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Card,  Table } from 'antd';
+import { Button, Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -8,6 +8,7 @@ import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
+import Loading from '@components/core/Loading';
 
 // const { Title } = Typography;
 const Parents: FC = (): JSX.Element => {
@@ -148,17 +149,20 @@ const Parents: FC = (): JSX.Element => {
         {/* <Title level={4}>{t("Table of parents")}</Title> */}
         {/* <Button type="primary" onClick={() => setOpen({ o: true, data: undefined })}>+ {t("Add")}</Button> */}
       </div>
+      {parentsReq?.isLoading && <Loading />}
       <Card>
-        <Table
-          columns={columns}
-          bordered={false}
-          dataSource={parentsReq?.isSuccess ? parentsReq?.data?.results : []}
-          loading={parentsReq?.isLoading}
-          rowKey="id"
-          scroll={{ x: 1400 }}
-          size="small"
-          className="text-uppercase"
-        />
+        {parentsReq?.isSuccess && parentsReq?.data?.results && (
+          <Table
+            columns={columns}
+            bordered={false}
+            dataSource={parentsReq?.isSuccess ? parentsReq?.data?.results : []}
+            loading={parentsReq?.isLoading}
+            rowKey="id"
+            scroll={{ x: 1400 }}
+            size="small"
+            className="text-uppercase"
+          />
+        )}
       </Card>
     </>
   );

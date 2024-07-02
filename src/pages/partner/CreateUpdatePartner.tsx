@@ -17,12 +17,11 @@ import {
   message,
 } from 'antd';
 import { useState } from 'react';
-import { BaseApiService,  PartnerService } from 'services/openapi';
+import { BaseApiService, PartnerService } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
 import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-
 import uploadImageIcon from '@assets/icons/image-download.svg';
 // type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -81,10 +80,10 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         let res = await PartnerService.partnerDetailNowRead(id as number);
         form.setFieldsValue({
           ...res,
+          birthday: '2000-01-01',
+          passport_data: '2000-01-01',
           username: res.username,
           fullname: res.fullname,
-          birthday: dayjs(res.birthday, formatDate),
-          passport_data: dayjs(res.passport_data, formatDate),
           passport_number: res.passport_number?.toString(),
         });
         // getDistricts(res.region?.uz);
@@ -211,41 +210,25 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 <Input className="text-capitalize" placeholder={t('FIO')} size="large" />
               </Form.Item>
             </Col>
-            {/* <Col md={8}>
-              <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
-                label={t('Middlename')}
-                name="middle_name"
-              >
-                <Input className="text-capitalize" placeholder={t('Middlename')} size="large" />
-              </Form.Item>
-            </Col> */}
-            {/* <Col md={8}>
-              <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
-                label={t('Surname')}
-                name="surname"
-              >
-                <Input className="text-capitalize" placeholder={t('Surname')} size="large" />
-              </Form.Item>
-            </Col> */}
 
-            <Col md={8}>
-              <Form.Item
-                rules={[{ message: t('Please fill the field'), required: false }]}
-                label={t('Birthday')}
-                name="birthday"
-              >
-                <DatePicker
-                  className="w-100"
-                  onChange={onChangeBirthdayPicker}
-                  placeholder="01.01.2000"
-                  size="large"
-                  format={formatDate}
-                  // defaultValue={id ? dayjs(form?.getFieldsValue(['birthday']), formatDate) : undefined}
-                />
-              </Form.Item>
-            </Col>
+            {!id && (
+              <Col md={8}>
+                <Form.Item
+                  rules={[{ message: t('Please fill the field'), required: false }]}
+                  label={t('Birthday')}
+                  name="birthday"
+                >
+                  <DatePicker
+                    className="w-100"
+                    onChange={onChangeBirthdayPicker}
+                    placeholder="2000-01-01"
+                    size="large"
+                    format={'YYYY-MM-DD'}
+                    // defaultValue={id ? dayjs(form?.getFieldsValue(['birthday']), formatDate) : undefined}
+                  />
+                </Form.Item>
+              </Col>
+            )}
           </Row>
           <Row gutter={8}>
             <Col md={8}>
@@ -333,22 +316,24 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 </ReactInputMask>
               </Form.Item>
             </Col>
-            <Col md={8}>
-              <Form.Item
-                rules={[{ message: t('Please fill the field'), required: false }]}
-                label={t('Passport date')}
-                name="passport_data"
-              >
-                <DatePicker
-                  className="w-100"
-                  onChange={onChangePasswordPicker}
-                  placeholder="01.01.2000"
-                  size="large"
-                  format={formatDate}
-                  // defaultValue={id ? dayjs(form.getFieldsValue(['passport_data']), formatDate) : undefined}
-                />
-              </Form.Item>
-            </Col>
+            {!id && (
+              <Col md={8}>
+                <Form.Item
+                  rules={[{ message: t('Please fill the field'), required: false }]}
+                  label={t('Passport date')}
+                  name="passport_data"
+                >
+                  <DatePicker
+                    className="w-100"
+                    onChange={onChangePasswordPicker}
+                    placeholder="2000-01-01"
+                    size="large"
+                    format={'YYYY-MM-DD'}
+                    // defaultValue={id ? dayjs(form?.getFieldsValue(['passport_data']), formatDate) : undefined}
+                  />
+                </Form.Item>
+              </Col>
+            )}
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: true }]}

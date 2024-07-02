@@ -9,62 +9,63 @@ import { StatisticsService } from 'services/openapi';
 import { PlanService } from 'services/openapi/services/PlanService';
 
 const Dashboard: React.FC = (): JSX.Element => {
-  
+  const role = localStorage.getItem('role') || 'ADMIN';
+
   const {
     data: statistics,
-
     isSuccess,
   } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  const {
-    data: plans,
-    isSuccess:isSuccessPlans,
-  } = useQuery({
+  console.log(isSuccess)
+  const { data: plans, isSuccess: isSuccessPlans } = useQuery({
     queryKey: ['plans'],
     queryFn: () => PlanService.planList(),
   });
+  console.log(statistics);
 
   return (
     <div className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
       <div className="d-loader">
         <div className="loader-header">
-          <span>0 kun</span>
-          <span>{isSuccessPlans && plans?.length && plans[0].total_days || 365} kun</span>
-          <span>0 / {isSuccessPlans && plans?.length && plans[0].total_clients }</span>
+          <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.days_progress} kun</span>
+          <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_days} kun</span>
+          <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients} / {isSuccessPlans && plans?.length && plans[0].total_clients}</span>
         </div>
         <div className="loader">
           <div className="active">
-            <span>0 ta</span>
+            <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients}  ta</span>
           </div>
           <div className="in-active">
-            <span>{isSuccessPlans && plans?.length && plans[0].total_clients }</span>
+            <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_clients}</span>
           </div>
         </div>
       </div>
 
       <div className="count-info row">
-        <div className="col-xl-6 col-xxl-3">
-          <div className="count-card">
-            <div className="header">
-              <img src={briefcase} alt="" />
-              <span>Barcha Hamkorlar</span>
-            </div>
-            <div className="count">0{/* <span>+2,4% </span> */}</div>
-            <div className="more">
-              <div className="tag">
-                <span className="one">Olib kelgan:</span>
-                <span className="two">0&nbsp;ta</span>
+        {role === 'ADMIN' && (
+          <div className="col-xl-6 col-xxl-3">
+            <div className="count-card">
+              <div className="header">
+                <img src={briefcase} alt="" />
+                <span>Barcha Hamkorlar</span>
               </div>
-              <div className="tag">
-                <span className="one">Jami daromad:</span>
-                <span className="two"> {isSuccess && statistics?.overall_statistics?.total_profit}</span>
+              <div className="count">13 <span>+{isSuccess && statistics?.daily_stats?.partner_growth_percentage}% </span></div>
+              <div className="more">
+                <div className="tag">
+                  <span className="one">Olib kelgan:</span>
+                  <span className="two">0&nbsp;ta</span>
+                </div>
+                <div className="tag">
+                  <span className="one">Jami daromad:</span>
+                  <span className="two"> {isSuccess && statistics?.overall_stats?.total_amount_paid_to_partners}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
         {/* <div className="col-xl-6 col-xxl-3">
           <div className="count-card">
             <div className="header">
@@ -88,17 +89,17 @@ const Dashboard: React.FC = (): JSX.Element => {
               <span>Barcha Ota-Onalar</span>
             </div>
             <div className="count">
-              {isSuccess && statistics?.overall_statistics?.total_parents}
-              <span>{isSuccess && statistics?.daily_statistics?.parent_growth}% </span>
+              {isSuccess && statistics?.overall_stats?.all_girls}
+              <span>{isSuccess && statistics?.daily_stats?.parent_growth_percentage}% </span>
             </div>
             <div className="more">
               <div className="tag">
                 <span className="one">To'landi: </span>
-                <span className="two">{isSuccess && statistics?.overall_statistics?.total_parents_paid} ta</span>
+                <span className="two">{isSuccess && statistics?.overall_stats?.all_paid_parents} ta</span>
               </div>
               <div className="tag">
                 <span className="one">To'lanmadi: </span>
-                <span className="two">{isSuccess && statistics?.overall_statistics?.total_parents_unpaid}</span>
+                <span className="two">{isSuccess && statistics?.overall_stats?.all_unpaid_parents} ta</span>
               </div>
             </div>
           </div>
@@ -110,17 +111,17 @@ const Dashboard: React.FC = (): JSX.Element => {
               <span>Barcha Bolalar</span>
             </div>
             <div className="count">
-              {isSuccess && statistics?.overall_statistics?.total_children}
-              <span>{isSuccess && statistics?.daily_statistics?.parent_growth}% </span>
+              {isSuccess && statistics?.overall_stats?.all_children}
+              <span>{isSuccess && statistics?.daily_stats?.child_growth_percentage}% </span>
             </div>
             <div className="more">
               <div className="tag">
                 <span className="one">Bolalar: </span>
-                <span className="two">{isSuccess && statistics?.overall_statistics?.total_boys} ta</span>
+                <span className="two">{isSuccess && statistics?.overall_stats?.all_boys} ta</span>
               </div>
               <div className="tag">
                 <span className="one">Qiz bolalar: </span>
-                <span className="two">{isSuccess && statistics?.overall_statistics?.total_girls} ta</span>
+                <span className="two">{isSuccess && statistics?.overall_stats?.all_girls} ta</span>
               </div>
             </div>
           </div>

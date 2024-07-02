@@ -20,7 +20,7 @@ const RenderRoutes = () => {
       
       <Routes>
         {filteredRoutes
-          .flatMap((item) => (item.children.length ? [item, ...item.children] : item))
+          .flatMap((item) => (item.children?.length ? [item, ...item.children] : item))
           // .filter((item) => checkPermission(item.config.key))
           .map((item, index) => (
             <Route key={index} path={item.path} element={<CustomComponent component={item.element} />} />

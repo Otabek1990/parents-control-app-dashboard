@@ -5,7 +5,7 @@
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-import { Statistics } from '../models/Statistics';
+import {  StatisticsAdmin, StatisticsPartner } from '../models/Statistics';
 
 export class StatisticsService {
   /**
@@ -13,7 +13,13 @@ export class StatisticsService {
    * @returns any
    * @throws ApiError
    */
-  public static statisticsList(): CancelablePromise<Statistics> {
+  public static statisticsList(): CancelablePromise<StatisticsAdmin> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/admin-panel-statistics/admin/',
+    });
+  }
+  public static statisticsPartnerList(): CancelablePromise<StatisticsPartner> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/admin-panel-statistics/partner/',
