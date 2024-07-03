@@ -166,6 +166,34 @@
           flex-direction: column;
           gap: 8px;
           align-items: flex-start;
+          h3{
+            color: #4E5D78;
+            font-size: 28px;
+            font-weight: bold;
+            
+            span{
+              color: #38CB89;
+              font-size: 13px;
+            }
+          }
+        }
+        .bar-header-right{
+          background-color: #DFE2E7;
+          padding: 4px 6px;
+          border-radius: 8px;
+          height: 40px;
+          width: 331px;
+          display: flex;
+          // align-items: center;
+          gap: 2px;
+          button{
+            background-color: transparent;
+            border-radius: 8px;
+            flex: 1;
+            border: none;
+
+          }
+          
         }
       }
     }

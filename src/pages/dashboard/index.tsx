@@ -63,8 +63,8 @@ const Dashboard: React.FC = (): JSX.Element => {
                 <span>Barcha Hamkorlar</span>
               </div>
               <div className="count">
-                {isSuccess && statistics?.overall_stats?.bar_graph_data_with_profit?.partners}{' '}
-                <span>+{isSuccess && statistics?.daily_stats?.partner_growth_percentage}% </span>
+                {isSuccess && statistics?.overall_stats?.bar_graph_data_with_profit?.partners}
+                <span>+{isSuccess && statistics?.daily_stats?.partner_growth_percentage} % </span>
               </div>
               <div className="more">
                 <div className="tag">
@@ -169,7 +169,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <ChartStats />
+      <ChartStats  />
     </div>
   );
 };

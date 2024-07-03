@@ -1,37 +1,46 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
-
+import { StatisticsService } from 'services/openapi';
+import { useQuery } from '@tanstack/react-query';
 const BarChart: React.FC = () => {
+  const { data: statistics, isSuccess } = useQuery({
+    queryKey: ['statistics'],
+    queryFn: () => StatisticsService.statisticsList(),
+  });
+
   const option: EChartsOption = {
-    title: {
-      text: 'Bar Chart Example'
-    },
+    // title: {
+    //   text: 'Bar Chart Example'
+    // },
     tooltip: {
-      trigger: 'axis'
+      trigger: 'axis',
     },
     xAxis: {
       type: 'category',
-      data: ['Category A', 'Category B', 'Category C', 'Category D', 'Category E']
+      data: ['Hamkorlar', 'Ota-onalar', 'Bolalar'],
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
     },
+
     series: [
       {
-        name: 'Example Series',
+        name: 'Jami',
         type: 'bar',
-        data: [10, 52, 200, 334, 390],
+        data: [
+          statistics?.overall_stats?.bar_graph_data_with_profit?.partners,
+          statistics?.overall_stats?.bar_graph_data_with_profit?.parents,
+          statistics?.overall_stats?.all_children,
+        ],
         itemStyle: {
-          color: '#73c0de'
-        }
-      }
-    ]
+          color: '#DFE2E7',
+        },
+      },
+    ],
   };
 
-  return (
-    <ReactECharts option={option} style={{ height: 400, width: '100%' }} />
-  );
+  return <ReactECharts option={option} style={{ height: 400, width: '70%', minWidth: '400px' }} />;
 };
 
 export default BarChart;

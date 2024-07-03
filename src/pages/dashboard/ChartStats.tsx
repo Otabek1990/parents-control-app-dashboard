@@ -1,7 +1,23 @@
-// import { Tabs } from 'antd';
+import { useState } from 'react';
+import BarChart from './BarChart';
 
 function ChartStats() {
-//   const { TabPane } = Tabs;
+  const [currentId, setCurrentId] = useState<number>(1);
+  const tabBtns = [
+    {
+      title: 'Oy',
+      id: 1,
+    },
+    {
+      title: 'Yil',
+      id: 2,
+    },
+    {
+      title: '3 Yil',
+      id: 3,
+    },
+  ];
+
   return (
     <div className="chart-stats-container">
       <div className="bar-chart-card">
@@ -14,32 +30,20 @@ function ChartStats() {
             </h3>
           </div>
           <div className="bar-header-right">
-            {/* <Tabs defaultActiveKey="1">
-              <TabPane tab="Oy" key="1">
-                <div>
-                  <h2>Oy Content</h2>
-                  <p>This is the content for the Oy tab.</p>
-                </div>
-              </TabPane>
-              <TabPane tab="Yil" key="2">
-                <div>
-                  <h2>Yil Content</h2>
-                  <p>This is the content for the Yil tab.</p>
-                </div>
-              </TabPane>
-              <TabPane tab="3Yil" key="3">
-                <div>
-                  <h2>3Yil Content</h2>
-                  <p>This is the content for the 3Yil tab.</p>
-                </div>
-              </TabPane>
-            </Tabs> */}
+            {tabBtns.map((btn) => (
+              <button
+                onClick={() => setCurrentId(btn.id)}
+                style={{ backgroundColor: currentId === btn.id ? 'white' : 'transparent' }}
+                key={btn.id}
+              >
+                {btn.title}
+              </button>
+            ))}
           </div>
         </div>
+        <BarChart />
       </div>
-      <div className="pie-chart-card">
-        <h1>Pie Chart</h1>
-      </div>
+      <div className="pie-chart-card"></div>
     </div>
   );
 }
