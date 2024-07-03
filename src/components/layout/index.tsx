@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Layout, Menu, theme, Rate, Dropdown, Avatar, notification, Popover, List, Tag, MenuProps } from 'antd';
+import { Layout, Menu, theme, Rate, Dropdown, Avatar, notification, MenuProps } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { filterRoutesByRole, routes } from '../../routes/routes';
 // import { usePermissions } from "@hooks/usePermissions";
@@ -8,9 +8,7 @@ import { routeType } from '../../routes/types';
 import './index.scss';
 import { IconComponent } from '@components/custom_icons/iconComponent';
 import donIcon from '../../assets/images/load_app_img.svg';
-import rectangle from '../../assets/icons/grid-rectangle.svg';
-import circle from '../../assets/icons/grid-circle.svg';
-import nofiy from '../../assets/icons/notification_5.svg';
+
 import { ACCESS_TOKEN, USERNAME } from '@config/constants';
 import { useAuthStore } from '../../store/authStore';
 import Language from '@components/layout/header/language';
@@ -19,26 +17,7 @@ import { useTranslation } from 'react-i18next';
 
 const { Header, Sider, Content } = Layout;
 
-const notData = [
-  {
-    username: 'jhon_doe',
-    type: 'Yillik',
-    prise: 125,
-    deadline: 254,
-  },
-  {
-    username: 'anvar',
-    type: 'Oylik',
-    prise: 25,
-    deadline: 9,
-  },
-  {
-    username: 'abdulaziz',
-    type: 'Kunlik',
-    prise: 5,
-    deadline: 1,
-  },
-];
+
 
 const LayoutCustom = ({ children }: any) => {
   const { t } = useTranslation();
@@ -52,7 +31,6 @@ const LayoutCustom = ({ children }: any) => {
   const navigate = useNavigate();
   // const { checkPermission } = usePermissions();
   const [collapsed] = useState(false);
-  const [fulled, setFulled] = useState<boolean>(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const {
     token: { colorBgContainer },
@@ -91,17 +69,17 @@ const LayoutCustom = ({ children }: any) => {
   };
 
   // ---- fullscreen ------
-  let fullscreen = document.querySelector('body');
+  // let fullscreen = document.querySelector('body');
 
-  const fullScreen = () => {
-    document.onfullscreenchange = () => setFulled(!fulled);
+  // const fullScreen = () => {
+  //   document.onfullscreenchange = () => setFulled(!fulled);
 
-    if (!document.fullscreenElement) {
-      fullscreen?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  };
+  //   if (!document.fullscreenElement) {
+  //     fullscreen?.requestFullscreen();
+  //   } else {
+  //     document.exitFullscreen();
+  //   }
+  // };
 
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -198,50 +176,15 @@ const LayoutCustom = ({ children }: any) => {
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-evenly">
+            <div className="d-flex gap-2 justify-content-evenly">
               {/*<div className="d-flex justify-content-evenly header-period-cls mt-3">*/}
               {/*  <div>Oy</div>*/}
               {/*  <div>Yil</div>*/}
               {/*  <div className="active-item">3 Yil</div>*/}
               {/*</div>*/}
               <Language />
-              <div className="mx-2" style={{ cursor: 'pointer' }} onClick={fullScreen}>
-                {!fulled ? <img width={25} src={rectangle} alt="" /> : <img width={25} src={circle} alt="" />}
-              </div>
-              <div className="px-2">
-                <Popover
-                  title={t('Notification')}
-                  content={
-                    <List
-                      size="small"
-                      header={null}
-                      footer={null}
-                      dataSource={notData}
-                      renderItem={(item: any) => (
-                        <List.Item>
-                          <div className="w-100">
-                            <div className="w-100 d-flex justify-content-between">
-                              <b>{item?.username}:</b>&nbsp;&nbsp;
-                              <Tag
-                                color={item?.deadline > 10 ? 'blue' : item?.deadline > 5 ? 'orange' : 'red'}
-                                className="border-0"
-                              >
-                                {item?.deadline} kun qoldi
-                              </Tag>
-                            </div>
-                            <div>
-                              {item?.type} - ${item?.prise}
-                            </div>
-                          </div>
-                        </List.Item>
-                      )}
-                    />
-                  }
-                  trigger="click"
-                >
-                  <img width={25} src={nofiy} alt="" style={{ cursor: 'pointer' }} />
-                </Popover>
-              </div>
+            
+             
               {/* <div className="px-2 pt-1">
                 <span style={{ borderRadius: '15px', width: '100px' }} className="bg-success text-light px-3 py-1">
                   34

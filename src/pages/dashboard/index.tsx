@@ -33,26 +33,31 @@ const Dashboard: React.FC = (): JSX.Element => {
   return (
     <div className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
-      {role === 'ADMIN' && (
+      {/* {role === 'ADMIN' && ( */}
         <div className="d-loader">
           <div className="loader-header">
-            <span>{(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.days_progress) || 2} kun</span>
-            <span>{(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_days) || 365} kun</span>
+            <span>{(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.days_progress) 
+            || (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.days_progress)} kun</span>
+            <span>{(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_days) || 
+              (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.remaining_days)} kun</span>
             <span>
-              {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients) || 2} /{' '}
+              {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients) || 
+              (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.added_clients)} /{' '}
               {(isSuccessPlans && plans?.length && plans[0].total_clients) || 5000}
             </span>
           </div>
           <div className="loader">
             <div className="active">
-              <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients} ta</span>
+              <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients || 
+                (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.added_clients)} ta</span>
             </div>
             <div className="in-active">
-              <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_clients}</span>
+              <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_clients ||
+                (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.remaining_clients)}</span>
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
 
       <div className="count-info row">
         {role === 'ADMIN' && (

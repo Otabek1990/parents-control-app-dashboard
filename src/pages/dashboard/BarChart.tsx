@@ -40,7 +40,7 @@ const BarChart: React.FC = () => {
     ],
   };
 
-  return <ReactECharts option={option} style={{ height: 400, width: '70%', minWidth: '400px' }} />;
+  return <ReactECharts option={option} style={{ height: 400, width: '240px', minWidth: '200px' }} />;
 };
 
 export default BarChart;

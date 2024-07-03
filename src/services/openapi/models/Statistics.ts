@@ -9,14 +9,13 @@ export type StatisticsAdmin = {
     partner_growth_percentage: number;
     child_growth_percentage: number;
     daily_joined_parents: number;
-
   };
   overall_stats: {
     all_boys: number;
     all_children: number;
     all_girls: number;
-    all_monthly_clients:number;
-    all_yearly_clients:number;
+    all_monthly_clients: number;
+    all_yearly_clients: number;
     all_paid_parents: number;
     all_unpaid_parents: number;
     total_parents: number;
@@ -27,18 +26,17 @@ export type StatisticsAdmin = {
       girls: number;
       total_partner_profit: number;
     };
-    get_client_adding_plan:{
-      added_clients:number;
-      days_progress:number;
-      remaining_clients:number;
-      remaining_days:number;
+    get_client_adding_plan: {
+      added_clients: number;
+      days_progress: number;
+      remaining_clients: number;
+      remaining_days: number;
     };
     circle_graph_data: number;
     total_amount_paid_to_partners: number;
     total_net_profit: number;
     total_profit: number;
   };
-  
 };
 
 export type StatisticsPartner = {
@@ -60,10 +58,16 @@ export type StatisticsPartner = {
       girls: number;
       total_partner_profit: number;
     };
+
+    partner_cleint_adding_plan: {
+      added_clients: number;
+      days_progress: number;
+      remaining_clients: number;
+      remaining_days: number;
+    };
     circle_graph_data: number;
     total_payme: number;
     total_paynet: number;
     total_profit: number;
   };
 };
-
