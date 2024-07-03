@@ -127,5 +127,7 @@
   "Total profit": "Jami foyda",
   "Back": "Orqaga",
   "Payment status": "To'lov holati",
-  "Amount": "Miqdori"
+  "Amount": "Miqdori",
+   "Paid":"To'langan",
+  "Unpaid":"To'lanmagan"
 }

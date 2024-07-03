@@ -36,12 +36,35 @@ const ParentStats = () => {
       title: <span className="text-uppercase">{t('Payment status')}</span>,
       key: 'payment_status',
       dataIndex: 'payment_status',
+      render: (record) =>
+        record==="Paid" ? (
+          <Button
+            style={{
+              backgroundColor: '#00E67F',
+              color: 'white',
+              textTransform: 'uppercase',
+              fontSize: '12px',
+              fontWeight: '600',
+            }}
+          >
+            {t('Paid')}
+          </Button>
+        ) : (
+          <Button
+            style={{
+              backgroundColor: '#F63409',
+              color: 'white',
+              textTransform: 'uppercase',
+              fontSize: '12px',
+              fontWeight: '600',
+            }}
+          >
+            {t('Unpaid')}
+          </Button>
+        ),
+
     },
-    {
-      title: <span className="text-uppercase">{t('Amount')}</span>,
-      key: 'amount',
-      dataIndex: 'amount',
-    },
+  
   ];
 
   return (

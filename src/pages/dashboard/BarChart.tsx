@@ -18,7 +18,7 @@ const BarChart: React.FC = () => {
     },
     xAxis: {
       type: 'category',
-      data: ['Hamkorlar', 'Ota-onalar', 'Bolalar'],
+      data: ['Hamkorlar'],
     },
     yAxis: {
       type: 'value',
@@ -30,8 +30,8 @@ const BarChart: React.FC = () => {
         type: 'bar',
         data: [
           statistics?.overall_stats?.bar_graph_data_with_profit?.partners,
-          statistics?.overall_stats?.bar_graph_data_with_profit?.parents,
-          statistics?.overall_stats?.all_children,
+          // statistics?.overall_stats?.bar_graph_data_with_profit?.parents,
+          // statistics?.overall_stats?.all_children,
         ],
         itemStyle: {
           color: '#DFE2E7',

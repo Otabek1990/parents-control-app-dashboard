@@ -40,7 +40,7 @@ const Banner = () => {
       </TitleCard>
       {isLoading && <Loading />}
 
-      {isSuccess && banners?.results?.length && (
+      {isSuccess  && (
         <Card>
           <Row gutter={[16, 16]}>
             {banners?.results?.map((item: BannerList, index: number) => (
@@ -69,7 +69,9 @@ const Banner = () => {
             ))}
           </Row>
         </Card>
-      )}
+      )
+       
+      }
     </>
   );
 };
