@@ -4,7 +4,7 @@ import { EChartsOption } from 'echarts';
 import { StatisticsService } from 'services/openapi';
 import { useQuery } from '@tanstack/react-query';
 const BarChart: React.FC = () => {
-  const { data: statistics, isSuccess } = useQuery({
+  const { data: statistics } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });

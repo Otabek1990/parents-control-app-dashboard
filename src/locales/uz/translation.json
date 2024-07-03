@@ -121,7 +121,11 @@
   "Create plan": "Plan yaratish",
   "Edit plan": "Planni o'zgartirish",
   "Upload Photo": "Rasm yuklash",
-   "Abonent code":"Abonent kodi",
-   "Please upload Photo":"Iltimos rasm yuklang"
- 
+  "Abonent code": "Abonent kodi",
+  "Please upload Photo": "Iltimos rasm yuklang",
+  "Parent count": "Ota otalar soni",
+  "Total profit": "Jami foyda",
+  "Back": "Orqaga",
+  "Payment status": "To'lov holati",
+  "Amount": "Miqdori"
 }

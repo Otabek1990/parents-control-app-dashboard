@@ -50,13 +50,14 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
   const onFinish = async (values: BannerCreate) => {
     // console.log(values);
     const formdata = new FormData();
-    console.log(formData);
+    
     formdata.append('title', values.title);
     formdata.append('description', values.description);
     formdata.append('url', values.url);
     if (formData.photo) {
       formdata.append('photo', formData.photo);
     }
+    console.log("salom")
     setLoading(true);
     try {
       const res: any = await BannerService.bannerCreate(formdata);
@@ -116,8 +117,8 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
             <Col md={8}>
-              <Form.Item rules={[{ message: t('Please upload Photo'), required: true }]} name="photo">
-                <label className="custom-file-upload" htmlFor="photo">
+              {/* <Form.Item rules={[{ message: t('Please upload Photo'), required: false }]} name="photo"> */}
+                <label style={{marginBottom:"15px"}} className="custom-file-upload" htmlFor="photo">
                
                   {t(' Upload Photo')}
                 </label>
@@ -134,7 +135,7 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
                     <img src={imagePreview} alt="Image Preview" style={{ maxWidth: '200px', marginTop: '10px' }} />
                   </div>
                 )}
-              </Form.Item>
+             
             </Col>
           </Row>
 

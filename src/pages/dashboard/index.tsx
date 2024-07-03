@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { StatisticsService } from 'services/openapi';
 import { PlanService } from 'services/openapi/services/PlanService';
 import { useNavigate } from 'react-router-dom';
-import BarChart from './BarChart';
+
 import ChartStats from './ChartStats';
 
 const Dashboard: React.FC = (): JSX.Element => {
@@ -57,7 +57,7 @@ const Dashboard: React.FC = (): JSX.Element => {
       <div className="count-info row">
         {role === 'ADMIN' && (
           <div className="col-xl-6 col-xxl-3">
-            <div onClick={() => navigate('/partners')} className="count-card">
+            <div onClick={() => navigate('/partnerStats')} className="count-card">
               <div className="header">
                 <img src={briefcase} alt="" />
                 <span>Barcha Hamkorlar</span>
@@ -99,7 +99,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div> */}
         <div className="col-xl-6 col-xxl-3">
-          <div onClick={() => navigate('/parents')} className="count-card">
+          <div onClick={() => navigate('/parentStats')} className="count-card">
             <div className="header">
               <img src={user} alt="" color="#38cb89" />
               <span>Barcha Ota-Onalar</span>
@@ -134,7 +134,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
         <div className="col-xl-6 col-xxl-3">
-          <div onClick={() => navigate('/children')} className="count-card">
+          <div  className="count-card">
             <div className="header">
               <img src={access} alt="" color="#38cb89" />
               <span>Barcha Bolalar</span>

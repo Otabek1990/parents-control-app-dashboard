@@ -113,15 +113,19 @@
   "Create banner": "Создать баннер",
   "Edit banner": "Изменить баннер",
   "Delete banner": "Удалить баннер",
-  "Title":"Названия",
-  "Description":"Описание",
-  "Add plan":"Добавить план",
-  "Total days":"Количество дней",
-  "Total clients":"Количество клиентов",
+  "Title": "Названия",
+  "Description": "Описание",
+  "Add plan": "Добавить план",
+  "Total days": "Количество дней",
+  "Total clients": "Количество клиентов",
   "Create plan": "Создать план",
   "Edit plan": "Изменить план",
-  "Upload Photo":"Загрузить изображение",
-  "Abonent code":"Код абонента",
-  "Please upload Photo":"Загрузите изображение"
-
+  "Upload Photo": "Загрузить изображение",
+  "Abonent code": "Код абонента",
+  "Please upload Photo": "Загрузите изображение",
+  "Parent count": "Количество родителей",
+  "Total profit": "Общая прибыль",
+  "Back":"Назад",
+  "Payment status":"Статус платежа",
+  "Amount":"Количество"
 }
