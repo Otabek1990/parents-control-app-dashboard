@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import { useState } from 'react';
 import { PartnerDetail, PartnerService } from 'services/openapi';
 import { timeConverter } from '@utils/timeConverter';
-// import { I18N_LANGUAGE } from '@config/constants';
+import { I18N_LANGUAGE } from '@config/constants';
 
 type Props = {
   id?: string | undefined | number;
@@ -24,9 +24,14 @@ const PartnerInformation = ({ id }: Props) => {
     }
   };
 
-  // const language = localStorage.getItem(I18N_LANGUAGE) ;
+  const language = localStorage.getItem(I18N_LANGUAGE) || 'uz';
   const handleClose = () => {
     setOpen(false);
+  };
+  type Language = 'uz' | 'ru' | 'en';
+
+  const isLanguage = (key: string): key is Language => {
+    return ['uz', 'ru', 'en'].includes(key);
   };
 
   return (
@@ -46,14 +51,28 @@ const PartnerInformation = ({ id }: Props) => {
             <Descriptions.Item label={t('Birthday')}>{partner?.birthday || '-'}</Descriptions.Item>
 
             <Descriptions.Item label={t('Work percentage')}>{partner?.percentage_of_work} %</Descriptions.Item>
-            <Descriptions.Item label={'Google play link'}>{partner?.google_play_link || '-'} </Descriptions.Item>
-            <Descriptions.Item label={t('Appstore Id')}>{partner?.appstore_id || '-'} </Descriptions.Item>
+            <Descriptions.Item label={'Google play link'}>
+              {' '}
+              <a href={partner?.google_play_link || ''} target="_blank">
+                {partner?.google_play_link || ''}
+              </a>
+            </Descriptions.Item>
+            <Descriptions.Item label={'Download link'}>
+              <a href={partner?.download_link || ''} target="_blank">
+                {partner?.download_link || ''}
+              </a>{' '}
+            </Descriptions.Item>
+            <Descriptions.Item label={t('Appstore Id')}>{partner?.appstore_id || ''} </Descriptions.Item>
             <Descriptions.Item label={t('Playstore Id')}>{partner?.playstore_id || '-'} </Descriptions.Item>
             <Descriptions.Item label={t('Passport date')}>{partner?.passport_data || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('Passport seria')}>{partner?.passport_seria || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('Passport number')}>{partner?.passport_number || '-'}</Descriptions.Item>
-            {/* <Descriptions.Item label={t('Region name')}>{(partner && partner.region[language]) || '-'}</Descriptions.Item> */}
-            {/* <Descriptions.Item label={t('District name')}>{(partner && partner.district[language]) || '-'}</Descriptions.Item> */}
+            <Descriptions.Item label={t('Region name')}>
+              {partner && partner.region && isLanguage(language) ? partner.region.name[language] : '-'}
+            </Descriptions.Item>
+            <Descriptions.Item label={t('District name')}>
+              {partner && partner.district && isLanguage(language) ? partner.district.name[language] : '-'}
+            </Descriptions.Item>
             <Descriptions.Item label={t('Created Time')}>{timeConverter(partner?.created_at || '')}</Descriptions.Item>
           </Descriptions>
         </Card>

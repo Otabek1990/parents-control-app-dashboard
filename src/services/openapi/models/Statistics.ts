@@ -22,6 +22,7 @@ export type StatisticsAdmin = {
     total_parents: number;
     bar_graph_data_with_profit: {
       parents: number;
+      partners: number;
       boys: number;
       girls: number;
       total_partner_profit: number;

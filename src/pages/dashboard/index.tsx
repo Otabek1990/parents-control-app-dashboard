@@ -7,9 +7,13 @@ import './styles.scss';
 import { useQuery } from '@tanstack/react-query';
 import { StatisticsService } from 'services/openapi';
 import { PlanService } from 'services/openapi/services/PlanService';
+import { useNavigate } from 'react-router-dom';
+import BarChart from './BarChart';
+import ChartStats from './ChartStats';
 
 const Dashboard: React.FC = (): JSX.Element => {
   const role = localStorage.getItem('role') || 'ADMIN';
+  const navigate = useNavigate();
 
   const { data: statistics, isSuccess } = useQuery({
     queryKey: ['statistics'],
@@ -53,13 +57,14 @@ const Dashboard: React.FC = (): JSX.Element => {
       <div className="count-info row">
         {role === 'ADMIN' && (
           <div className="col-xl-6 col-xxl-3">
-            <div className="count-card">
+            <div onClick={() => navigate('/partners')} className="count-card">
               <div className="header">
                 <img src={briefcase} alt="" />
                 <span>Barcha Hamkorlar</span>
               </div>
               <div className="count">
-                13 <span>+{isSuccess && statistics?.daily_stats?.partner_growth_percentage}% </span>
+                {isSuccess && statistics?.overall_stats?.bar_graph_data_with_profit?.partners}{' '}
+                <span>+{isSuccess && statistics?.daily_stats?.partner_growth_percentage}% </span>
               </div>
               <div className="more">
                 <div className="tag">
@@ -68,7 +73,10 @@ const Dashboard: React.FC = (): JSX.Element => {
                 </div>
                 <div className="tag">
                   <span className="one">Jami foyda:</span>
-                  <span className="two"> {isSuccess && statistics?.overall_stats?.total_amount_paid_to_partners}</span>
+                  <span className="two">
+                    {' '}
+                    {isSuccess && statistics?.overall_stats?.bar_graph_data_with_profit?.total_partner_profit}
+                  </span>
                 </div>
               </div>
             </div>
@@ -91,13 +99,13 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div> */}
         <div className="col-xl-6 col-xxl-3">
-          <div className="count-card">
+          <div onClick={() => navigate('/parents')} className="count-card">
             <div className="header">
               <img src={user} alt="" color="#38cb89" />
               <span>Barcha Ota-Onalar</span>
             </div>
             <div className="count">
-              {(isSuccess && statistics?.overall_stats?.all_girls) ||
+              {(isSuccess && statistics?.overall_stats?.bar_graph_data_with_profit?.parents) ||
                 (isSuccessStatPartner && statisticsPartner?.overall_statistics?.total_parents)}
               <span>
                 {(isSuccess && statistics?.daily_stats?.parent_growth_percentage) ||
@@ -126,7 +134,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
         <div className="col-xl-6 col-xxl-3">
-          <div className="count-card">
+          <div onClick={() => navigate('/children')} className="count-card">
             <div className="header">
               <img src={access} alt="" color="#38cb89" />
               <span>Barcha Bolalar</span>
@@ -161,6 +169,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
+      <ChartStats />
     </div>
   );
 };

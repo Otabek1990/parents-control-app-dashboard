@@ -4,18 +4,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
 
       span {
-        color: #8A94A6;
-        font-size: 20px;
+        color: #8a94a6;
+        font-size: 16px;
         font-weight: 600;
         line-height: 24px;
       }
     }
 
     .loader {
-      height: 72px;
+      height: 55px;
       border-radius: 15px;
       background-color: white;
       display: flex;
@@ -24,7 +24,7 @@
 
       .active {
         width: 40%;
-        height: 72px;
+        height: 55px;
         border-radius: 15px 0 0 15px;
         background: linear-gradient(90deg, #12d583 0%, #21eb66 100%);
         display: flex;
@@ -67,10 +67,11 @@
       transition: 0.2s all;
       background: white;
       border-radius: 15px;
-      padding: 24px;
+      padding: 16px;
+   
 
       .header {
-        margin-bottom: 24px;
+        margin-bottom: 15px;
 
         img {
           width: 32px;
@@ -84,7 +85,6 @@
           font-weight: 500;
           line-height: 20px;
         }
-      
       }
 
       .count {
@@ -95,6 +95,7 @@
         font-size: 32px;
         font-weight: 700;
         line-height: 32px;
+        
 
         span {
           color: #38cb89;
@@ -118,26 +119,51 @@
           padding-right: 14px;
           padding-top: 5px;
           padding-bottom: 5px;
-          background: #FAFBFC;
+          background: #fafbfc;
+        
           border-radius: 8px;
 
-          .one{
-            color: #B0B7C3;
-             font-size: 13px;
+          .one {
+            color: #b0b7c3;
+            font-size: 13px;
             font-weight: 500;
             line-height: 24px;
           }
-          .two{
-            color: #4E5D78;
-             font-size: 13px;
+          .two {
+            color: #4e5d78;
+            font-size: 13px;
             font-weight: 600;
             line-height: 24px;
           }
         }
       }
-      &:hover{
+      &:hover {
         transform: scale(1.03);
       }
+    }
+  }
+
+  .chart-stats-container {
+    margin-top: 20px;
+    width: 100%;
+    display: grid;
+    height: 500px;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    .bar-chart-card {
+      height: 100%;
+      background-color: white;
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+    }
+    .pie-chart-card {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
     }
   }
 }

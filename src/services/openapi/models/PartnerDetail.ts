@@ -25,17 +25,25 @@ export type PartnerDetail = {
   passport_seria?: string | null;
   passport_number?: number | null;
   passport_data?: string | null;
+  download_link?: string | null;
+
   // region: PartnerDetail.region;
   region: {
-    uz: string;
-    ru: string;
-    en: string;
+    id: number;
+    name: {
+      uz: string;
+      ru: string;
+      en: string;
+    };
   };
   // district: PartnerDetail.district;
   district: {
-    uz: string;
-    ru: string;
-    en: string;
+    id: number;
+    name: {
+      uz: string;
+      ru: string;
+      en: string;
+    };
   };
   created_at?: string;
 };
