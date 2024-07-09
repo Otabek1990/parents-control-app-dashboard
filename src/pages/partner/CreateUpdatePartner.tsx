@@ -30,9 +30,10 @@ type Props = {
 
 const CreateUpdatePartner = ({ id, refetch }: Props) => {
   const [formData, setFormData] = useState({
-    photo: null as File | null,
+    avatar: null as File | null,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const language=localStorage.getItem("language") || "uz"
   // -----------------------------------------
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     if (e.target.files && e.target.files[0]) {
       setFormData({
         ...formData,
-        photo: e.target.files[0],
+        avatar: e.target.files[0],
       });
       setImagePreview(URL.createObjectURL(e.target.files[0]));
     }
@@ -61,7 +62,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     }
   };
 
-  const getLegions = async () => {
+  const getRegions = async () => {
     try {
       let res = await BaseApiService.baseApiRegionListList();
       setRegions(res);
@@ -72,10 +73,11 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
 
   const showModal = async () => {
     setOpen(true);
-    getLegions();
+    getRegions();
     if (id) {
       try {
         let res = await PartnerService.partnerDetailNowRead(id as number);
+        getDistricts(res?.region?.id)
         form.setFieldsValue({
           ...res,
           birthday: res?.birthday || '2000-01-01',
@@ -83,7 +85,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
           username: res.username,
           fullname: res.fullname,
           passport_number: res.passport_number?.toString(),
-          region: 1,
+          region: res.region?.id || 1,
+          district: res?.district?.id || 1,
           
         });
         // getDistricts(res.region?.uz);
@@ -125,7 +128,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
   const onFinish = async (values: any) => {
     console.log(values);
     setLoading(true);
-    console.log(formData.photo);
+    console.log(formData.avatar);
     const formDat = new FormData();
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -140,12 +143,14 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
       }
     }
 
-    if (formData.photo) {
-      formDat.append('photo', formData.photo);
+    if (formData.avatar) {
+      formDat.append('avatar', formData.avatar);
     }
     for (let [key, value] of formDat.entries()) {
       console.log(`${key}: ${value}`);
     }
+    formDat.append('playstore_id', "uz.bosstracker.parent");
+
 
     try {
       const res: any = await (id
@@ -239,8 +244,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={8}>
-            <Col md={8}>
+          {/* <Row gutter={8}> */}
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Appstore Id')}
@@ -248,8 +253,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               >
                 <Input placeholder={t('Appstore Id')} size="large" />
               </Form.Item>
-            </Col>
-            <Col md={8}>
+            </Col> */}
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Playstore Id')}
@@ -257,8 +262,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               >
                 <Input placeholder={t('Playstore Id')} size="large" />
               </Form.Item>
-            </Col>
-            <Col md={8}>
+            </Col> */}
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Google play link'}
@@ -266,8 +271,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               >
                 <Input placeholder={'Google play link'} size="large" />
               </Form.Item>
-            </Col>
-            <Col md={8}>
+            </Col> */}
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Download link'}
@@ -275,15 +280,15 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               >
                 <Input placeholder={'Download link'} size="large" />
               </Form.Item>
-            </Col>
-          </Row>
+            </Col> */}
+          {/* </Row> */}
           <Row gutter={8}>
             <Col md={4}>
-              {/* <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} name="photo"> */}
+              {/* <Form.Item rules={[{ message: t('Please fill the field'), required: false }]} name="avatar"> */}
               <label
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                 className="custom-file-upload"
-                htmlFor="photo"
+                htmlFor="avatar"
               >
                 <img src={uploadImageIcon} alt="upload icon" />
                 <span>{t('Upload image')}</span>
@@ -291,8 +296,8 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
               <Input
                 onChange={handlePhotoChange}
                 type="file"
-                name="photo"
-                id="photo"
+                name="avatar"
+                id="avatar"
                 style={{ display: 'none' }}
                 size="large"
               />

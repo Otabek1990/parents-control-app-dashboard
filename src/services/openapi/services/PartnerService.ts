@@ -106,54 +106,54 @@ export class PartnerService {
   }
 
   /**
-   * Partner Put(Put) API view
-   * @param guid
-   * @returns PartnerUpdate
-   * @throws ApiError
-   */
-  public static partnerUpdateNowRead(guid: string): CancelablePromise<PartnerUpdate> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/partner/update/{guid}/now/',
-      path: {
-        guid: guid,
-      },
-    });
-  }
+  //  * Partner Put(Put) API view
+  //  * @param guid
+  //  * @returns PartnerUpdate
+  //  * @throws ApiError
+  //  */
+  // public static partnerUpdateNowRead(guid: string): CancelablePromise<PartnerUpdate> {
+  //   return __request(OpenAPI, {
+  //     method: 'GET',
+  //     url: '/partner/update/{guid}/now/',
+  //     path: {
+  //       guid: guid,
+  //     },
+  //   });
+  // }
 
   /**
    * Partner Put(Put) API view
-   * @param guid
+   * @param id
    * @param data
    * @returns PartnerUpdate
    * @throws ApiError
    */
-  public static partnerUpdateNowUpdate(guid: string | number, data: FormData): CancelablePromise<PartnerUpdate> {
+  public static partnerUpdateNowUpdate(id: string | number, data: FormData): CancelablePromise<PartnerUpdate> {
     return __request(OpenAPI, {
       method: 'PUT',
-      url: '/partner/update/{guid}/',
+      url: `/admin-panel-partner/update/${id}/`,
       path: {
-        guid: guid,
+        id: id,
       },
       body: data,
     });
   }
 
-  /**
-   * Partner Put(Put) API view
-   * @param guid
-   * @param data
-   * @returns PartnerUpdate
-   * @throws ApiError
-   */
-  public static partnerUpdateNowPartialUpdate(guid: string, data: FormData): CancelablePromise<PartnerUpdate> {
-    return __request(OpenAPI, {
-      method: 'PATCH',
-      url: '/partner/update/{guid}/now/',
-      path: {
-        guid: guid,
-      },
-      body: data,
-    });
-  }
+  // /**
+  //  * Partner Put(Put) API view
+  //  * @param guid
+  //  * @param data
+  //  * @returns PartnerUpdate
+  //  * @throws ApiError
+  //  */
+  // public static partnerUpdateNowPartialUpdate(guid: string, data: FormData): CancelablePromise<PartnerUpdate> {
+  //   return __request(OpenAPI, {
+  //     method: 'PATCH',
+  //     url: '/partner/update/{guid}/now/',
+  //     path: {
+  //       guid: guid,
+  //     },
+  //     body: data,
+  //   });
+  // }
 }

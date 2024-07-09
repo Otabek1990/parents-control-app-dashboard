@@ -3,20 +3,21 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PartnerCreate = {
-  appstore_id: string;
   birthday: string | null;
   district: number;
-  download_link: string;
+  // download_link: string;
+  // appstore_id: string;
+  // google_play_link: string;
+  playstore_id: string;
   fullname: string;
   gender: number;
-  google_play_link: string;
   passport_data: string | null;
   passport_number: string;
   passport_seria: string;
   password: string;
   percentage_of_work: number;
-  photo: File | undefined; // Adjust based on actual type
-  playstore_id: string;
+  // photo: File | undefined; // Adjust based on actual type
+  avatar: File | undefined; // Adjust based on actual type
   region: number;
   username: string;
 };

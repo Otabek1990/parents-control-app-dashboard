@@ -19,16 +19,20 @@ type Props = {
 const CreateUpdateBanner = ({ id, refetch }: Props) => {
   const [formData, setFormData] = useState({
     photo: null as File | null,
+    video: null as File | null,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [videoPreview, setVideoPreview] = useState<string | null>(null);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFormData({
         ...formData,
-        photo: e.target.files[0],
+        [e.target.name]: e.target.files[0],
       });
-      setImagePreview(URL.createObjectURL(e.target.files[0]));
+      e.target.name === 'photo'
+        ? setImagePreview(URL.createObjectURL(e.target.files[0]))
+        : setVideoPreview(URL.createObjectURL(e.target.files[0]));
     }
   };
   // -----------------------------------------
@@ -50,20 +54,25 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
   const onFinish = async (values: BannerCreate) => {
     // console.log(values);
     const formdata = new FormData();
-    
+
     formdata.append('title', values.title);
     formdata.append('description', values.description);
     formdata.append('url', values.url);
     if (formData.photo) {
       formdata.append('photo', formData.photo);
     }
-    console.log("salom")
+    if (formData.video) {
+      formdata.append('video', formData.video);
+    }
+    console.log('salom');
     setLoading(true);
     try {
       const res: any = await BannerService.bannerCreate(formdata);
       form.resetFields();
       message.success(res.message);
       setOpen(false);
+      setImagePreview(null)
+      setVideoPreview(null)
       refetch({ throwOnError: true });
     } catch (e: any) {
       errorHandler(e?.body);
@@ -118,24 +127,43 @@ const CreateUpdateBanner = ({ id, refetch }: Props) => {
             </Col>
             <Col md={8}>
               {/* <Form.Item rules={[{ message: t('Please upload Photo'), required: false }]} name="photo"> */}
-                <label style={{marginBottom:"15px"}} className="custom-file-upload" htmlFor="photo">
-               
-                  {t(' Upload Photo')}
-                </label>
-                <Input
-                  onChange={handlePhotoChange}
-                  type="file"
-                  name="photo"
-                  id="photo"
-                  style={{ display: 'none' }}
-                  size="large"
-                />
-                {imagePreview && (
-                  <div>
-                    <img src={imagePreview} alt="Image Preview" style={{ maxWidth: '200px', marginTop: '10px' }} />
-                  </div>
-                )}
-             
+              <label style={{ marginBottom: '15px' }} className="custom-file-upload" htmlFor="photo">
+                {t('Upload Photo')}
+              </label>
+              <Input
+                onChange={handlePhotoChange}
+                type="file"
+                name="photo"
+                id="photo"
+                style={{ display: 'none' }}
+                size="large"
+                accept="image/*"
+              />
+              {imagePreview && (
+                <div>
+                  <img src={imagePreview} alt="Image Preview" style={{ maxWidth: '200px', marginTop: '10px' }} />
+                </div>
+              )}
+            </Col>
+            <Col md={8}>
+              {/* <Form.Item rules={[{ message: t('Please upload Photo'), required: false }]} name="photo"> */}
+              <label style={{ marginBottom: '15px' }} className="custom-file-upload" htmlFor="video">
+                {t('Upload Video')}
+              </label>
+              <Input
+                onChange={handlePhotoChange}
+                type="file"
+                name="video"
+                id="video"
+                style={{ display: 'none' }}
+                size="large"
+                accept="video/*"
+              />
+              {videoPreview && (
+                <div>
+                  <video controls src={videoPreview} style={{ maxWidth: '300px', marginTop: '10px' }}></video>
+                </div>
+              )}
             </Col>
           </Row>
 

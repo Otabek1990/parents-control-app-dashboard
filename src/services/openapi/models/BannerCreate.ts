@@ -8,4 +8,5 @@ export type BannerCreate = {
   description: string;
   url: string;
   photo: File | null;
+  video?: File | null;
 };
