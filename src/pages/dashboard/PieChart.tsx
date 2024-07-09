@@ -66,11 +66,11 @@ const PieChart: React.FC = () => {
       <div className="pie-chart-bottom">
         <div className="pie-chart-title">
           <div className="circle-div"></div>
-          <span>Biz va hamkor</span>
+          <span>Biz</span>
         </div>
         <div className="pie-chart-title">
           <div style={{ backgroundColor: '#01D25B' }} className="circle-div"></div>
-          <span>Hamkor agent</span>
+          <span>Hamkor</span>
         </div>
       </div>
     </div>

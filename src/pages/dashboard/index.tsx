@@ -23,8 +23,7 @@ const Dashboard: React.FC = (): JSX.Element => {
     queryKey: ['statisticsPartner'],
     queryFn: () => StatisticsService.statisticsPartnerList(),
   });
-  console.log(statisticsPartner);
-  console.log(isSuccess);
+
   const { data: plans, isSuccess: isSuccessPlans } = useQuery({
     queryKey: ['plans'],
     queryFn: () => PlanService.planList(),

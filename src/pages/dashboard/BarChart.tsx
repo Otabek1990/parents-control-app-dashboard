@@ -1,46 +1,55 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
-import { EChartsOption } from 'echarts';
-import { StatisticsService } from 'services/openapi';
+
 import { useQuery } from '@tanstack/react-query';
+import { PartnerDetailService } from 'services/openapi/services/PartnerDetailService';
 const BarChart: React.FC = () => {
-  const { data: statistics } = useQuery({
-    queryKey: ['statistics'],
-    queryFn: () => StatisticsService.statisticsList(),
+
+  const { data } = useQuery({
+    queryKey: ['partnerStats'],
+    queryFn: () => PartnerDetailService.partnerDetailList(),
   });
 
-  const option: EChartsOption = {
-    // title: {
-    //   text: 'Bar Chart Example'
-    // },
-    tooltip: {
-      trigger: 'axis',
-    },
+  console.log(data);
+  const usernames = data?.map((item) => item.username);
+  const profits = data?.map((item) => item.total_profit);
+  console.log(usernames);
+  console.log(profits);
+
+  const option = {
     xAxis: {
       type: 'category',
-      data: ['Hamkorlar'],
+      data: usernames,
     },
     yAxis: {
       type: 'value',
     },
-
     series: [
       {
-        name: 'Jami',
+        data: profits,
         type: 'bar',
-        data: [
-          statistics?.overall_stats?.bar_graph_data_with_profit?.partners,
-          // statistics?.overall_stats?.bar_graph_data_with_profit?.parents,
-          // statistics?.overall_stats?.all_children,
-        ],
-        itemStyle: {
-          color: '#DFE2E7',
-        },
       },
     ],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow',
+      },
+    },
+    // dataZoom: [
+    //   {
+    //     type: 'slider',
+    //     show: true,
+    //     xAxisIndex: [0],
+    //     start: 0,
+    //     end: 100,
+    //   },
+    // ],
   };
 
-  return <ReactECharts option={option} style={{ height: 400, width: '240px', minWidth: '200px' }} />;
+  return <ReactECharts option={option} style={{ height: 400, width: '90%', minWidth: '100px' }} />;
+
+
 };
 
 export default BarChart;

@@ -1,4 +1,4 @@
-import { EyeOutlined } from '@ant-design/icons';
+import { CopyOutlined, EyeOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
 import { Button, Modal, Card, Descriptions, Typography } from 'antd';
 import { t } from 'i18next';
@@ -13,6 +13,14 @@ type Props = {
 const PartnerInformation = ({ id }: Props) => {
   const [partner, setPartner] = useState<PartnerDetail>();
   const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState<boolean>(false);
+
+  const handleCopy = (link:string) => {
+    navigator.clipboard.writeText(link).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // 2 soniyadan keyin statusni qaytaradi
+    });
+  };
 
   const handleOpen = async () => {
     setOpen(true);
@@ -43,7 +51,7 @@ const PartnerInformation = ({ id }: Props) => {
         </Typography.Title>
         <Card style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}>
           <Descriptions column={1} style={{ marginTop: 20 }}>
-            {/* <Descriptions.Item label={t('Username')}>{partner?.username || '-'}</Descriptions.Item> */}
+            <Descriptions.Item label={t('Username')}>{partner?.username || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('F.I.O')}>{partner?.fullname}</Descriptions.Item>
             {/* <Descriptions.Item label={t('Name')}>{partner?.name}</Descriptions.Item>
             <Descriptions.Item label={t('Surname')}>{partner?.surname}</Descriptions.Item>
@@ -61,6 +69,8 @@ const PartnerInformation = ({ id }: Props) => {
               <a href={partner?.download_link || ''} target="_blank">
                 {partner?.download_link || ''}
               </a>{' '}
+              <CopyOutlined  onClick={()=>handleCopy(partner?.download_link || "")} style={{ cursor: 'pointer', marginLeft: '10px' }} />
+              {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied!</span>}
             </Descriptions.Item>
             <Descriptions.Item label={t('Appstore Id')}>{partner?.appstore_id || ''} </Descriptions.Item>
             <Descriptions.Item label={t('Playstore Id')}>{partner?.playstore_id || '-'} </Descriptions.Item>
