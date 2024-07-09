@@ -28,12 +28,12 @@ const formatDate = (date: Date): string => {
 function BarChartCard() {
   const currentDate = new Date();
   const role = localStorage.getItem('role');
-  const { data: statistics, isSuccess } = useQuery({
+  const { data: statistics } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  const { data: partnerStatistics, isSuccess: isSuccessPartnerStatistics } = useQuery({
-    queryKey: ['partnerStatisticx'],
+  const { data: partnerStatistics} = useQuery({
+    queryKey: ['partnerStatistic'],
     queryFn: () => StatisticsService.statisticsPartnerList(),
   });
 

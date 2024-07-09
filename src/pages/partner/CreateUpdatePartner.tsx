@@ -33,7 +33,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     avatar: null as File | null,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const language=localStorage.getItem("language") || "uz"
+  
   // -----------------------------------------
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
