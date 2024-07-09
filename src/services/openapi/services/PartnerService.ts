@@ -26,21 +26,7 @@ export class PartnerService {
     });
   }
 
-  /**
-   * Partner Delete(Delete) API view
-   * @param guid
-   * @returns PartnerList
-   * @throws ApiError
-   */
-  public static partnerDeleteNowRead(guid: string | number): CancelablePromise<PartnerList> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/partner/delete/{guid}/now/',
-      path: {
-        guid: guid,
-      },
-    });
-  }
+
 
   /**
    * Partner Delete(Delete) API view
@@ -48,12 +34,12 @@ export class PartnerService {
    * @returns void
    * @throws ApiError
    */
-  public static partnerDeleteNowDelete(guid: string | number): CancelablePromise<void> {
+  public static partnerDeleteNowDelete(id: string | number): CancelablePromise<void> {
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: '/admin-panel-partner/delete/{guid}/',
+      url: `/admin-panel-partner/delete/{id}/`,
       path: {
-        guid: guid,
+        id: id,
       },
     });
   }
@@ -96,7 +82,7 @@ export class PartnerService {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/admin-panel-partner/list/',
-      // /admin-panel-partner/list/
+     
       query: {
         search: search,
         limit: limit,
@@ -105,21 +91,7 @@ export class PartnerService {
     });
   }
 
-  /**
-  //  * Partner Put(Put) API view
-  //  * @param guid
-  //  * @returns PartnerUpdate
-  //  * @throws ApiError
-  //  */
-  // public static partnerUpdateNowRead(guid: string): CancelablePromise<PartnerUpdate> {
-  //   return __request(OpenAPI, {
-  //     method: 'GET',
-  //     url: '/partner/update/{guid}/now/',
-  //     path: {
-  //       guid: guid,
-  //     },
-  //   });
-  // }
+
 
   /**
    * Partner Put(Put) API view
@@ -139,21 +111,5 @@ export class PartnerService {
     });
   }
 
-  // /**
-  //  * Partner Put(Put) API view
-  //  * @param guid
-  //  * @param data
-  //  * @returns PartnerUpdate
-  //  * @throws ApiError
-  //  */
-  // public static partnerUpdateNowPartialUpdate(guid: string, data: FormData): CancelablePromise<PartnerUpdate> {
-  //   return __request(OpenAPI, {
-  //     method: 'PATCH',
-  //     url: '/partner/update/{guid}/now/',
-  //     path: {
-  //       guid: guid,
-  //     },
-  //     body: data,
-  //   });
-  // }
+ 
 }

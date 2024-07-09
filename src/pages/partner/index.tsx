@@ -21,9 +21,9 @@ const Partners = () => {
     queryFn: () => PartnerService.partnerListList(),
   });
 
-  const deleteAgent = async (guid: string | number) => {
+  const deletePartner = async (id: string | number) => {
     try {
-      await PartnerService.partnerDeleteNowDelete(guid);
+      await PartnerService.partnerDeleteNowDelete(id);
       refetch();
     } catch (error: any) {
       errorHandler(error?.body?.detail);
@@ -106,7 +106,7 @@ const Partners = () => {
           <ConfirmModal
             btnType="dashed"
             icon={<DeleteOutlined />}
-            handleSubmit={() => deleteAgent(record?.id as string | number)}
+            handleSubmit={() => deletePartner(record?.id as string | number)}
             title={t('Delete partner')}
           />
         </Space>

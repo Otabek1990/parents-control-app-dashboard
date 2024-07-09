@@ -1,8 +1,3 @@
-/* generated using openapi-typescript-codegen -- do no edit */
-/* istanbul ignore file */
-/* tslint:disable */
-/* eslint-disable */
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -10,80 +5,49 @@ import { request as __request } from '../core/request';
 import { PlanCreate } from '../models/PlanCreate';
 import { PlanList } from '../models/PlanList';
 
+const getRoleFromLocalStorage = (): string | null => {
+  return localStorage.getItem('role');
+};
+
+const isAdmin = (): boolean => {
+  const role = getRoleFromLocalStorage();
+  return role === 'ADMIN';
+};
+
 export class PlanService {
   /**
-     * Banner List(List) API view
-
-     * @returns any 
-     * @throws ApiError
-     */
+   * Get list of plans. Requires 'admin' role.
+   * @returns Array of PlanList
+   * @throws Error if unauthorized or API error
+   */
   public static planList(): CancelablePromise<Array<PlanList>> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/admin-panel-statistics/client-adding-plans/',
-    });
+    if (isAdmin()) {
+      return __request(OpenAPI, {
+        method: 'GET',
+        url: '/admin-panel-statistics/client-adding-plans/',
+      });
+    }
+    else {
+      return Promise.reject(new Error('Unauthorized access')) as CancelablePromise<Array<PlanList>>;
+    }
   }
+
   /**
-   * Banner Create(Post) api view
-   * @param data
-   * @returns ParentCreate
-   * @throws ApiError
+   * Create a new plan. Requires 'admin' role.
+   * @param data PlanCreate object
+   * @returns Created PlanCreate object
+   * @throws Error if unauthorized or API error
    */
   public static planCreate(data: PlanCreate): CancelablePromise<PlanCreate> {
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/admin-panel-statistics/client-adding-plans/',
-      body: data,
-    });
+    if (isAdmin()) {
+      return __request(OpenAPI, {
+        method: 'POST',
+        url: '/admin-panel-statistics/client-adding-plans/',
+        body: data,
+      });
+    }
+    else {
+      return Promise.reject(new Error('Unauthorized access')) as CancelablePromise<PlanCreate>;
+    }
   }
-
-  /**
-   * Banner Delete(Delete) API view
-   * @param id
-   * @returns ParentList
-   * @throws ApiError
-   */
-  //   public static bannerDelete(id: number): CancelablePromise<BannerList> {
-  //     return __request(OpenAPI, {
-  //       method: 'DELETE',
-  //       url: `/banner/${id}/`,
-  //       path: {
-  //         id: id,
-  //       },
-  //     });
-  //   }
-
-  /**
-//    * Banner Detail(Detail) API view
-//    * @param id
-//    * @returns ParentDetail
-//    * @throws ApiError
-//    */
-  //   public static bannerDetail(id: number): CancelablePromise<BannerDetail> {
-  //     return __request(OpenAPI, {
-  //       method: 'GET',
-  //       url: `/banner/${id}/`,
-  //       path: {
-  //         id: id,
-  //       },
-  //     });
-  //   }
-
-  //   /**
-  //    * Banner Child Code Create(Put) api view
-  //    * @param id
-  //    * @param data
-  //    * @returns ParenChildCodeCreate
-  //    * @throws ApiError
-  //    */
-  //   public static bannerUpdate(id: number, data: BannerCreate): CancelablePromise<BannerCreate> {
-  //     return __request(OpenAPI, {
-  //       method: 'PUT',
-  //       url: `/banner/${id}/`,
-  //       path: {
-  //         id: id,
-  //       },
-  //       body: data,
-  //     });
-  //   }
 }

@@ -39,7 +39,9 @@ export type StatisticsAdmin = {
   };
 };
 
+
 export type StatisticsPartner = {
+  partner:string;
   daily_statistics: {
     parent_growth: number;
     child_growth: number;

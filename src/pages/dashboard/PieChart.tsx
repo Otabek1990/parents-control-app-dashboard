@@ -13,14 +13,20 @@ const PieChart: React.FC = () => {
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
+  console.log(statistics);
+  const ourProfit = isSuccess
+    ? statistics?.overall_stats?.total_profit -
+      statistics?.overall_stats?.bar_graph_data_with_profit?.total_partner_profit
+    : 0;
+  const partnerProfit = isSuccess ? statistics?.overall_stats?.bar_graph_data_with_profit?.total_partner_profit : 0;
   const data: ChartData<'doughnut'> = {
-    labels: ['Biz va hamkor', 'Hamkor agent',"data"],
+    labels: ['Biz', 'Hamkor'],
     datasets: [
       {
-        data: [25000, 35000,50000],
-        backgroundColor: ['#FFAB00',"#FAFBFC", '#01D25B'],
-        hoverBackgroundColor: ['#FFB733', '#33FF33',"#FAFBFC"],
-        borderColor: ['#FFFFFF', '#FFFFFF',"#FAFBFC"],
+        data: [ourProfit,partnerProfit],
+        backgroundColor: ['#ffab00', '#01D25B'],
+        hoverBackgroundColor: ['#FFB733', '#33FF33'],
+        borderColor: ['#FFFFFF', '#FFFFFF'],
         borderWidth: 5,
       },
     ],
@@ -57,10 +63,10 @@ const PieChart: React.FC = () => {
         }}
       >
         <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
-            {isSuccess && statistics?.overall_stats?.circle_graph_data}
+          {isSuccess && statistics?.overall_stats?.circle_graph_data}
         </div>
         <div style={{ fontSize: '16px', color: 'gray' }}>
-        {isSuccess && statistics?.overall_stats?.total_amount_paid_to_partners}
+          {isSuccess && statistics?.overall_stats?.total_amount_paid_to_partners}
         </div>
       </div>
       <div className="pie-chart-bottom">

@@ -26,10 +26,15 @@ const formatDate = (date: Date): string => {
 };
 
 function BarChartCard() {
-    const currentDate = new Date();
+  const currentDate = new Date();
+  const role = localStorage.getItem('role');
   const { data: statistics, isSuccess } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
+  });
+  const { data: partnerStatistics, isSuccess: isSuccessPartnerStatistics } = useQuery({
+    queryKey: ['partnerStatisticx'],
+    queryFn: () => StatisticsService.statisticsPartnerList(),
   });
 
   const [currentId, setCurrentId] = useState<number>(1);
@@ -47,14 +52,21 @@ function BarChartCard() {
       id: 3,
     },
   ];
+  const totalProfit =
+    role === 'ADMIN' ? statistics?.overall_stats?.total_profit : partnerStatistics?.overall_statistics?.total_profit;
+  const perGrowth =
+    role === 'ADMIN'
+      ? statistics?.daily_stats?.partner_growth_percentage
+      : partnerStatistics?.daily_statistics?.parent_growth;
+
   return (
     <div className="bar-chart-card">
       <div className="bar-header">
         <div className="bar-header-left">
-          <span> {formatDate(currentDate)}</span>
+          <span> -{formatDate(currentDate)}</span>
 
           <h3>
-            {isSuccess && statistics?.overall_stats?.total_profit} so’m <span>0%</span>
+            {totalProfit} so’m <span>{perGrowth}%</span>
           </h3>
         </div>
         <div className="bar-header-right">
