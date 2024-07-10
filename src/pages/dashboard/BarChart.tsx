@@ -19,7 +19,7 @@ const BarChart: React.FC = () => {
 
   const partner = isSuccessPartnerStatistics ? partnerStatistics?.partner : '';
   const partnerProfit = isSuccessPartnerStatistics
-    ? partnerStatistics?.overall_statistics?.bar_graph_data_with_profit?.total_partner_profit
+    ? partnerStatistics?.overall_statistics?.bar_graph_data_with_profit?.parents
     : '';
 
   
