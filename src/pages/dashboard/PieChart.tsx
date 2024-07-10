@@ -13,7 +13,7 @@ const PieChart: React.FC = () => {
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  console.log(statistics);
+  
   const ourProfit = isSuccess
     ? statistics?.overall_stats?.total_profit -
       statistics?.overall_stats?.bar_graph_data_with_profit?.total_partner_profit

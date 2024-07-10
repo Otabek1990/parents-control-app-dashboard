@@ -22,7 +22,7 @@ const BarChart: React.FC = () => {
     ? partnerStatistics?.overall_statistics?.bar_graph_data_with_profit?.total_partner_profit
     : '';
 
-  console.log(partnerStatistics);
+  
 
   const partnerOption = {
     xAxis: {
@@ -46,7 +46,7 @@ const BarChart: React.FC = () => {
     },
   };
   const usernames = data?.map((item) => item.username);
-  const profits = data?.map((item) => item.total_profit);
+  const profits = data?.map((item) => item.parent_count);
   const adminOption = {
     xAxis: {
       type: 'category',
@@ -54,6 +54,7 @@ const BarChart: React.FC = () => {
     },
     yAxis: {
       type: 'value',
+      minInterval: 1, 
     },
     series: [
       {
