@@ -2,18 +2,7 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { genders } from '@assets/data';
 import { errorHandler } from '@config/axios_config';
 import { UseQueryResult } from '@tanstack/react-query';
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Row,
-  Select,
-  message,
-} from 'antd';
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Select, message } from 'antd';
 import { useState } from 'react';
 import { BaseApiService, PartnerService } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
@@ -21,6 +10,7 @@ import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import uploadImageIcon from '@assets/icons/image-download.svg';
+import { MonthlyPercentageService } from 'services/openapi/services/MonthlyPercentage';
 // type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 type Props = {
@@ -33,7 +23,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     avatar: null as File | null,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  
+
   // -----------------------------------------
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -77,7 +67,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     if (id) {
       try {
         let res = await PartnerService.partnerDetailNowRead(id as number);
-        getDistricts(res?.region?.id)
+        getDistricts(res?.region?.id);
         form.setFieldsValue({
           ...res,
           birthday: res?.birthday || '2000-01-01',
@@ -87,7 +77,6 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
           passport_number: res.passport_number?.toString(),
           region: res.region?.id || 1,
           district: res?.district?.id || 1,
-          
         });
         // getDistricts(res.region?.uz);
       } catch (e: any) {
@@ -149,8 +138,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     for (let [key, value] of formDat.entries()) {
       console.log(`${key}: ${value}`);
     }
-    formDat.append('playstore_id', "uz.bosstracker.parent");
-
+    formDat.append('playstore_id', 'uz.bosstracker.parent');
 
     try {
       const res: any = await (id
@@ -158,6 +146,21 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         : PartnerService.partnerCreateCreate(formDat));
       form.resetFields();
       message.success(res.message);
+      if (!id) {
+        const arr = [
+          {
+            partner: res?.user?.id,
+            month: 'January',
+            percentage: 48,
+          },
+        ];
+        try {
+          const perRes = await MonthlyPercentageService.monthlyPercentageCreate(arr);
+          console.log(perRes);
+        } catch (error) {
+          console.log('percentageda hatolik!');
+        }
+      }
       setOpen(false);
       refetch({ throwOnError: true });
     } catch (e: any) {
@@ -245,7 +248,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
             </Col>
           </Row>
           {/* <Row gutter={8}> */}
-            {/* <Col md={8}>
+          {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Appstore Id')}
@@ -254,7 +257,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 <Input placeholder={t('Appstore Id')} size="large" />
               </Form.Item>
             </Col> */}
-            {/* <Col md={8}>
+          {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Playstore Id')}
@@ -263,7 +266,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 <Input placeholder={t('Playstore Id')} size="large" />
               </Form.Item>
             </Col> */}
-            {/* <Col md={8}>
+          {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Google play link'}
@@ -272,7 +275,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 <Input placeholder={'Google play link'} size="large" />
               </Form.Item>
             </Col> */}
-            {/* <Col md={8}>
+          {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Download link'}
@@ -361,17 +364,40 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
 
             <Col md={8}>
               <Form.Item
-                rules={[{ message: t('Please fill the field'), required: true }]}
+                rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Work percentage')}
-                name="percentage_of_work"
+                // name="percentage_of_work"
+               
               >
-                <InputNumber
-                  type="number"
-                  controls={false}
-                  placeholder={t('Work percentage')}
-                  size="large"
-                  className="w-100"
-                />
+                <div  style={{ display: 'flex',gap:"5px" }}>
+                  <InputNumber
+                    type="number"
+                    controls={false}
+                    placeholder={t('Work percentage')}
+                    size='large'
+                    className="w-100"
+                  />
+                  <Select
+                    showSearch
+                     size='large'
+                    placeholder={t('Select a month')}
+                    filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                    options={[
+                      { value: 'Yanvar', label: 'Yanvar' },
+                      { value: 'Fevral', label: 'Fevral' },
+                      { value: 'Mart', label: 'Mart' },
+                      { value: 'April', label: 'April' },
+                      { value: 'May', label: 'May' },
+                      { value: 'Iyun', label: 'Iyun' },
+                      { value: 'Iyul', label: 'Iyul' },
+                      { value: 'Avgust', label: 'Avgust' },
+                      { value: 'Sentyabr', label: 'Sentyabr' },
+                      { value: 'Oktyabr', label: 'Oktyabr' },
+                      { value: 'Noyabr', label: 'Noyabr' },
+                      { value: 'Dekabr', label: 'Dekabr' },
+                    ]}
+                  />
+                </div>
               </Form.Item>
             </Col>
             <Col md={8}>
