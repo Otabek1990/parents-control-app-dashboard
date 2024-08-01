@@ -130,5 +130,7 @@
   "Payment status": "To'lov holati",
   "Amount": "Miqdori",
    "Paid":"To'langan",
-  "Unpaid":"To'lanmagan"
+  "Unpaid":"To'lanmagan",
+  "Select a month":"Oyni tanlang"
+
 }

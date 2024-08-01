@@ -21,3 +21,28 @@
  
   border-style: solid;
 }
+.percentage-list {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0;            /* Remove default padding */
+  margin: 0;             /* Remove default margin */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 columns */
+  grid-auto-rows: auto;  /* Rows will automatically size based on content */
+  gap: 10px;             /* Gap between items */
+  margin-top: 10px;
+}
+
+.percentage-list > li {
+  background-color: #f0f0f0; /* Example background color */
+  padding: 2px;             /* Space inside each item */
+  border: 1px solid #ccc;    
+  text-align: center;        
+  border-radius: 4px;    
+  font-size: 12px;  
+  display: flex; 
+}
+.text-sm{
+  font-size: 15px;
+  text-transform: capitalize;
+  word-break: keep-all;
+}

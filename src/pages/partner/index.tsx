@@ -12,9 +12,13 @@ import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 
 import TitleCard from '@components/core/TitleCard';
+import { months } from './months';
 
 const Partners = () => {
   const { t } = useTranslation();
+  const time = new Date();
+  const month = months[time.getMonth()];
+  console.log(month);
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['agents'],
@@ -32,7 +36,7 @@ const Partners = () => {
 
   const columns: ColumnsType<PartnerList> = [
     {
-      title: <span className="text-uppercase">id</span>,
+      title: <span className=" text-sm">id</span>,
       key: 'id',
       render: (record) => {
         let index = data?.results?.indexOf(record);
@@ -40,64 +44,73 @@ const Partners = () => {
       },
     },
     {
-      title: <span className="text-uppercase">{t('Username')}</span>,
+      title: <span className=" text-sm">{t('Username')}</span>,
       key: 'username',
       dataIndex: 'username',
     },
     {
-      title: <span className="text-uppercase">{t('F.I.O')}</span>,
+      title: <span className=" text-sm">{t('F.I.O')}</span>,
       key: 'fullname',
       dataIndex: 'fullname',
     },
     // {
-    //   title: <span className="text-uppercase">{t('Name')}</span>,
+    //   title: <span className=" text-sm">{t('Name')}</span>,
     //   key: 'name',
     //   dataIndex: 'name',
     // },
     // {
-    //   title: <span className="text-uppercase">{t('Surname')}</span>,
+    //   title: <span className=" text-sm">{t('Surname')}</span>,
     //   key: 'surname',
     //   render: (record: PartnerList) => {
     //     return record?.surname;
     //   },
     // },
     // {
-    //   title: <span className="text-uppercase">{t('Middlename')}</span>,
+    //   title: <span className=" text-sm">{t('Middlename')}</span>,
     //   key: 'middle_name',
     //   render: (record: PartnerList) => {
     //     return record?.middle_name;
     //   },
     // },
     {
-      title: <span className="text-uppercase">{t('Birthday')}</span>,
+      title: <span className=" text-sm">{t('Birthday')}</span>,
       key: 'birthday',
       render: (record: PartnerList) => {
         return record?.birthday || '-';
       },
     },
     {
-      title: <span className="text-uppercase">{t('Appstore Id')}</span>,
+      title: <span className=" text-sm">{t('Appstore Id')}</span>,
       key: 'appstore_id',
       render: (record: PartnerList) => {
         return record?.appstore_id || '-';
       },
     },
     {
-      title: <span className="text-uppercase">{t('Playstore Id')}</span>,
+      title: <span className=" text-sm">{t('Playstore Id')}</span>,
       key: 'playstore_id',
       render: (record: PartnerList) => {
         return record?.playstore_id || '-';
       },
     },
+    // {
+    //   title: <span className=" text-sm">{t('Work percentage')}</span>,
+    //   dataIndex: 'percentage_of_work',
+    //   key: 'percentage_of_work',
+    //   render: (record) => record + '%',
+    // },
     {
-      title: <span className="text-uppercase">{t('Work percentage')}</span>,
-      dataIndex: 'percentage_of_work',
-      key: 'percentage_of_work',
-      render: (record) => record + '%',
+      title: <span className=" text-sm">{t('Work percentage')}</span>,
+      dataIndex: 'monthly_percentages',
+      key: 'monthly_percentages',
+      render: (record) => {
+        const hasPercent = record.length && record.find((item: { month: string; }) => item.month === month);
+        return hasPercent ? `${hasPercent?.percentage}%` : '50%';
+      },
     },
 
     {
-      title: <span className="text-uppercase "> {t('Actions')} </span>,
+      title: <span className=" text-sm "> {t('Actions')} </span>,
       key: 'action',
       render: (record: PartnerList) => (
         <Space size="middle">
