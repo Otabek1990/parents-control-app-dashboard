@@ -164,25 +164,27 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         ? PartnerService.partnerUpdateNowUpdate(id as string | number, formDat)
         : PartnerService.partnerCreateCreate(formDat));
       form.resetFields();
-      message.success(res.message);
       if (!id) {
-       
-        const arr=percentages.map(item=>{
+        
+        const arr=percentages.length 
+        ? percentages.map(item=>{
           return {
             ...item,
             partner:res?.user?.id
           }
         })
+        :[]
         console.log(arr)
         try {
           const perRes = await MonthlyPercentageService.monthlyPercentageCreate(arr);
+          message.success(res.message);
           console.log(perRes);
+          setOpen(false);
         } catch (error) {
           alert('Ish foizi qoshishda hatolik!');
         }
       }
       
-      setOpen(false);
       refetch({ throwOnError: true });
     } catch (e: any) {
       errorHandler(e?.body);
