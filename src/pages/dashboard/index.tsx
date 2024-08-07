@@ -30,7 +30,7 @@ const Dashboard: React.FC = (): JSX.Element => {
   });
 
   return (
-    <div className="dashboard-wrapper">
+    <div  className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
       {/* {role === 'ADMIN' && ( */}
         <div className="d-loader">

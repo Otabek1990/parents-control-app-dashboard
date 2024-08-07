@@ -1,4 +1,5 @@
 .dashboard-wrapper {
+  
   .d-loader {
     .loader-header {
       display: flex;
@@ -143,17 +144,23 @@
 
   .chart-stats-container {
     margin-top: 20px;
+    
     width: 100%;
     display: grid;
     height: 500px;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
+    @media screen and (max-width:767px) {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
     .bar-chart-card {
       height: 100%;
       background-color: white;
       border-radius: 16px;
       padding: 20px;
       width: 100%;
+     
       .bar-header {
         width: 100%;
         display: flex;
@@ -168,11 +175,17 @@
             color:#B0B7C3;
             font-weight: 500;
             font-size: 18px;
+            @media screen and (max-width:767px) {
+             font-size: 14px;
+            }
           }
           h3 {
             color: #4e5d78;
             font-size: 28px;
             font-weight: bold;
+            @media screen and (max-width:767px) {
+              font-size: 20px;
+            }
 
             span {
               color: #38cb89;
@@ -190,6 +203,9 @@
           display: flex;
           // align-items: center;
           gap: 2px;
+          @media screen and (max-width:767px) {
+            width: 60%
+          }
           button {
             background-color: transparent;
             border-radius: 8px;
@@ -239,3 +255,4 @@
     }
   }
 }
+

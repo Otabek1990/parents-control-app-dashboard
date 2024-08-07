@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^13.2.2",
     "react-input-mask": "^3.0.0-alpha.2",
+    "react-responsive": "^10.0.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

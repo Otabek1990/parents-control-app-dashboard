@@ -64,3 +64,17 @@
     box-shadow: 1px 1px 1px 1px white;
   }
 }
+.demo-logo-vertical {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+}
+.sidebar-logo-cls {
+  color: #377dff;
+  font-family: Rammetto One;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

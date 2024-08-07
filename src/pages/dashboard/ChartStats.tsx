@@ -4,7 +4,7 @@ import PieChartCard from './PieChartCard';
 function ChartStats() {
   const role = localStorage.getItem('role');
   return (
-    <div className="chart-stats-container">
+    <div  className="chart-stats-container">
       <BarChartCard />
       {role === 'ADMIN' && <PieChartCard />}
     

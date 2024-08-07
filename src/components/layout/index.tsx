@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Layout, Menu, theme, Rate, Dropdown, Avatar, notification, MenuProps } from 'antd';
+import { Layout, Menu, theme, Rate, Dropdown, Avatar, notification, MenuProps, Button, Drawer } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { filterRoutesByRole, routes } from '../../routes/routes';
 // import { usePermissions } from "@hooks/usePermissions";
@@ -12,25 +12,28 @@ import donIcon from '../../assets/images/load_app_img.svg';
 import { ACCESS_TOKEN, USERNAME } from '@config/constants';
 import { useAuthStore } from '../../store/authStore';
 import Language from '@components/layout/header/language';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-
+import { useMediaQuery } from 'react-responsive';
 const { Header, Sider, Content } = Layout;
 
-
-
 const LayoutCustom = ({ children }: any) => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  // const isMobile = window.innerWidth < 767;
+  const [collapsed] = useState(false); // Sidebar starts collapsed
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const { t } = useTranslation();
   const store: any = useAuthStore((state) => state);
-  const role = localStorage.getItem('role') || "ADMIN";
-
+  const role = localStorage.getItem('role') || 'ADMIN';
+  const handleMenuClick = (path: string) => {
+    navigate(path);
+    setDrawerVisible(false);
+  };
   const filteredRoutes = filterRoutesByRole(routes, role);
-
 
   const location = useLocation();
   const navigate = useNavigate();
   // const { checkPermission } = usePermissions();
-  const [collapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const {
     token: { colorBgContainer },
@@ -68,19 +71,6 @@ const LayoutCustom = ({ children }: any) => {
       : undefined;
   };
 
-  // ---- fullscreen ------
-  // let fullscreen = document.querySelector('body');
-
-  // const fullScreen = () => {
-  //   document.onfullscreenchange = () => setFulled(!fulled);
-
-  //   if (!document.fullscreenElement) {
-  //     fullscreen?.requestFullscreen();
-  //   } else {
-  //     document.exitFullscreen();
-  //   }
-  // };
-
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (latestOpenKey) {
@@ -93,7 +83,7 @@ const LayoutCustom = ({ children }: any) => {
   const logOut = () => {
     store?.setAuth({ isAuth: false, role: '' });
     localStorage.removeItem(ACCESS_TOKEN);
-    localStorage.removeItem('role')
+    localStorage.removeItem('role');
     notification.success({ message: 'Successfully', description: 'Muvaffaqiyatli tizimdan chiqildi' });
   };
   // console.log( "path", location.pathname, openKeys);
@@ -103,19 +93,20 @@ const LayoutCustom = ({ children }: any) => {
       <Sider
         theme="light"
         className="px-3 border sidebar-wrapper"
-        style={{ minHeight: '100vh' }}
+        style={{ minHeight: '100vh', display: isMobile ? 'none' : 'block' }}
         width={280}
         trigger={null}
         collapsible
         collapsed={collapsed}
       >
-        <div className="demo-logo-vertical">
-          <span className="sidebar-logo-cls">Bosstracker</span>
-        </div>
+        {!isMobile && (
+          <div className="demo-logo-vertical">
+            <span className="sidebar-logo-cls">Anor</span>
+          </div>
+        )}
         <Menu
           style={{ border: 'none' }}
           theme="light"
-          // mode="vertical"
           mode="inline"
           defaultSelectedKeys={[location.pathname]}
           openKeys={openKeys}
@@ -153,43 +144,45 @@ const LayoutCustom = ({ children }: any) => {
         />
         <div style={{ backgroundColor: ' #FAFBFC' }} className="d-flex justify-content-center flex-column px-0 py-5">
           <img height={'100%'} width={239} src={donIcon} alt="" />
-          {/* <div className="d-flex justify-content-center pt-3">
-            <Button style={{ borderRadius: "14px", fontSize: "15px", height: "48px", width: "200px" }} type="primary">
-              {t("Download the program")}
-            </Button>
-          </div> */}
         </div>
       </Sider>
-      <Layout>
+      <Layout >
         <Header style={{ padding: 0, background: colorBgContainer }}>
-          <div className="d-flex justify-content-between">
-            <div className="d-flex px-3">
-              <div style={{ fontSize: '25px', fontWeight: '600', color: '#4E5D78' }} className="pe-3">
-                0
-              </div>
-              <div style={{ lineHeight: '20px' }} className="d-flex flex-column pt-2">
-                <div>
-                  <Rate allowHalf defaultValue={0} />
+          <div className="d-flex  justify-content-between">
+            {!isMobile && (
+              <div className="d-flex px-3">
+                <div style={{ fontSize: '25px', fontWeight: '600', color: '#4E5D78' }} className="pe-3">
+                  0
                 </div>
-                <div style={{ color: '#8A94A6' }}>
-                  0 {t('comment')} - 0 {t('ball')}
+                <div style={{ lineHeight: '20px' }} className="d-flex flex-column pt-2">
+                  <div>
+                    <Rate allowHalf defaultValue={0} />
+                  </div>
+                  <div style={{ color: '#8A94A6' }}>
+                    0 {t('comment')} - 0 {t('ball')}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {isMobile && (
+              <div style={{display:"flex",alignItems:"center",gap:"3px"}}>
+                <Button
+                  type="text"
+                  icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                  onClick={() => setDrawerVisible(true)}
+                  style={{
+                    fontSize: '16px',
+                    width: 40,
+                    height: 40,
+                  }}
+                />
+                <span className="sidebar-logo-cls">Anor</span>
+              </div>
+            )}
+
             <div className="d-flex gap-2 justify-content-evenly">
-              {/*<div className="d-flex justify-content-evenly header-period-cls mt-3">*/}
-              {/*  <div>Oy</div>*/}
-              {/*  <div>Yil</div>*/}
-              {/*  <div className="active-item">3 Yil</div>*/}
-              {/*</div>*/}
               <Language />
-            
-             
-              {/* <div className="px-2 pt-1">
-                <span style={{ borderRadius: '15px', width: '100px' }} className="bg-success text-light px-3 py-1">
-                  34
-                </span>
-              </div> */}
+
               <Dropdown
                 trigger={['click']}
                 placement={'bottomRight'}
@@ -236,26 +229,63 @@ const LayoutCustom = ({ children }: any) => {
               </Dropdown>
             </div>
           </div>
-          {/*<Button*/}
-          {/*  type="text"*/}
-          {/*  icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}*/}
-          {/*  onClick={() => setCollapsed(!collapsed)}*/}
-          {/*  style={{*/}
-          {/*    fontSize: "16px",*/}
-          {/*    width: 64,*/}
-          {/*    height: 64*/}
-          {/*  }}*/}
-          {/*/>*/}
         </Header>
         <Content
           style={{
-            padding: 24,
+            padding: isMobile ? 12 :24,
             minHeight: 280,
           }}
         >
           {children}
         </Content>
       </Layout>
+      <Drawer
+        title={
+          <div className="demo-logo-vertical">
+            <span className="sidebar-logo-cls">Anor</span>
+          </div>
+        }
+        placement="left"
+        onClose={() => setDrawerVisible(false)}
+        visible={drawerVisible}
+        width={'80%'}
+      >
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={[location.pathname]}
+          onClick={({ key }) => handleMenuClick(key)}
+          items={filteredRoutes
+            // ?.filter((item) => checkPermission(item.config.key) && item.config.isShowInMenu)
+            .map((item, index) => {
+              return item?.config?.isLabel
+                ? {
+                    key: `label-${index}`,
+                    label: t(item.name),
+                    className: 'sidebar-menu-part-label',
+                    disabled: true,
+                  }
+                : {
+                    key: `${item.path}`,
+                    label: t(item.name),
+                    className: item.children?.length ? 'sidebar-menu-part-label' : 'sidebar-menu-part-item',
+                    style: { color: index == 0 ? '#377DFF' : '' },
+                    icon: item.icon?.component ? (
+                      <CustomComponent component={item.icon?.component} />
+                    ) : item?.icon?.name ? (
+                      <IconComponent style={{}} type={item?.icon?.name} />
+                    ) : (
+                      ''
+                    ),
+                    onClick: () => {
+                      if (!(item.children?.length && getChildren(item)?.length)) {
+                        navigate(item.path);
+                      }
+                    },
+                    children: item.children?.length ? getChildren(item) : undefined,
+                  };
+            })}
+        />
+      </Drawer>
     </Layout>
   );
 };
