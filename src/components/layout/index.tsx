@@ -247,7 +247,7 @@ const LayoutCustom = ({ children }: any) => {
         }
         placement="left"
         onClose={() => setDrawerVisible(false)}
-        visible={drawerVisible}
+        open={drawerVisible}
         width={'80%'}
       >
         <Menu

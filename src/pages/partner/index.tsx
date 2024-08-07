@@ -13,8 +13,10 @@ import Empty from '@assets/animated-illusions/empty.json';
 
 import TitleCard from '@components/core/TitleCard';
 import { months } from './months';
+import { useState } from 'react';
 
 const Partners = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   const time = new Date();
   const month = months[time.getMonth()];
@@ -38,10 +40,11 @@ const Partners = () => {
     {
       title: <span className=" text-sm">id</span>,
       key: 'id',
-      render: (record) => {
-        let index = data?.results?.indexOf(record);
-        return Number(index) + 1;
-      },
+      // render: (record) => {
+      //   let index = data?.results?.indexOf(record);
+      //   return Number(index) + 1;
+      // },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
     {
       title: <span className=" text-sm">{t('Username')}</span>,
@@ -143,6 +146,12 @@ const Partners = () => {
                 <Lottie animationData={Empty} loop={false}></Lottie>
               </div>
             ),
+          }}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
           }}
           dataSource={data?.results}
           loading={isLoading}

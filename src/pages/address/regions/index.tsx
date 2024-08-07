@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getRegionList } from "@pages/address/service";
 import { ColumnsType } from "antd/es/table";
@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 const { Title } = Typography;
 const Regions: FC = (): JSX.Element => {
   const { i18n, t } = useTranslation();
+  const [currentPage] = useState(1);
   // const [form] = Form.useForm();
   // const [modal, setModal] = useState<{ open: boolean; data: any }>({ open: false, data: null });
   const { data, isLoading }: any = useQuery({
@@ -20,9 +21,8 @@ const Regions: FC = (): JSX.Element => {
     {
       title: <span className="text-uppercase">№</span>,
       key: "id",
-      render: ({}, {}, index) => {
-        return index + 1;
-      }
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
+
     },
     {
       title: <span className="text-uppercase">{t("Region name")}</span>,
@@ -39,6 +39,12 @@ console.log(data)
       </div>
       <Card>
         <Table
+        //  pagination={{
+        //   pageSize: 10,
+        //   onChange: (page) => {
+        //     setCurrentPage(page);
+        //   },
+        // }}
           columns={columns}
           bordered={false}
           dataSource={data}

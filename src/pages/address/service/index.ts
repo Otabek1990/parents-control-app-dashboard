@@ -14,7 +14,8 @@ export const getRegionList = async ({
   limit?: number;
 }) => {
   try {
-    let resp: AxiosResponse<any, any> = await instance.get('/v1/base-api/region-list/', {
+    let resp: AxiosResponse<any, any> = await instance.get('/v1/admin-panel-auth/region-list/', {
+      // https://production.bosstrackergroup.uz/api/v1/admin-panel-auth/region-list/
       params: {
         search,
         p,
@@ -30,7 +31,7 @@ export const getRegionList = async ({
 
 export const deleteRegion = async (id: string | number) => {
   try {
-    let resp: AxiosResponse<any, any> = await instance.delete(`/v1/base-api/region/${id}/delete/`);
+    let resp: AxiosResponse<any, any> = await instance.delete(`/v1/base-api/admin-panel-auth/region-list/${id}/delete/`);
     return resp.data;
   } catch (e: any) {
     console.log('region list error---> ', e);

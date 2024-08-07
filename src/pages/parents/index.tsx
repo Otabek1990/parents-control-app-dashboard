@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Button, Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
@@ -13,6 +13,7 @@ import Loading from '@components/core/Loading';
 // const { Title } = Typography;
 const Parents: FC = (): JSX.Element => {
   const { t } = useTranslation();
+  const [currentPage, setCurrentPage] = useState(1);
   // const [form] = Form.useForm();
   // const [open, setOpen] = useState<{ o: boolean; data: ParentList | undefined }>({ o: false, data: undefined });
   const parentsReq: any = useQuery({
@@ -34,9 +35,10 @@ const Parents: FC = (): JSX.Element => {
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
-      render: ({}, {}, index) => {
-        return index + 1;
-      },
+      // render: ({}, {}, index) => {
+      //   return index + 1;
+      // },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
 
     {
@@ -153,6 +155,12 @@ const Parents: FC = (): JSX.Element => {
       <Card>
         {parentsReq?.isSuccess && parentsReq?.data?.results && (
           <Table
+            pagination={{
+              pageSize: 10,
+              onChange: (page) => {
+                setCurrentPage(page);
+              },
+            }}
             columns={columns}
             bordered={false}
             dataSource={parentsReq?.isSuccess ? parentsReq?.data?.results : []}

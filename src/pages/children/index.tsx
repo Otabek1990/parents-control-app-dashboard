@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ChildList, ChildService } from '../../services/openapi';
@@ -9,6 +9,7 @@ import TitleCard from '@components/core/TitleCard';
 
 const Children: FC = (): JSX.Element => {
   const { t } = useTranslation();
+  const [currentPage, setCurrentPage] = useState(1);
   // const [form] = Form.useForm();
   // const [open, setOpen] = useState<{ o: boolean; data:ChildList | undefined }>({ o: false, data: undefined });
   const childrenReq: any = useQuery({
@@ -24,9 +25,7 @@ const Children: FC = (): JSX.Element => {
           {
             title: <span className="text-uppercase">№</span>,
             key: 'id',
-            render: ({}, {}, index) => {
-              return index + 1;
-            },
+            render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
           },
 
           {
@@ -94,6 +93,12 @@ const Children: FC = (): JSX.Element => {
       <div className="d-flex justify-content-between align-items-center mb-4"></div>
       <Card>
         <Table
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+          }}
           columns={columns}
           bordered={false}
           dataSource={childrenReq?.data?.results}

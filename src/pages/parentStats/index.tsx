@@ -8,8 +8,10 @@ import Empty from '@assets/animated-illusions/empty.json';
 import { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
 import { ParentDetailList, ParentDetailService } from 'services/openapi/services/ParentDetailService';
+import { useState } from 'react';
 
 const ParentStats = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   const navigate=useNavigate()
 
@@ -23,9 +25,7 @@ const ParentStats = () => {
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: ({}, {}, index: number) => {
-        return Number(index) + 1;
-      },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
     {
       title: <span className="text-uppercase">{t('Username')}</span>,
@@ -82,6 +82,12 @@ const ParentStats = () => {
                 <Lottie animationData={Empty} loop={false}></Lottie>
               </div>
             ),
+          }}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
           }}
           dataSource={data}
           loading={isLoading}

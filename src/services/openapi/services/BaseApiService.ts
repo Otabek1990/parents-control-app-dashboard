@@ -78,6 +78,7 @@ search?: string,
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin-panel-auth/region-list/',
+            // https://production.bosstrackergroup.uz/api/v1/admin-panel-auth/region-list/
             
         });
     }

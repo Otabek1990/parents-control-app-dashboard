@@ -8,10 +8,12 @@ import Empty from '@assets/animated-illusions/empty.json';
 import { PartnerDetailList, PartnerDetailService } from 'services/openapi/services/PartnerDetailService';
 import { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const PartnerStats = () => {
   const { t } = useTranslation();
   const navigate=useNavigate()
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading} = useQuery({
     queryKey: ['partnerStats'],
@@ -23,9 +25,10 @@ const PartnerStats = () => {
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: ({}, {}, index: number) => {
-        return Number(index) + 1;
-      },
+      // render: ({}, {}, index: number) => {
+      //   return Number(index) + 1;
+      // },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
     {
       title: <span className="text-uppercase">{t('Username')}</span>,
@@ -60,6 +63,12 @@ const PartnerStats = () => {
               </div>
             ),
           }}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+          }}
           dataSource={data}
           loading={isLoading}
           rowKey="id"
@@ -67,6 +76,7 @@ const PartnerStats = () => {
           size="small"
           style={{ textTransform: 'capitalize' }}
         />
+      
       </Card>
     </>
   );

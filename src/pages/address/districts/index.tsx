@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { getRegionList } from "@pages/address/service";
@@ -9,6 +9,7 @@ import { BaseApiService } from "services/openapi";
 const { Title } = Typography;
 const Districts: FC = (): JSX.Element => {
   const { i18n, t } = useTranslation();
+  const [currentPage, setCurrentPage] = useState(1);
   // const [form] = Form.useForm();
   // const [modal, setModal] = useState<{ open: boolean, data: Region | null }>({open: false, data: null});
   const regionResp: any = useQuery({
@@ -26,9 +27,7 @@ const Districts: FC = (): JSX.Element => {
     {
       title: <span className="text-uppercase">№</span>,
       key: "id",
-      render: ({}, {}, index) => {
-        return index + 1;
-      }
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
     {
       title: <span className="text-uppercase">{t("District name")}</span>,
@@ -60,6 +59,12 @@ const Districts: FC = (): JSX.Element => {
       </div>
       <Card>
         <Table
+           pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+          }}
           columns={columns}
           bordered={false}
           dataSource={districtResp?.data}
@@ -68,6 +73,7 @@ const Districts: FC = (): JSX.Element => {
           // scroll={{ x: 768 }}
           size="small"
         />
+       
       </Card>
     </>
   );
