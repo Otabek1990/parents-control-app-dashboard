@@ -6,8 +6,9 @@ import bola from "../../assets/icons/accessibility_nocolor.png";
 import payme from "../../assets/icons/Payme.svg";
 import paynet from "../../assets/icons/Paynet.svg";
 import payment from "../../assets/icons/payment.svg";
+import click from "../../assets/icons/click.png";
 
-export const IconComponent = ({ type, style }: { type: "main" | "hamkor" | "agent" | "ota_ona" | "bola" | "payme" | "paynet" | "payment", style?: any }) => {
+export const IconComponent = ({ type, style }: { type: "main" | "hamkor" | "agent" | "ota_ona" | "bola" | "payme" | "paynet" | "payment" | "click", style?: any }) => {
   // console.log(type,style);
   switch (type) {
     case "main":
@@ -46,6 +47,10 @@ export const IconComponent = ({ type, style }: { type: "main" | "hamkor" | "agen
     case "payment":
       return <span style={style?{ ...style }:{}}>
       <img width="25px" style={{paddingRight:"5px"}} src={payment} alt="" />
+    </span>;
+    case "click":
+      return <span style={style?{ ...style }:{}}>
+      <img width="25px" style={{paddingRight:"5px"}} src={click} alt="" />
     </span>;
 
     default: return <span>none</span>

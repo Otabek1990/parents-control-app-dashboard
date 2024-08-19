@@ -53,6 +53,9 @@ const PartnerStats = () => {
         <Button onClick={()=>navigate(-1)}>
          <span style={{marginRight:"5px"}}>&lt;</span> {t("Back")}
         </Button>
+
+
+        
         <Table
           columns={columns}
           bordered={false}

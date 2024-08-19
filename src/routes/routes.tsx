@@ -11,6 +11,8 @@ import {
   PaymentToPartner,
   Banner,
   AddPlan,
+  Paynet,
+  Click
 } from 'pages';
 import { routeType } from './types';
 import { HomeFilled } from '@ant-design/icons';
@@ -188,10 +190,22 @@ export const routes: Array<routeType> = [
       {
         name: 'Paynet',
         path: '/paynet',
-        element: InProggressPage,
+        element: Paynet,
         icon: { name: 'paynet' },
         config: {
           key: 'paynet_page',
+          isShowInMenu: true,
+        },
+        children: [],
+        roles:['ADMIN']
+      },
+      {
+        name: 'Click',
+        path: '/click',
+        element: Click,
+        icon: { name: 'click' },
+        config: {
+          key: 'click_page',
           isShowInMenu: true,
         },
         children: [],

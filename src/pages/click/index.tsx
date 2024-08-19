@@ -8,14 +8,14 @@ import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
-import { PaymeService } from 'services/openapi/services/PaymeService';
+import { ClickService } from 'services/openapi/services/ClickService';
 
 // const { Title } = Typography;
-const Payme: FC = (): JSX.Element => {
+const Click: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const paymesReq: any = useQuery({
-    queryKey: ['payme'],
-    queryFn: () => PaymeService.PaymeGetList()
+    queryKey: ['click'],
+    queryFn: () => ClickService.ClickGetList()
   });
 
 
@@ -67,8 +67,8 @@ const Payme: FC = (): JSX.Element => {
 
   return (
     <>
-     
-      <TitleCard titleName={t('Pay me')} />
+    
+      <TitleCard titleName={t('Click')} />
    
       <Card>
         <Table
@@ -86,4 +86,4 @@ const Payme: FC = (): JSX.Element => {
   );
 };
 
-export default Payme;
+export default Click;

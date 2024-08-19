@@ -10,6 +10,8 @@ export { default as Regions } from './address/regions';
 export { default as Districts } from './address/districts';
 export { default as Operators } from './operator';
 export { default as Payme } from './payme';
+export { default as Paynet } from './paynet';
+export { default as Click } from './click';
 export { default as PaymentToPartner } from './paymentToPartner';
 export { default as Banner } from './banner';
 export { default as AddPlan } from './addPlan';

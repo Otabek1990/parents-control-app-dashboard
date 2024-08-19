@@ -129,8 +129,20 @@
   "Back": "Orqaga",
   "Payment status": "To'lov holati",
   "Amount": "Miqdori",
-   "Paid":"To'langan",
-  "Unpaid":"To'lanmagan",
-  "Select a month":"Oyni tanlang"
-
+  "Paid": "To'langan",
+  "Unpaid": "To'lanmagan",
+  "Select a month": "Oyni tanlang",
+  "All": "Jami",
+  "Old password": "Eski parol",
+  "New password": "Yangi parol",
+  "Confirm new password": "Yangi parolni tasdiqlang",
+  "Please input your old password!": "Eski parolni kiriting!",
+  "Please input your new password!": "Yangi parolni kiriting!",
+  "Please confirm your new password!": "Yangi parolni tasdiqlang!",
+  "Please complete the form correctly": "Formani to'g'ri to'ldiring",
+  "The two passwords do not match!": "Parollar bir biriga mos emas!",
+  "Password changed successfully": "Parol muvaffaqiyatli almashtirildi",
+  "Failed to change password": "Parol o'zgartirishda xatolik sodir bo'ldi",
+  "Password must be at least 5 characters long!": "Parol eng kamida 5ta belgidan iborat bo'lishi kerak!",
+  "Password is incorrect": "Eski parol xato kiritildi!"
 }

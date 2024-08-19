@@ -8,14 +8,14 @@ import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
-import { PaymeService } from 'services/openapi/services/PaymeService';
+import { PaynetService } from 'services/openapi/services/PaynetService';
 
 // const { Title } = Typography;
-const Payme: FC = (): JSX.Element => {
+const Paynet: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const paymesReq: any = useQuery({
-    queryKey: ['payme'],
-    queryFn: () => PaymeService.PaymeGetList()
+    queryKey: ['paynet'],
+    queryFn: () => PaynetService.PaynetGetList()
   });
 
 
@@ -67,9 +67,9 @@ const Payme: FC = (): JSX.Element => {
 
   return (
     <>
-     
-      <TitleCard titleName={t('Pay me')} />
-   
+    
+      <TitleCard titleName={t('Paynet')} />
+    
       <Card>
         <Table
           columns={columns}
@@ -86,4 +86,4 @@ const Payme: FC = (): JSX.Element => {
   );
 };
 
-export default Payme;
+export default Paynet;

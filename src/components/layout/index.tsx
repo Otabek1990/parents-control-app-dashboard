@@ -1,5 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Layout, Menu, theme, Rate, Dropdown, Avatar, notification, MenuProps, Button, Drawer } from 'antd';
+import {
+  Layout,
+  Menu,
+  theme,
+  Rate,
+  Dropdown,
+  Avatar,
+  notification,
+  MenuProps,
+  Button,
+  Drawer,
+  Modal,
+  message,
+  Form,
+  Spin,
+} from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { filterRoutesByRole, routes } from '../../routes/routes';
 // import { usePermissions } from "@hooks/usePermissions";
@@ -15,9 +30,64 @@ import Language from '@components/layout/header/language';
 import { LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import Input from 'antd/es/input';
 const { Header, Sider, Content } = Layout;
 
+interface PasswordChangeRequest {
+  old_password: string;
+  new_password1: string;
+  new_password2: string;
+}
+
 const LayoutCustom = ({ children }: any) => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [form] = Form.useForm();
+
+  let token = localStorage.getItem(ACCESS_TOKEN);
+
+
+  // API call to change the password using React Query's useMutation
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (data: PasswordChangeRequest) =>
+      axios.post('https://production.bosstrackergroup.uz/api/v1/password-change/', data, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in headers
+        },
+      }),
+    onSuccess: () => {
+      message.success(t('Password changed successfully'));
+      setIsModalVisible(false); // Close modal on success
+      form.resetFields(); // Reset form fields
+    },
+    onError: (err:any) => {
+    const error=err?.response?.data?.message
+      message.error(t(error));
+    },
+  });
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    form.resetFields(); // Reset form fields when closing
+  };
+
+  // Function to submit form and call mutation
+  const handleOk = () => {
+    form
+      .validateFields()
+      .then((values: PasswordChangeRequest) => {
+        mutate({
+          old_password: values.old_password,
+          new_password1: values.new_password1,
+          new_password2: values.new_password2,
+        });
+      })
+      .catch(() => {
+        message.error(t('Please complete the form correctly'));
+      });
+  };
+
   const [drawerVisible, setDrawerVisible] = useState(false);
   // const isMobile = window.innerWidth < 767;
   const [collapsed] = useState(false); // Sidebar starts collapsed
@@ -146,7 +216,7 @@ const LayoutCustom = ({ children }: any) => {
           <img height={'100%'} width={239} src={donIcon} alt="" />
         </div>
       </Sider>
-      <Layout >
+      <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
           <div className="d-flex  justify-content-between">
             {!isMobile && (
@@ -165,7 +235,7 @@ const LayoutCustom = ({ children }: any) => {
               </div>
             )}
             {isMobile && (
-              <div style={{display:"flex",alignItems:"center",gap:"3px"}}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                 <Button
                   type="text"
                   icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -187,7 +257,27 @@ const LayoutCustom = ({ children }: any) => {
                 trigger={['click']}
                 placement={'bottomRight'}
                 menu={{
-                  items: [
+                  items: role==="ADMIN" ? [
+                    {
+                      label: t('Personal information'),
+                      key: 'personal_info',
+                      icon: <UserOutlined />,
+                      onClick: () => {
+                        // logOut();
+                      },
+                    },
+                  
+                    {
+                      label: t('Logout'),
+                      key: 'logout',
+                      icon: <LogoutOutlined />,
+                      onClick: () => {
+                        logOut();
+                      },
+                    },
+                  ]
+                  :
+                  [
                     {
                       label: t('Personal information'),
                       key: 'personal_info',
@@ -201,7 +291,7 @@ const LayoutCustom = ({ children }: any) => {
                       key: 'set_password',
                       icon: <SettingOutlined />,
                       onClick: () => {
-                        // logOut();
+                        setIsModalVisible(true);
                       },
                     },
                     {
@@ -232,7 +322,7 @@ const LayoutCustom = ({ children }: any) => {
         </Header>
         <Content
           style={{
-            padding: isMobile ? 12 :24,
+            padding: isMobile ? 12 : 24,
             minHeight: 280,
           }}
         >
@@ -286,6 +376,52 @@ const LayoutCustom = ({ children }: any) => {
             })}
         />
       </Drawer>
+      <Modal title={t('Change password')} open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        {isLoading && <Spin tip="Changing password..." style={{ display: 'block', margin: '20px auto' }} />}
+        <Form form={form} layout="vertical">
+          <Form.Item
+            label={t('Old password')}
+            name="old_password"
+            rules={[{ required: true, message: t('Please input your old password!') }]}
+          >
+            <Input.Password placeholder={t('Old password')} />
+          </Form.Item>
+
+          <Form.Item
+            label={t('New password')}
+            name="new_password1"
+            rules={[
+              { required: true, message: t('Please input your new password!') },
+              { min: 5, message: t('Password must be at least 5 characters long!') },
+            ]}
+            /*
+{ min: 6, message: 'New password must be at least 6 characters long!' },
+
+            */
+          >
+            <Input.Password placeholder={t('New password')} />
+          </Form.Item>
+
+          <Form.Item
+            label={t('Confirm new password')}
+            name="new_password2"
+            rules={[
+              { required: true, message: t('Please confirm your new password!') },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('new_password1') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error(t('The two passwords do not match!')));
+                },
+              }),
+              { min: 5, message: t('Password must be at least 5 characters long!') },
+            ]}
+          >
+            <Input.Password placeholder={t('Confirm new password')} />
+          </Form.Item>
+        </Form>
+      </Modal>
     </Layout>
   );
 };
