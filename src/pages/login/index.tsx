@@ -42,7 +42,7 @@ const Login: FC = (): JSX.Element => {
       setLoading(false);
     }
   };
-
+// Admin
   return (
     <Space className="login-section" direction="vertical">
       <Spin
@@ -68,7 +68,7 @@ const Login: FC = (): JSX.Element => {
             <div className="d-flex justify-content-end px-5 py-3"><Language/></div>
             <Row className="right-side">
               <Col xs={18} sm={18} lg={16} xl={12}>
-                <h2 className="text-center">{t("Bosstracker Admin")}</h2>
+                <h2 className="text-center">{t("Anor Admin")}</h2>
                 <p>{t("Welcome ! Please enter your information")}.</p>
                 <Form onFinish={onFinish} layout="vertical">
                   <Form.Item
