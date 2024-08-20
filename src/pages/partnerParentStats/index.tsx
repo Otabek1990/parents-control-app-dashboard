@@ -7,29 +7,34 @@ import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 import { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
-import {  ParentDetailList, ParentDetailService } from 'services/openapi/services/ParentDetailService';
 import { useState } from 'react';
+import { PartnerParentStatsList, PartnerParentStatsService } from 'services/openapi/services/PartnerParentStatsService';
+import { timeConverter } from '@utils/timeConverter';
 const { Option } = Select;
 interface ParentDetailListTable {
-  amount: number;
+  abonent_code: string;
+  id: number;
+  last_login: string;
+  status: string;
+  tariff_expiry_time: string | null;
+  tariff_name: string | null;
   username: string;
-  payment_status: string;
 }
 
-const ParentStats = () => {
+const PartnerParentStats = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState<string | undefined>(undefined); // Start with no filter
 
-  const { data, isLoading } = useQuery<ParentDetailList>(
-    ['parentStats', status],
-    () => ParentDetailService.partnerDetailList(status),
+  const { data, isLoading } = useQuery<PartnerParentStatsList>(
+    ['partnerParentStats', status],
+    () => PartnerParentStatsService.partnerParentDetailList(status),
     {
       keepPreviousData: true,
     },
   );
-
+console.log(data);
   const handleChange = (value: string) => {
     if (value === 'all') {
       setStatus(undefined); // No filter for "All"
@@ -50,9 +55,20 @@ const ParentStats = () => {
       dataIndex: 'username',
     },
     {
+      title: <span className="text-uppercase">{t('Abonent code')}</span>,
+      key: 'abonent_code',
+      dataIndex: 'abonent_code',
+    },
+    {
+      title: <span className="text-uppercase">{t('Tariff name')}</span>,
+      key: 'tariff_name',
+      dataIndex: 'tariff_name',
+    },
+  
+    {
       title: <span className="text-uppercase">{t('Payment status')}</span>,
-      key: 'payment_status',
-      dataIndex: 'payment_status',
+      key: 'status',
+      dataIndex: 'status',
       render: (record) =>
         record === 'Paid' ? (
           <Button
@@ -80,6 +96,19 @@ const ParentStats = () => {
           </Button>
         ),
     },
+    {
+      title: <span className="text-uppercase">{t('Tariff expire time')}</span>,
+      dataIndex: 'tariff_expiry_time',
+      key: 'tariff_expiry_time',
+      render: (record) => (record ? timeConverter(record) : '-'),
+    },
+    {
+      title: <span className="text-uppercase">{t('Last visit')}</span>,
+      dataIndex: 'last_login',
+      key: 'last_login',
+      render: (record) => (record ? timeConverter(record) : ''),
+    },
+
   ];
 
   return (
@@ -119,7 +148,7 @@ const ParentStats = () => {
               setCurrentPage(page);
             },
           }}
-          dataSource={data}
+          dataSource={data?.results}
           loading={isLoading}
           rowKey={"username"}
          
@@ -132,4 +161,4 @@ const ParentStats = () => {
   );
 };
 
-export default ParentStats;
+export default PartnerParentStats;

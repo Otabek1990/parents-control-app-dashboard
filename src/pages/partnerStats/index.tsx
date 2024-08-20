@@ -19,7 +19,7 @@ const PartnerStats = () => {
     queryKey: ['partnerStats'],
     queryFn: () => PartnerDetailService.partnerDetailList(),
   });
-  console.log(data);
+  
 
   const columns: ColumnsType<PartnerDetailList> = [
     {
@@ -74,7 +74,7 @@ const PartnerStats = () => {
           }}
           dataSource={data}
           loading={isLoading}
-          rowKey="id"
+          rowKey="username"
           scroll={{ x: 1000 }}
           size="small"
           style={{ textTransform: 'capitalize' }}

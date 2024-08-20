@@ -66,7 +66,7 @@ const Parents: FC = (): JSX.Element => {
               fontWeight: '600',
             }}
           >
-            {t('Active')}
+            {t('Paid')}
           </Button>
         ) : (
           <Button
@@ -78,7 +78,7 @@ const Parents: FC = (): JSX.Element => {
               fontWeight: '600',
             }}
           >
-            {t('DisActive')}
+            {t('Unpaid')}
           </Button>
         ),
     },

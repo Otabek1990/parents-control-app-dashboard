@@ -5,6 +5,7 @@ import CustomComponent from './custom_component';
 import LayoutCustom from '@components/layout';
 import PartnerStats from '@pages/partnerStats';
 import ParentStats from '@pages/parentStats';
+import PartnerParentStats from '@pages/partnerParentStats';
 
 const RenderRoutes = () => {
   // const { checkPermission } = usePermissions();
@@ -27,6 +28,7 @@ const RenderRoutes = () => {
           ))}
         <Route path="partnerStats" element={<PartnerStats />} />
         <Route path="parentStats" element={<ParentStats />} />
+        <Route path="partnerParentStats" element={<PartnerParentStats/>} />
       </Routes>
     </LayoutCustom>
   );

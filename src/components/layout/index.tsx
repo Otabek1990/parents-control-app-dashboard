@@ -47,7 +47,6 @@ const LayoutCustom = ({ children }: any) => {
 
   let token = localStorage.getItem(ACCESS_TOKEN);
 
-
   // API call to change the password using React Query's useMutation
   const { mutate, isLoading } = useMutation({
     mutationFn: (data: PasswordChangeRequest) =>
@@ -61,8 +60,8 @@ const LayoutCustom = ({ children }: any) => {
       setIsModalVisible(false); // Close modal on success
       form.resetFields(); // Reset form fields
     },
-    onError: (err:any) => {
-    const error=err?.response?.data?.message
+    onError: (err: any) => {
+      const error = err?.response?.data?.message;
       message.error(t(error));
     },
   });
@@ -257,27 +256,7 @@ const LayoutCustom = ({ children }: any) => {
                 trigger={['click']}
                 placement={'bottomRight'}
                 menu={{
-                  items: role==="ADMIN" ? [
-                    {
-                      label: t('Personal information'),
-                      key: 'personal_info',
-                      icon: <UserOutlined />,
-                      onClick: () => {
-                        // logOut();
-                      },
-                    },
-                  
-                    {
-                      label: t('Logout'),
-                      key: 'logout',
-                      icon: <LogoutOutlined />,
-                      onClick: () => {
-                        logOut();
-                      },
-                    },
-                  ]
-                  :
-                  [
+                  items: [
                     {
                       label: t('Personal information'),
                       key: 'personal_info',

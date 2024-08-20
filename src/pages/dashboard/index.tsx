@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import briefcase from 'assets/icons/briefcase.svg';
 import user from 'assets/icons/user.svg';
 import access from 'assets/icons/accessibility.svg';
@@ -29,33 +29,51 @@ const Dashboard: React.FC = (): JSX.Element => {
     queryFn: () => PlanService.planList(),
   });
 
+
+ 
   return (
-    <div  className="dashboard-wrapper">
+    <div className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
       {/* {role === 'ADMIN' && ( */}
-        <div className="d-loader">
-          <div className="loader-header">
-            <span>{(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.days_progress) 
-            || (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.days_progress)} kun</span>
-            <span>{(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_days) || 
-              (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.remaining_days)} kun</span>
+      <div className="d-loader">
+        <div className="loader-header">
+          <span>
+            {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.days_progress) ||
+              (isSuccessStatPartner &&
+                statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.days_progress)}{' '}
+            kun
+          </span>
+          <span>
+            {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_days) ||
+              (isSuccessStatPartner &&
+                statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.remaining_days)}{' '}
+            kun
+          </span>
+          <span>
+            {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients) ||
+              (isSuccessStatPartner &&
+                statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.added_clients)}{' '}
+            / {(isSuccessPlans && plans?.length && plans[0].total_clients) || 5000}
+          </span>
+        </div>
+        <div className="loader">
+          <div className="active">
             <span>
-              {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients) || 
-              (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.added_clients)} /{' '}
-              {(isSuccessPlans && plans?.length && plans[0].total_clients) || 5000}
+              {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients) ||
+                (isSuccessStatPartner &&
+                  statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.added_clients)}{' '}
+              ta
             </span>
           </div>
-          <div className="loader">
-            <div className="active">
-              <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.added_clients || 
-                (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.added_clients)} ta</span>
-            </div>
-            <div className="in-active">
-              <span>{isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_clients ||
-                (isSuccessStatPartner && statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.remaining_clients)}</span>
-            </div>
+          <div className="in-active">
+            <span>
+              {(isSuccess && statistics?.overall_stats?.get_client_adding_plan?.remaining_clients) ||
+                (isSuccessStatPartner &&
+                  statisticsPartner?.overall_statistics?.partner_cleint_adding_plan?.remaining_clients)}
+            </span>
           </div>
         </div>
+      </div>
       {/* )} */}
 
       <div className="count-info row">
@@ -86,24 +104,9 @@ const Dashboard: React.FC = (): JSX.Element => {
             </div>
           </div>
         )}
-        {/* <div className="col-xl-6 col-xxl-3">
-          <div className="count-card">
-            <div className="header">
-              <img src={video_cal} alt="" />
-              <span>Barcha Agentlar</span>
-            </div>
-            <div className="count">
-              9.148
-              <span>+2,4% </span>
-            </div>
-            <div className="more">
-              <div className='tag' ><span className='one' >Jalb qilingan: </span> <span className='two' >400</span></div>
-              <div className='tag' ><span className='one' >Kelishuvlar soni: </span> <span className='two' >1.704</span></div>
-            </div>
-          </div>
-        </div> */}
+
         <div className="col-xl-6 col-xxl-3">
-          <div onClick={() => navigate('/parentStats')} className="count-card">
+          <div onClick={() =>role==="ADMIN" ? navigate('/parentStats') : navigate("/partnerParentStats")} className="count-card">
             <div className="header">
               <img src={user} alt="" color="#38cb89" />
               <span>Barcha Ota-Onalar</span>
@@ -138,7 +141,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
         <div className="col-xl-6 col-xxl-3">
-          <div  className="count-card">
+          <div className="count-card">
             <div className="header">
               <img src={access} alt="" color="#38cb89" />
               <span>Barcha Bolalar</span>
@@ -173,7 +176,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <ChartStats  />
+      <ChartStats />
     </div>
   );
 };
