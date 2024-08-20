@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import briefcase from 'assets/icons/briefcase.svg';
 import user from 'assets/icons/user.svg';
 import access from 'assets/icons/accessibility.svg';
