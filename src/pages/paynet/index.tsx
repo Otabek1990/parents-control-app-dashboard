@@ -1,4 +1,4 @@
-import { FC} from 'react';
+import { FC, useState } from 'react';
 import { Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { PaymeList } from '../../services/openapi';
@@ -12,22 +12,18 @@ import { PaynetService } from 'services/openapi/services/PaynetService';
 
 // const { Title } = Typography;
 const Paynet: FC = (): JSX.Element => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   const paymesReq: any = useQuery({
     queryKey: ['paynet'],
-    queryFn: () => PaynetService.PaynetGetList()
+    queryFn: () => PaynetService.PaynetGetList(),
   });
-
-
-
 
   const columns: ColumnsType<PaymeList> = [
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
-      render: ({}, {}, index) => {
-        return index + 1;
-      },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
 
     {
@@ -40,7 +36,6 @@ const Paynet: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('Phone number')}</span>,
       dataIndex: 'phone_number',
       key: 'phone_number',
-   
     },
     {
       title: <span className="text-uppercase">{t('Tariff price')}</span>,
@@ -52,29 +47,30 @@ const Paynet: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('Payed money')}</span>,
       dataIndex: 'amount',
       key: 'amount',
-     
     },
     {
       title: <span className="text-uppercase">{t('Date')}</span>,
       dataIndex: 'created',
       key: 'created',
       render: (record) => (record ? timeConverter(record) : ''),
-   
     },
-
   ];
-
 
   return (
     <>
-    
       <TitleCard titleName={t('Paynet')} />
-    
+
       <Card>
         <Table
           columns={columns}
           bordered={false}
           dataSource={paymesReq?.data}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+          }}
           loading={paymesReq?.isLoading}
           rowKey="id"
           scroll={{ x: 1400 }}

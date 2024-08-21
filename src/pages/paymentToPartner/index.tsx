@@ -14,15 +14,16 @@ import TitleCard from '@components/core/TitleCard';
 import CreatePaymentToPartner from './CreatePaymentToPartner';
 import { timeConverter } from '@utils/timeConverter';
 import { errorHandler } from '@config/axios_config';
+import { useState } from 'react';
 
 const PaymentToPartner = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
 
   const {
     data: paymentsToPartner,
     isLoading,
     refetch,
-    
   } = useQuery({
     queryKey: ['paymentToPartner'],
     queryFn: () => PaymentToPartnerService.paymentToPartnerGetList(),
@@ -41,9 +42,7 @@ const PaymentToPartner = () => {
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: ({}, {}, index) => {
-        return Number(index) + 1;
-      },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
     {
       title: <span className="text-uppercase">{t('Partner')}</span>,
@@ -103,6 +102,12 @@ const PaymentToPartner = () => {
                 <Lottie animationData={Empty} loop={false}></Lottie>
               </div>
             ),
+          }}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
           }}
           dataSource={paymentsToPartner}
           loading={isLoading}

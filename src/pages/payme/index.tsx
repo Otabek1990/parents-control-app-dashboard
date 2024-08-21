@@ -1,4 +1,4 @@
-import { FC} from 'react';
+import { FC, useState} from 'react';
 import { Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { PaymeList } from '../../services/openapi';
@@ -12,6 +12,8 @@ import { PaymeService } from 'services/openapi/services/PaymeService';
 
 // const { Title } = Typography;
 const Payme: FC = (): JSX.Element => {
+
+  const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   const paymesReq: any = useQuery({
     queryKey: ['payme'],
@@ -25,9 +27,7 @@ const Payme: FC = (): JSX.Element => {
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
-      render: ({}, {}, index) => {
-        return index + 1;
-      },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
 
     {
@@ -76,6 +76,12 @@ const Payme: FC = (): JSX.Element => {
           bordered={false}
           dataSource={paymesReq?.data}
           loading={paymesReq?.isLoading}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+          }}
           rowKey="id"
           scroll={{ x: 1400 }}
           size="small"

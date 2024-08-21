@@ -1,4 +1,4 @@
-import { FC} from 'react';
+import { FC, useState } from 'react';
 import { Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { PaymeList } from '../../services/openapi';
@@ -12,22 +12,18 @@ import { ClickService } from 'services/openapi/services/ClickService';
 
 // const { Title } = Typography;
 const Click: FC = (): JSX.Element => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   const paymesReq: any = useQuery({
     queryKey: ['click'],
-    queryFn: () => ClickService.ClickGetList()
+    queryFn: () => ClickService.ClickGetList(),
   });
-
-
-
 
   const columns: ColumnsType<PaymeList> = [
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
-      render: ({}, {}, index) => {
-        return index + 1;
-      },
+      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
     },
 
     {
@@ -40,7 +36,6 @@ const Click: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('Phone number')}</span>,
       dataIndex: 'phone_number',
       key: 'phone_number',
-   
     },
     {
       title: <span className="text-uppercase">{t('Tariff price')}</span>,
@@ -52,30 +47,31 @@ const Click: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('Payed money')}</span>,
       dataIndex: 'amount',
       key: 'amount',
-     
     },
     {
       title: <span className="text-uppercase">{t('Date')}</span>,
       dataIndex: 'created',
       key: 'created',
       render: (record) => (record ? timeConverter(record) : ''),
-   
     },
-
   ];
-
 
   return (
     <>
-    
       <TitleCard titleName={t('Click')} />
-   
+
       <Card>
         <Table
           columns={columns}
           bordered={false}
           dataSource={paymesReq?.data}
           loading={paymesReq?.isLoading}
+          pagination={{
+            pageSize: 10,
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+          }}
           rowKey="id"
           scroll={{ x: 1400 }}
           size="small"
