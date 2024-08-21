@@ -15,7 +15,7 @@ import {
   Form,
   Spin,
 } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { filterRoutesByRole, routes } from '../../routes/routes';
 // import { usePermissions } from "@hooks/usePermissions";
 import CustomComponent from '../../routes/custom_component';
@@ -170,7 +170,7 @@ const LayoutCustom = ({ children }: any) => {
       >
         {!isMobile && (
           <div className="demo-logo-vertical">
-            <span className="sidebar-logo-cls">Anor</span>
+            <Link to={"/"} className="sidebar-logo-cls">Anor</Link>
           </div>
         )}
         <Menu
@@ -245,7 +245,7 @@ const LayoutCustom = ({ children }: any) => {
                     height: 40,
                   }}
                 />
-                <span className="sidebar-logo-cls">Anor</span>
+                <Link to={"/"} className="sidebar-logo-cls">Anor</Link>
               </div>
             )}
 
@@ -311,7 +311,7 @@ const LayoutCustom = ({ children }: any) => {
       <Drawer
         title={
           <div className="demo-logo-vertical">
-            <span className="sidebar-logo-cls">Anor</span>
+           <Link to={"/"} className="sidebar-logo-cls">Anor</Link>
           </div>
         }
         placement="left"
