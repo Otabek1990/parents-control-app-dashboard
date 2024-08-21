@@ -91,8 +91,6 @@ export class PartnerService {
     });
   }
 
-
-
   /**
    * Partner Put(Put) API view
    * @param id

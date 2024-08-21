@@ -20,12 +20,29 @@ const Partners = () => {
   const { t } = useTranslation();
   const time = new Date();
   const month = months[time.getMonth()];
-  console.log(month);
+ 
+  const pageSize = 15;
 
+  // Fetch data based on current page
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['agents'],
-    queryFn: () => PartnerService.partnerListList(),
+    queryKey: ['partners', currentPage], // Query key includes the current page
+    queryFn: () => PartnerService.partnerListList(undefined, pageSize, (currentPage - 1) * pageSize),
+    keepPreviousData: true, // Keeps previous data while fetching the new page
   });
+
+
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: data?.count || 0, // Total count from API response
+    onChange: (page: number) => {
+      setCurrentPage(page); // Update page number
+    },
+  };
+  // const { data, isLoading, refetch } = useQuery({
+  //   queryKey: ['agents'],
+  //   queryFn: () => PartnerService.partnerListList(),
+  // });
 
   const deletePartner = async (id: string | number) => {
     try {
@@ -35,7 +52,7 @@ const Partners = () => {
       errorHandler(error?.body?.detail);
     }
   };
-
+console.log(data);
   const columns: ColumnsType<PartnerList> = [
     {
       title: <span className=" text-sm">id</span>,
@@ -44,8 +61,7 @@ const Partners = () => {
       //   let index = data?.results?.indexOf(record);
       //   return Number(index) + 1;
       // },
-      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
-    },
+      render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,    },
     {
       title: <span className=" text-sm">{t('Username')}</span>,
       key: 'username',
@@ -56,25 +72,7 @@ const Partners = () => {
       key: 'fullname',
       dataIndex: 'fullname',
     },
-    // {
-    //   title: <span className=" text-sm">{t('Name')}</span>,
-    //   key: 'name',
-    //   dataIndex: 'name',
-    // },
-    // {
-    //   title: <span className=" text-sm">{t('Surname')}</span>,
-    //   key: 'surname',
-    //   render: (record: PartnerList) => {
-    //     return record?.surname;
-    //   },
-    // },
-    // {
-    //   title: <span className=" text-sm">{t('Middlename')}</span>,
-    //   key: 'middle_name',
-    //   render: (record: PartnerList) => {
-    //     return record?.middle_name;
-    //   },
-    // },
+
     {
       title: <span className=" text-sm">{t('Birthday')}</span>,
       key: 'birthday',
@@ -96,12 +94,7 @@ const Partners = () => {
         return record?.playstore_id || '-';
       },
     },
-    // {
-    //   title: <span className=" text-sm">{t('Work percentage')}</span>,
-    //   dataIndex: 'percentage_of_work',
-    //   key: 'percentage_of_work',
-    //   render: (record) => record + '%',
-    // },
+    
     {
       title: <span className=" text-sm">{t('Work percentage')}</span>,
       dataIndex: 'monthly_percentages',
@@ -147,12 +140,13 @@ const Partners = () => {
               </div>
             ),
           }}
-          pagination={{
-            pageSize: 10,
-            onChange: (page) => {
-              setCurrentPage(page);
-            },
-          }}
+          // pagination={{
+          //   pageSize: 15,
+          //   onChange: (page) => {
+          //     setCurrentPage(page);
+          //   },
+          // }}
+          pagination={paginationConfig}
           dataSource={data?.results}
           loading={isLoading}
           rowKey="id"

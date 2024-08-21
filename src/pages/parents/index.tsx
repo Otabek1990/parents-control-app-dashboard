@@ -14,12 +14,25 @@ import Loading from '@components/core/Loading';
 const Parents: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
-  // const [form] = Form.useForm();
-  // const [open, setOpen] = useState<{ o: boolean; data: ParentList | undefined }>({ o: false, data: undefined });
-  const parentsReq: any = useQuery({
-    queryKey: ['parents'],
-    queryFn: () => ParentService.parentListList(),
+  const pageSize = 15;
+
+  const { data, isLoading, isSuccess } = useQuery({
+    queryKey: ['parents', currentPage], // Query key includes the current page
+    queryFn: () => ParentService.parentListList(undefined, pageSize, (currentPage - 1) * pageSize),
+    keepPreviousData: true, // Keeps previous data while fetching the new page
   });
+
+
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: data?.count || 0, // Total count from API response
+    onChange: (page: number) => {
+      setCurrentPage(page); // Update page number
+    },
+  };
+  // const [form] = Form.useForm();
+
 
   // const deleteParents = async (id: string) => {
   //   try {
@@ -38,7 +51,7 @@ const Parents: FC = (): JSX.Element => {
       // render: ({}, {}, index) => {
       //   return index + 1;
       // },
-      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
+        render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
     },
 
     {
@@ -100,12 +113,7 @@ const Parents: FC = (): JSX.Element => {
       key: 'last_login',
       render: (record) => (record ? timeConverter(record) : ''),
     },
-    // {
-    //   title: <span className="text-uppercase">{t('Child code')}</span>,
-    //   dataIndex: 'child_code',
-    //   key: 'child_code',
-    //   // render: (record) => record[i18n?.language]
-    // },
+  
 
     // {
     //   title: <span className="text-uppercase">{t('Profile')}</span>,
@@ -151,20 +159,21 @@ const Parents: FC = (): JSX.Element => {
         {/* <Title level={4}>{t("Table of parents")}</Title> */}
         {/* <Button type="primary" onClick={() => setOpen({ o: true, data: undefined })}>+ {t("Add")}</Button> */}
       </div>
-      {parentsReq?.isLoading && <Loading />}
+      {isLoading && <Loading />}
       <Card>
-        {parentsReq?.isSuccess && parentsReq?.data?.results && (
+        {isSuccess && data?.results && (
           <Table
-            pagination={{
-              pageSize: 10,
-              onChange: (page) => {
-                setCurrentPage(page);
-              },
-            }}
+            // pagination={{
+            //   pageSize: 10,
+            //   onChange: (page) => {
+            //     setCurrentPage(page);
+            //   },
+            // }}
+            pagination={paginationConfig}
             columns={columns}
             bordered={false}
-            dataSource={parentsReq?.isSuccess ? parentsReq?.data?.results : []}
-            loading={parentsReq?.isLoading}
+            dataSource={isSuccess ? data?.results : []}
+            loading={isLoading}
             rowKey="id"
             scroll={{ x: 1400 }}
             size="small"

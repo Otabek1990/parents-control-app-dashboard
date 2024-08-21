@@ -6,16 +6,27 @@ import { ColumnsType } from 'antd/es/table';
 // import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
+import Loading from '@components/core/Loading';
 
 const Children: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
-  // const [form] = Form.useForm();
-  // const [open, setOpen] = useState<{ o: boolean; data:ChildList | undefined }>({ o: false, data: undefined });
-  const childrenReq: any = useQuery({
-    queryKey: ['parents'],
-    queryFn: () => ChildService.childList(),
+  const pageSize = 15;
+
+  const { data, isLoading, isSuccess } = useQuery({
+    queryKey: ['children', currentPage], // Query key includes the current page
+    queryFn: () => ChildService.childList(undefined, pageSize, (currentPage - 1) * pageSize),
+    keepPreviousData: true, // Keeps previous data while fetching the new page
   });
+
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: data?.count || 0, // Total count from API response
+    onChange: (page: number) => {
+      setCurrentPage(page); // Update page number
+    },
+  };
 
   const role = localStorage.getItem('role');
 
@@ -25,8 +36,7 @@ const Children: FC = (): JSX.Element => {
           {
             title: <span className="text-uppercase">№</span>,
             key: 'id',
-            render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
-          },
+            render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,          },
 
           {
             title: <span className="text-uppercase">{t("Child's name")}</span>,
@@ -83,7 +93,7 @@ const Children: FC = (): JSX.Element => {
   return (
     <>
       {/* <CreateOrEditParents
-        refetch={() => childrenReq?.refetch()}
+        refetch={() => refetch()}
         open={open.o}
         data={open.data}
         setOpen={() => setOpen({ o: false, data: undefined })}
@@ -91,22 +101,20 @@ const Children: FC = (): JSX.Element => {
       /> */}
       <TitleCard titleName={t('Table of children')} />
       <div className="d-flex justify-content-between align-items-center mb-4"></div>
+      {isLoading && <Loading />}
       <Card>
-        <Table
-          pagination={{
-            pageSize: 10,
-            onChange: (page) => {
-              setCurrentPage(page);
-            },
-          }}
-          columns={columns}
-          bordered={false}
-          dataSource={childrenReq?.data?.results}
-          loading={childrenReq?.isLoading}
-          rowKey="id"
-          scroll={{ x: 1400 }}
-          size="small"
-        />
+        {isSuccess && data?.results && (
+          <Table
+          pagination={paginationConfig}
+            columns={columns}
+            bordered={false}
+            dataSource={data?.results}
+            loading={isLoading}
+            rowKey="id"
+            scroll={{ x: 1400 }}
+            size="small"
+          />
+        )}
       </Card>
     </>
   );
