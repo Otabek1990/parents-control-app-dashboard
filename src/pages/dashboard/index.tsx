@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import briefcase from 'assets/icons/briefcase.svg';
 import user from 'assets/icons/user.svg';
 import access from 'assets/icons/accessibility.svg';
@@ -9,9 +9,17 @@ import { StatisticsService } from 'services/openapi';
 import { PlanService } from 'services/openapi/services/PlanService';
 import { useNavigate } from 'react-router-dom';
 
-import ChartStats from './ChartStats';
+
+import axios from 'axios';
+import { ACCESS_TOKEN, API_URL } from '@config/constants';
+import { StatisticsPartner } from 'services/openapi/models/Statistics';
+import BarChartCard from './BarChartCard';
+import PieChartCard from './PieChartCard';
 
 const Dashboard: React.FC = (): JSX.Element => {
+  const [isSuccessStatPartner, setIsSuccessStatPartner] = useState(false);
+  const [statisticsPartner, setStatisticsPartner] = useState<StatisticsPartner>();
+  const token = localStorage.getItem(ACCESS_TOKEN);
   const role = localStorage.getItem('role') || 'ADMIN';
   const navigate = useNavigate();
 
@@ -19,19 +27,35 @@ const Dashboard: React.FC = (): JSX.Element => {
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  const { data: statisticsPartner, isSuccess: isSuccessStatPartner } = useQuery({
-    queryKey: ['statisticsPartner'],
-    queryFn: () => StatisticsService.statisticsPartnerList(),
-  });
-  console.log(statisticsPartner);
+  // const { data: statisticsPartner, isSuccess: isSuccessStatPartner } = useQuery({
+  //   queryKey: ['statisticsOfPartner'],
+  //   queryFn: () => StatisticsService.statisticsPartnerList(),
+  // });
+  // console.log(statisticsPartner);
 
   const { data: plans, isSuccess: isSuccessPlans } = useQuery({
     queryKey: ['plans'],
     queryFn: () => PlanService.planList(),
   });
 
+  useEffect(() => {
+    async function FetchData() {
+      try {
+        const res = await axios.get(`${API_URL}/v1/admin-panel-statistics/partner/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setStatisticsPartner(res?.data);
+        setIsSuccessStatPartner(true);
+      } catch (err) {
+        console.log(err);
+        setIsSuccessStatPartner(false);
+      }
+    }
+    FetchData();
+  }, []);
 
- 
   return (
     <div className="dashboard-wrapper">
       {/* <h1>Dashboard</h1> */}
@@ -107,7 +131,10 @@ const Dashboard: React.FC = (): JSX.Element => {
         )}
 
         <div className="col-xl-6 col-xxl-3">
-          <div onClick={() =>role==="ADMIN" ? navigate('/parentStats') : navigate("/partnerParentStats")} className="count-card">
+          <div
+            onClick={() => (role === 'ADMIN' ? navigate('/parentStats') : navigate('/partnerParentStats'))}
+            className="count-card"
+          >
             <div className="header">
               <img src={user} alt="" color="#38cb89" />
               <span>Barcha Ota-Onalar</span>
@@ -177,7 +204,11 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <ChartStats />
+     
+      <div className="chart-stats-container">
+     <BarChartCard />
+        {role === 'ADMIN' && <PieChartCard />}
+      </div>
     </div>
   );
 };

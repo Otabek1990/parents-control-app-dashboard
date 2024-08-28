@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BarChart from './BarChart';
 import { StatisticsService } from 'services/openapi';
 import { useQuery } from '@tanstack/react-query';
+import { StatisticsPartner } from 'services/openapi/models/Statistics';
+import { ACCESS_TOKEN, API_URL } from '@config/constants';
+import axios from 'axios';
 
 const formatDate = (date: Date): string => {
   const months = [
@@ -26,17 +29,37 @@ const formatDate = (date: Date): string => {
 };
 
 function BarChartCard() {
+ 
+  const token = localStorage.getItem(ACCESS_TOKEN);
+  const [partnerStatistics, setStatisticsPartner] = useState<StatisticsPartner>();
   const currentDate = new Date();
   const role = localStorage.getItem('role');
   const { data: statistics } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  const { data: partnerStatistics} = useQuery({
-    queryKey: ['partnerStatistic'],
-    queryFn: () => StatisticsService.statisticsPartnerList(),
-  });
+  // const { data: partnerStatistics} = useQuery({
+  //   queryKey: ['partnerStatistic'],
+  //   queryFn: () => StatisticsService.statisticsPartnerList(),
+  // });
 
+  useEffect(() => {
+    async function FetchData() {
+      try {
+        const res = await axios.get(`${API_URL}/v1/admin-panel-statistics/partner/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setStatisticsPartner(res?.data);
+       
+      } catch (err) {
+        console.log(err);
+       
+      }
+    }
+    FetchData()
+  }, []);
   const [currentId, setCurrentId] = useState<number>(1);
   const tabBtns = [
     {
@@ -58,6 +81,8 @@ function BarChartCard() {
     role === 'ADMIN'
       ? statistics?.daily_stats?.partner_growth_percentage
       : partnerStatistics?.daily_statistics?.parent_growth;
+
+
 
   return (
     <div className="bar-chart-card">
