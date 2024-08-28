@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import { ACCESS_TOKEN } from '@config/constants';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -34,9 +35,14 @@ export class StatisticsService {
   }
 
   public static statisticsPartnerList(): CancelablePromise<StatisticsPartner> {
+    const token=localStorage.getItem(ACCESS_TOKEN)
     return __request(OpenAPI, {
       method: 'GET',
       url: '/admin-panel-statistics/partner/',
+      headers: {
+        Authorization: `Bearer ${token}`
+    }
+     
     });
   }
 }

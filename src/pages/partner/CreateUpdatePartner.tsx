@@ -10,9 +10,9 @@ import ReactInputMask from 'react-input-mask';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import uploadImageIcon from '@assets/icons/image-download.svg';
-import { MonthlyPercentageService } from 'services/openapi/services/MonthlyPercentage';
-import { MonthlyPercentageData } from 'services/openapi/models/MonthlyPercentageCreate';
-import { months } from './months';
+// import { MonthlyPercentageService } from 'services/openapi/services/MonthlyPercentage';
+// import { MonthlyPercentageData } from 'services/openapi/models/MonthlyPercentageCreate';
+// import { months } from './months';
 // type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 // defaultValue
 type Props = {
@@ -21,9 +21,9 @@ type Props = {
 };
 
 const CreateUpdatePartner = ({ id, refetch }: Props) => {
-  const [percentages, setPercentages] = useState<MonthlyPercentageData[]>([]);
-  const [selectedMonth, setSelectedMonth] = useState<string>(months[0]);
-  const [percentage, setPercentage] = useState<number>(0);
+  // const [percentages, setPercentages] = useState<MonthlyPercentageData[]>([]);
+  // const [selectedMonth, setSelectedMonth] = useState<string>(months[0]);
+  // const [percentage, setPercentage] = useState<number>(0);
   const [formData, setFormData] = useState({
     avatar: null as File | null,
   });
@@ -37,28 +37,28 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
   const [regions, setRegions] = useState<IRegion[]>([]);
   const [districts, setDistricts] = useState<IDistrict[]>([]);
 
-  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMonth(e.target.value);
-  };
+  // const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setSelectedMonth(e.target.value);
+  // };
 
-  const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPercentage(Number(e.target.value));
-  };
-  const handleAddPercentage = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPercentages((prevPercentages) => {
-      const existingIndex = prevPercentages.findIndex((item) => item.month === selectedMonth);
-      if (existingIndex !== -1) {
-        // Update the existing percentage for the selected month
-        const updatedPercentages = [...prevPercentages];
-        updatedPercentages[existingIndex].percentage = percentage;
-        return updatedPercentages;
-      } else {
-        // Add new entry
-        return [...prevPercentages, { month: selectedMonth, percentage, partner: 1 }];
-      }
-    });
-  };
+  // const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPercentage(Number(e.target.value));
+  // };
+  // const handleAddPercentage = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setPercentages((prevPercentages) => {
+  //     const existingIndex = prevPercentages.findIndex((item) => item.month === selectedMonth);
+  //     if (existingIndex !== -1) {
+  //       // Update the existing percentage for the selected month
+  //       const updatedPercentages = [...prevPercentages];
+  //       updatedPercentages[existingIndex].percentage = percentage;
+  //       return updatedPercentages;
+  //     } else {
+  //       // Add new entry
+  //       return [...prevPercentages, { month: selectedMonth, percentage, partner: 1 }];
+  //     }
+  //   });
+  // };
  
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -119,7 +119,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     setDistricts([]);
     setRegions([]);
     form.resetFields();
-    setPercentages([])
+    // setPercentages([])
   };
 
   const onChangeRegion = async (value: number) => {
@@ -136,7 +136,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
   const onFinish = async (values: any) => {
     console.log(values);
     setLoading(true);
-    console.log(formData.avatar);
+   
     const formDat = new FormData();
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -154,9 +154,9 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     if (formData.avatar) {
       formDat.append('avatar', formData.avatar);
     }
-    for (let [key, value] of formDat.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // for (let [key, value] of formDat.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
     formDat.append('playstore_id', 'uz.bosstracker.parent');
 
     try {
@@ -164,30 +164,35 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         ? PartnerService.partnerUpdateNowUpdate(id as string | number, formDat)
         : PartnerService.partnerCreateCreate(formDat));
       form.resetFields();
-      if (!id) {
+      message.success(res.message);
+      console.log(res);
+      setOpen(false)
+      // if (!id) {
         
-        const arr=percentages.length 
-        ? percentages.map(item=>{
-          return {
-            ...item,
-            partner:res?.user?.id
-          }
-        })
-        :[]
-        console.log(arr)
-        try {
-          const perRes = await MonthlyPercentageService.monthlyPercentageCreate(arr);
-          message.success(res.message);
-          console.log(perRes);
-          setOpen(false);
-        } catch (error) {
-          alert('Ish foizi qoshishda hatolik!');
-        }
-      }
+      //   const arr=percentages.length 
+      //   ? percentages.map(item=>{
+      //     return {
+      //       ...item,
+      //       partner:res?.user?.id
+      //     }
+      //   })
+      //   :[]
+      //   console.log(arr)
+      //   try {
+      //     const perRes = await MonthlyPercentageService.monthlyPercentageCreate(arr);
+      //     message.success(res.message);
+      //     console.log(perRes);
+      //     setOpen(false);
+      //   } catch (error) {
+      //     alert('Ish foizi qoshishda hatolik!');
+      //   }
+      // }
+
       
       refetch({ throwOnError: true });
     } catch (e: any) {
-      errorHandler(e?.body);
+      console.log(e?.body?.message);
+      errorHandler(e?.body?.message);
     } finally {
       setLoading(false);
     }
@@ -390,7 +395,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 </Radio.Group>
               </Form.Item>
             </Col>
-            <Col md={20}>
+            {/* <Col md={20}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Work percentage')}
@@ -435,7 +440,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                   </ul>
                 </div>
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
           <Row key="footer" gutter={16}>
             <Col span="12">

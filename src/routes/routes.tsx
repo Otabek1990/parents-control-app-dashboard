@@ -185,7 +185,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
-        roles:['ADMIN']
+        roles:['ADMIN','PARTNER']
       },
       {
         name: 'Paynet',
@@ -197,7 +197,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
-        roles:['ADMIN']
+        roles:['ADMIN','PARTNER']
       },
       {
         name: 'Click',
@@ -209,10 +209,10 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
-        roles:['ADMIN']
+        roles:['ADMIN','PARTNER']
       },
     ],
-    roles:['ADMIN']
+    roles:['ADMIN','PARTNER']
   },
   {
     name: 'Payment to partner',
