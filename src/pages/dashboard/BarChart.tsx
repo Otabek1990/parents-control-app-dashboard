@@ -13,6 +13,10 @@ function BarChart({ statisticsPartner }: BarChartCardPropsPartner) {
   const { data } = useQuery({
     queryKey: ['partnerStats'],
     queryFn: () => PartnerDetailService.partnerDetailList(),
+    enabled: role==="ADMIN", // The query will only run if isAdmin() returns true
+    onError: (error) => {
+      console.error('Failed to fetch statistics:', error);
+    },
   });
 
   const partner = statisticsPartner?.partner;
@@ -62,15 +66,7 @@ function BarChart({ statisticsPartner }: BarChartCardPropsPartner) {
         type: 'shadow',
       },
     },
-    // dataZoom: [
-    //   {
-    //     type: 'slider',
-    //     show: true,
-    //     xAxisIndex: [0],
-    //     start: 0,
-    //     end: 100,
-    //   },
-    // ],
+
   };
 
   const opt = role === 'ADMIN' ? adminOption : partnerOption;

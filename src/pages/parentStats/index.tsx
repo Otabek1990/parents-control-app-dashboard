@@ -7,8 +7,10 @@ import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 import { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
-import {  ParentDetailList, ParentDetailService } from 'services/openapi/services/ParentDetailService';
+import { ParentDetailList, ParentDetailService } from 'services/openapi/services/ParentDetailService';
 import { useState } from 'react';
+import { exportDatasToExcel } from '@utils/exportExcel';
+import { formatNumber } from '@utils/timeConverter';
 const { Option } = Select;
 interface ParentDetailListTable {
   amount: number;
@@ -80,28 +82,50 @@ const ParentStats = () => {
           </Button>
         ),
     },
+    {
+      title: <span className="text-uppercase">{t('Amount')}</span>,
+      key: 'amount',
+      dataIndex: 'amount',
+      render: (record) => {
+        return formatNumber(record | 0);
+      },
+    },
   ];
-
+  const exportToExcelHandler = () => {
+   console.log('admin');
+    exportDatasToExcel(data,'adminParents', 'Ota onalar');
+  };
   return (
     <>
       <Card>
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'space-between',
             width: '100%',
             marginBottom: '20px',
+            gap: '20px',
           }}
         >
           <Button onClick={() => navigate(-1)}>
             <span style={{ marginRight: '5px' }}>&lt;</span> {t('Back')}
           </Button>
-          <Select defaultValue="all" style={{ width: 200 }} onChange={handleChange}>
-            <Option value="all">{t('All')}</Option>
-            <Option value="paid">{t('Paid')}</Option>
-            <Option value="unpaid">{t('Unpaid')}</Option>
-          </Select>
+          <div
+            style={{
+              display: 'flex',
+              gap: '20px',
+            }}
+          >
+            <Select defaultValue="all" style={{ width: 130 }} onChange={handleChange}>
+              <Option value="all">{t('All')}</Option>
+              <Option value="paid">{t('Paid')}</Option>
+              <Option value="unpaid">{t('Unpaid')}</Option>
+            </Select>
+            <Button type="primary" onClick={exportToExcelHandler}>
+              <span style={{ marginRight: '5px' }}></span> {t('Save to Excel')}
+            </Button>
+          </div>
         </div>
         <Table
           columns={columns}
@@ -121,8 +145,7 @@ const ParentStats = () => {
           }}
           dataSource={data}
           loading={isLoading}
-          rowKey={"username"}
-         
+          rowKey={'username'}
           scroll={{ x: 1000 }}
           size="small"
           style={{ textTransform: 'capitalize' }}

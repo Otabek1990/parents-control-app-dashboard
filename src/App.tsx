@@ -11,10 +11,8 @@ import Loading from '@components/core/Loading';
 function App() {
   const store: any = useAuthStore((state) => state);
   const [loading, setLoading] = useState(false);
-  
 
   useEffect(() => {
-    
     let token = localStorage.getItem(ACCESS_TOKEN);
     if (token) {
       (async () => {
@@ -23,7 +21,7 @@ function App() {
           await instance({
             method: 'get',
             url: '/v1/admin-panel-auth/me/',
-          
+
           });
           if (store?.setAuth({ isAuth: true, role: 'ADMIN' })) setLoading(false);
         } catch (e: any) {
@@ -34,6 +32,8 @@ function App() {
         }
       })();
     }
+
+
   }, []);
 
   return loading ? <Loading/>: store?.isAuth ? <RenderRoutes /> : <Login />;

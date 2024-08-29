@@ -3,7 +3,6 @@ import { StatisticsService } from 'services/openapi';
 import { useQuery } from '@tanstack/react-query';
 import { StatisticsPartner } from 'services/openapi/models/Statistics';
 
-
 const formatDate = (date: Date): string => {
   const months = [
     'Yanvar',
@@ -27,11 +26,9 @@ const formatDate = (date: Date): string => {
 };
 // StatisticsPartner
 
-
- type BarChartCardPropsPartner = {
+type BarChartCardPropsPartner = {
   statisticsPartner: StatisticsPartner | undefined;
 };
-
 
 function BarChartCard({ statisticsPartner }: BarChartCardPropsPartner) {
   // const [partnerStatistics, setStatisticsPartner] = useState<StatisticsPartner>();
@@ -40,8 +37,14 @@ function BarChartCard({ statisticsPartner }: BarChartCardPropsPartner) {
   const { data: statistics } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
+    enabled: role==="ADMIN", // The query will only run if isAdmin() returns true
+    onError: (error) => {
+      console.error('Failed to fetch statistics:', error);
+    },
   });
-  console.log(statisticsPartner);
+
+  // queryKey: ['statistics'],
+  // queryFn: () => StatisticsService.statisticsList(),
 
   const [currentId, setCurrentId] = useState<number>(1);
   const tabBtns = [

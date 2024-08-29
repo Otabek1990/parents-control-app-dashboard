@@ -89,7 +89,7 @@ const Login: FC = (): JSX.Element => {
                       <span>
                         <img src={userPassword} alt="Password Icon" />
                       </span>
-                    } allowClear placeholder={t("Enter your existing system password")} size="large" />
+                    } allowClear autoComplete='off' placeholder={t("Enter your existing system password")} size="large" />
                   </Form.Item>
                   <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 0, span: 24 }}>
                     <div className={'d-flex justify-content-between align-items-center w-100'}>

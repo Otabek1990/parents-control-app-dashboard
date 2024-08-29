@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { PartnerParentStatsList, PartnerParentStatsService } from 'services/openapi/services/PartnerParentStatsService';
 import { timeConverter } from '@utils/timeConverter';
+import { exportDatasToExcel } from '@utils/exportExcel';
 const { Option } = Select;
 interface ParentDetailListTable {
   abonent_code: string;
@@ -34,7 +35,6 @@ const PartnerParentStats = () => {
       keepPreviousData: true,
     },
   );
-console.log(data);
   const handleChange = (value: string) => {
     if (value === 'all') {
       setStatus(undefined); // No filter for "All"
@@ -64,7 +64,7 @@ console.log(data);
       key: 'tariff_name',
       dataIndex: 'tariff_name',
     },
-  
+
     {
       title: <span className="text-uppercase">{t('Payment status')}</span>,
       key: 'status',
@@ -108,8 +108,11 @@ console.log(data);
       key: 'last_login',
       render: (record) => (record ? timeConverter(record) : ''),
     },
-
   ];
+  const exportToExcelHandler = () => {
+    console.log('partner');
+    exportDatasToExcel(data?.results, 'partnerParents', 'Hamkor kiritgan Ota onalar');
+  };
 
   return (
     <>
@@ -117,7 +120,7 @@ console.log(data);
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'space-between',
             width: '100%',
             marginBottom: '20px',
@@ -126,11 +129,21 @@ console.log(data);
           <Button onClick={() => navigate(-1)}>
             <span style={{ marginRight: '5px' }}>&lt;</span> {t('Back')}
           </Button>
-          <Select defaultValue="all" style={{ width: 200 }} onChange={handleChange}>
-            <Option value="all">{t('All')}</Option>
-            <Option value="paid">{t('Paid')}</Option>
-            <Option value="unpaid">{t('Unpaid')}</Option>
-          </Select>
+          <div
+            style={{
+              display: 'flex',
+              gap: '20px',
+            }}
+          >
+            <Select defaultValue="all" style={{ width: 130 }} onChange={handleChange}>
+              <Option value="all">{t('All')}</Option>
+              <Option value="paid">{t('Paid')}</Option>
+              <Option value="unpaid">{t('Unpaid')}</Option>
+            </Select>
+            <Button type="primary" onClick={exportToExcelHandler}>
+              <span style={{ marginRight: '5px' }}></span> {t('Save to Excel')} 
+            </Button>
+          </div>
         </div>
         <Table
           columns={columns}
@@ -150,8 +163,7 @@ console.log(data);
           }}
           dataSource={data?.results}
           loading={isLoading}
-          rowKey={"username"}
-         
+          rowKey={'username'}
           scroll={{ x: 1000 }}
           size="small"
           style={{ textTransform: 'capitalize' }}

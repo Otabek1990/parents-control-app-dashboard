@@ -26,6 +26,10 @@ const Dashboard: React.FC = (): JSX.Element => {
   const { data: statistics, isSuccess } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
+    enabled: role==="ADMIN", // The query will only run if isAdmin() returns true
+    onError: (error) => {
+      console.error('Failed to fetch statistics:', error);
+    },
   });
   // const { data: statisticsPartner, isSuccess: isSuccessStatPartner } = useQuery({
   //   queryKey: ['statisticsOfPartner'],
@@ -36,6 +40,10 @@ const Dashboard: React.FC = (): JSX.Element => {
   const { data: plans, isSuccess: isSuccessPlans } = useQuery({
     queryKey: ['plans'],
     queryFn: () => PlanService.planList(),
+    enabled: role==="ADMIN", // The query will only run if isAdmin() returns true
+    onError: (error) => {
+      console.error('Failed to fetch statistics:', error);
+    },
   });
 
   useEffect(() => {
@@ -55,7 +63,7 @@ const Dashboard: React.FC = (): JSX.Element => {
     }
     FetchData();
   }, []);
-  console.log(statisticsPartner);
+  
 
   return (
     <div className="dashboard-wrapper">
