@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
-import BarChart from './BarChart';
+import { useState } from 'react';
 import { StatisticsService } from 'services/openapi';
 import { useQuery } from '@tanstack/react-query';
 import { StatisticsPartner } from 'services/openapi/models/Statistics';
-import { ACCESS_TOKEN, API_URL } from '@config/constants';
-import axios from 'axios';
+
 
 const formatDate = (date: Date): string => {
   const months = [
@@ -27,39 +25,24 @@ const formatDate = (date: Date): string => {
 
   return `${day} ${month}, ${year}`;
 };
+// StatisticsPartner
 
-function BarChartCard() {
- 
-  const token = localStorage.getItem(ACCESS_TOKEN);
-  const [partnerStatistics, setStatisticsPartner] = useState<StatisticsPartner>();
+
+ type BarChartCardPropsPartner = {
+  statisticsPartner: StatisticsPartner | undefined;
+};
+
+
+function BarChartCard({ statisticsPartner }: BarChartCardPropsPartner) {
+  // const [partnerStatistics, setStatisticsPartner] = useState<StatisticsPartner>();
   const currentDate = new Date();
   const role = localStorage.getItem('role');
   const { data: statistics } = useQuery({
     queryKey: ['statistics'],
     queryFn: () => StatisticsService.statisticsList(),
   });
-  // const { data: partnerStatistics} = useQuery({
-  //   queryKey: ['partnerStatistic'],
-  //   queryFn: () => StatisticsService.statisticsPartnerList(),
-  // });
+  console.log(statisticsPartner);
 
-  useEffect(() => {
-    async function FetchData() {
-      try {
-        const res = await axios.get(`${API_URL}/v1/admin-panel-statistics/partner/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setStatisticsPartner(res?.data);
-       
-      } catch (err) {
-        console.log(err);
-       
-      }
-    }
-    FetchData()
-  }, []);
   const [currentId, setCurrentId] = useState<number>(1);
   const tabBtns = [
     {
@@ -76,38 +59,32 @@ function BarChartCard() {
     },
   ];
   const totalProfit =
-    role === 'ADMIN' ? statistics?.overall_stats?.total_profit : partnerStatistics?.overall_statistics?.total_profit;
+    role === 'ADMIN' ? statistics?.overall_stats?.total_profit : statisticsPartner?.overall_statistics?.total_profit;
   const perGrowth =
     role === 'ADMIN'
       ? statistics?.daily_stats?.partner_growth_percentage
-      : partnerStatistics?.daily_statistics?.parent_growth;
-
-
+      : statisticsPartner?.daily_statistics?.parent_growth;
 
   return (
-    <div className="bar-chart-card">
-      <div className="bar-header">
-        <div className="bar-header-left">
-          <span> -{formatDate(currentDate)}</span>
+    <div className="bar-header">
+      <div className="bar-header-left">
+        <span> -{formatDate(currentDate)}</span>
 
-          <h3>
-            {totalProfit} so’m <span>{perGrowth}%</span>
-          </h3>
-        </div>
-        <div className="bar-header-right">
-          {tabBtns.map((btn) => (
-            <button
-              onClick={() => setCurrentId(btn.id)}
-              style={{ backgroundColor: currentId === btn.id ? 'white' : 'transparent' }}
-              key={btn.id}
-            >
-              {btn.title}
-            </button>
-          ))}
-        </div>
+        <h3>
+          {totalProfit} so’m <span>{perGrowth}%</span>
+        </h3>
       </div>
-
-      <BarChart />
+      <div className="bar-header-right">
+        {tabBtns.map((btn) => (
+          <button
+            onClick={() => setCurrentId(btn.id)}
+            style={{ backgroundColor: currentId === btn.id ? 'white' : 'transparent' }}
+            key={btn.id}
+          >
+            {btn.title}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

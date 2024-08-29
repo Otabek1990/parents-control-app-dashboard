@@ -9,12 +9,12 @@ import { StatisticsService } from 'services/openapi';
 import { PlanService } from 'services/openapi/services/PlanService';
 import { useNavigate } from 'react-router-dom';
 
-
 import axios from 'axios';
 import { ACCESS_TOKEN, API_URL } from '@config/constants';
 import { StatisticsPartner } from 'services/openapi/models/Statistics';
 import BarChartCard from './BarChartCard';
 import PieChartCard from './PieChartCard';
+import BarChart from './BarChart';
 
 const Dashboard: React.FC = (): JSX.Element => {
   const [isSuccessStatPartner, setIsSuccessStatPartner] = useState(false);
@@ -55,6 +55,7 @@ const Dashboard: React.FC = (): JSX.Element => {
     }
     FetchData();
   }, []);
+  console.log(statisticsPartner);
 
   return (
     <div className="dashboard-wrapper">
@@ -204,10 +205,13 @@ const Dashboard: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-     
+
       <div className="chart-stats-container">
-     <BarChartCard />
-        {role === 'ADMIN' && <PieChartCard />}
+        <div className="bar-chart-card">
+         <BarChartCard statisticsPartner={statisticsPartner}/> 
+          <BarChart statisticsPartner={statisticsPartner} />
+        </div>
+        {role === 'ADMIN'  && <PieChartCard />}
       </div>
     </div>
   );

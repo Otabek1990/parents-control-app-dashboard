@@ -1,28 +1,22 @@
-import React from 'react';
 import ReactECharts from 'echarts-for-react';
 
 import { useQuery } from '@tanstack/react-query';
 import { PartnerDetailService } from 'services/openapi/services/PartnerDetailService';
-import { StatisticsService } from 'services/openapi';
+import { StatisticsPartner } from 'services/openapi/models/Statistics';
 
-const BarChart: React.FC = () => {
+type BarChartCardPropsPartner = {
+  statisticsPartner: StatisticsPartner | undefined;
+};
+
+function BarChart({ statisticsPartner }: BarChartCardPropsPartner) {
   const role = localStorage.getItem('role');
   const { data } = useQuery({
     queryKey: ['partnerStats'],
     queryFn: () => PartnerDetailService.partnerDetailList(),
   });
 
-  const { data: partnerStatistics, isSuccess: isSuccessPartnerStatistics } = useQuery({
-    queryKey: ['partnerStatisticx'],
-    queryFn: () => StatisticsService.statisticsPartnerList(),
-  });
-
-  const partner = isSuccessPartnerStatistics ? partnerStatistics?.partner : '';
-  const partnerProfit = isSuccessPartnerStatistics
-    ? partnerStatistics?.overall_statistics?.bar_graph_data_with_profit?.parents
-    : '';
-
-  
+  const partner = statisticsPartner?.partner;
+  const partnerProfit = statisticsPartner?.overall_statistics?.bar_graph_data_with_profit?.parents;
 
   const partnerOption = {
     xAxis: {
@@ -54,7 +48,7 @@ const BarChart: React.FC = () => {
     },
     yAxis: {
       type: 'value',
-      minInterval: 1, 
+      minInterval: 1,
     },
     series: [
       {
@@ -80,7 +74,9 @@ const BarChart: React.FC = () => {
   };
 
   const opt = role === 'ADMIN' ? adminOption : partnerOption;
-  return <ReactECharts option={opt} style={{ height: 400, width: role==="ADMIN" ? "90%":"40%", minWidth: '100px' }} />;
-};
+  return (
+    <ReactECharts option={opt} style={{ height: 400, width: role === 'ADMIN' ? '90%' : '40%', minWidth: '100px' }} />
+  );
+}
 
 export default BarChart;
