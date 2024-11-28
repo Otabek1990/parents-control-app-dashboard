@@ -145,6 +145,7 @@
   "Failed to change password":"Не удалось изменить пароль",
   "Password must be at least 5 characters long!":"Пароль должен быть длиной не менее 5 символов!",
   "Password is incorrect":"Старый пароль неверен",
-  "Save to Excel":"Сохранить в Excel"
+  "Save to Excel":"Сохранить в Excel",
+  "Rows per page":"Строков на странице"
 
 }

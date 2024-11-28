@@ -145,5 +145,6 @@
   "Failed to change password": "Parol o'zgartirishda xatolik sodir bo'ldi",
   "Password must be at least 5 characters long!": "Parol eng kamida 5ta belgidan iborat bo'lishi kerak!",
   "Password is incorrect": "Eski parol xato kiritildi!",
-  "Save to Excel":"Excelda saqlash"
+  "Save to Excel":"Excelda saqlash",
+  "Rows per page":"Qatorlar soni"
 }

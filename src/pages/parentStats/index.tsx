@@ -1,8 +1,6 @@
-import { Button, Card, Table, Select } from 'antd';
+import { Button, Card, Table, Select, Spin } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-
 import { useTranslation } from 'react-i18next';
-
 import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 import { ColumnsType } from 'antd/es/table';
@@ -11,7 +9,9 @@ import { ParentDetailList, ParentDetailService } from 'services/openapi/services
 import { useState } from 'react';
 import { exportDatasToExcel } from '@utils/exportExcel';
 import { formatNumber } from '@utils/timeConverter';
+
 const { Option } = Select;
+
 interface ParentDetailListTable {
   amount: number;
   username: string;
@@ -20,11 +20,12 @@ interface ParentDetailListTable {
 
 const ParentStats = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Default page size
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState<string | undefined>(undefined); // Start with no filter
 
-  const { data, isLoading } = useQuery<ParentDetailList>(
+  const { data, isLoading, isFetching } = useQuery<ParentDetailList>(
     ['parentStats', status],
     () => ParentDetailService.partnerDetailList(status),
     {
@@ -32,19 +33,15 @@ const ParentStats = () => {
     },
   );
 
-  const handleChange = (value: string) => {
-    if (value === 'all') {
-      setStatus(undefined); // No filter for "All"
-    } else {
-      setStatus(value); // Set the selected status
-    }
+  const handleStatusChange = (value: string) => {
+    setStatus(value === 'all' ? undefined : value); // Update status filter
   };
 
   const columns: ColumnsType<ParentDetailListTable> = [
     {
       title: <span className="text-uppercase">id</span>,
       key: 'id',
-      render: ({}, {}, index) => (currentPage - 1) * 10 + index + 1,
+      render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
     },
     {
       title: <span className="text-uppercase">{t('Username')}</span>,
@@ -91,10 +88,11 @@ const ParentStats = () => {
       },
     },
   ];
+
   const exportToExcelHandler = () => {
-   console.log('admin');
-    exportDatasToExcel(data,'adminParents', 'Ota onalar');
+    exportDatasToExcel(data, 'adminParents', 'Ota onalar');
   };
+
   return (
     <>
       <Card>
@@ -117,7 +115,7 @@ const ParentStats = () => {
               gap: '20px',
             }}
           >
-            <Select defaultValue="all" style={{ width: 130 }} onChange={handleChange}>
+            <Select defaultValue="all" style={{ width: 130 }} onChange={handleStatusChange}>
               <Option value="all">{t('All')}</Option>
               <Option value="paid">{t('Paid')}</Option>
               <Option value="unpaid">{t('Unpaid')}</Option>
@@ -127,29 +125,37 @@ const ParentStats = () => {
             </Button>
           </div>
         </div>
-        <Table
-          columns={columns}
-          bordered={false}
-          locale={{
-            emptyText: (
-              <div className="w-25 m-auto ">
-                <Lottie animationData={Empty} loop={false}></Lottie>
-              </div>
-            ),
-          }}
-          pagination={{
-            pageSize: 10,
-            onChange: (page) => {
-              setCurrentPage(page);
-            },
-          }}
-          dataSource={data}
-          loading={isLoading}
-          rowKey={'username'}
-          scroll={{ x: 1000 }}
-          size="small"
-          style={{ textTransform: 'capitalize' }}
-        />
+        {isFetching ? ( // Show loader while fetching
+          <div style={{ textAlign: 'center', padding: '20px' }}>
+            <Spin size="large" />
+          </div>
+        ) : (
+          <Table
+            columns={columns}
+            bordered={false}
+            locale={{
+              emptyText: (
+                <div className="w-25 m-auto ">
+                  <Lottie animationData={Empty} loop={false}></Lottie>
+                </div>
+              ),
+            }}
+            pagination={{
+              pageSize,
+              pageSizeOptions: ['10', '25', '50', '100'], // Options for page sizes
+              showSizeChanger: true,
+              onShowSizeChange: (_, newSize) => setPageSize(newSize), // Update page size
+              current: currentPage,
+              onChange: (page) => setCurrentPage(page), // Update current page
+            }}
+            dataSource={data}
+            loading={isLoading}
+            rowKey={'username'}
+            scroll={{ x: 1000 }}
+            size="small"
+            style={{ textTransform: 'capitalize' }}
+          />
+        )}
       </Card>
     </>
   );
