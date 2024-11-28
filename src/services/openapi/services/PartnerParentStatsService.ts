@@ -27,7 +27,7 @@ export type PartnerParentStatsList = {
 
 export class PartnerParentStatsService {
   public static partnerParentDetailList(status?: string): CancelablePromise<PartnerParentStatsList> {
-    const url = '/admin-panel-parent/list/' 
+    const url = '/admin-panel-parent/list/?limit=25' 
     const token=localStorage.getItem(ACCESS_TOKEN)
     return __request(OpenAPI, {
       method: 'GET',
