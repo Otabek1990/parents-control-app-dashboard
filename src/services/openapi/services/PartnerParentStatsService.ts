@@ -25,18 +25,31 @@ export type PartnerParentStatsList = {
 };
 
 
+
 export class PartnerParentStatsService {
-  public static partnerParentDetailList(status?: string): CancelablePromise<PartnerParentStatsList> {
-    const url = '/admin-panel-parent/list/?limit=25' 
-    const token=localStorage.getItem(ACCESS_TOKEN)
+  public static partnerParentDetailList(
+    status?: string,
+    limit: number = 10, // Default limit
+    offset: number = 0 // Default offset
+  ): CancelablePromise<PartnerParentStatsList> {
+    const url = '/admin-panel-parent/list/';
+    const token = localStorage.getItem(ACCESS_TOKEN);
+
+    if (!token) {
+      throw new Error('Authorization token is missing');
+    }
+
     return __request(OpenAPI, {
       method: 'GET',
       url: url,
       headers: {
         Authorization: `Bearer ${token}`, // Include the token in the headers
       },
-      query: status ? { status } : {}, // Add the status parameter to the query string
+      query: {
+        ...(status ? { status } : {}),
+        limit, // Add limit to query
+        offset, // Add offset to query
+      },
     });
   }
 }
-
