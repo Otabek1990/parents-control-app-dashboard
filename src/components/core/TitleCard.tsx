@@ -1,6 +1,5 @@
 import { Typography } from 'antd';
 import { t } from 'i18next';
-import InputText from './Input';
 // import DatePickerComponent from './DatePickerComponent';
 import { type ReactNode } from 'react';
 
@@ -15,7 +14,6 @@ function TitleCard({ titleName, children }: TitleCardProps) {
     <div className="d-flex justify-content-between align-items-center mb-2">
       <Title style={{whiteSpace:"nowrap"}} level={4}>{t(titleName)}</Title>
       <div className="d-flex align-items-center gap-3">
-        <InputText />
         {/* <DatePickerComponent />
         <DatePickerComponent /> */}
         {children}

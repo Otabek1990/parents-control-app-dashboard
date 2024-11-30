@@ -222,10 +222,10 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
-                label={t('Username')}
+                label={t('Phone number')}
                 name="username"
               >
-                <Input placeholder={t('Username')} />
+                <Input type='tel' placeholder={t('Phone number')} />
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -234,7 +234,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
                 label={t('Password')}
                 name="password"
               >
-                <Input placeholder={t('Password')} />
+                <Input  placeholder={t('Password')} />
               </Form.Item>
             </Col>
             <Col md={8}>

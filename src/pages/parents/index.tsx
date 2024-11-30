@@ -3,57 +3,42 @@ import { Button, Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
-// import { DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
-// import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
 import Loading from '@components/core/Loading';
 
-// const { Title } = Typography;
 const Parents: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 15;
+  const [pageSize, setPageSize] = useState(10); // Default page size is 10
 
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['parents', currentPage], // Query key includes the current page
+    queryKey: ['parents', currentPage, pageSize], // Query key includes current page and page size
     queryFn: () => ParentService.parentListList(undefined, pageSize, (currentPage - 1) * pageSize),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
-
 
   const paginationConfig = {
     current: currentPage,
     pageSize: pageSize,
     total: data?.count || 0, // Total count from API response
+    pageSizeOptions: ['10', '25', '50', '100'], // Set available page sizes
     onChange: (page: number) => {
       setCurrentPage(page); // Update page number
     },
+    onShowSizeChange: (current: number, size: number) => {
+      setPageSize(size); // Update page size
+      setCurrentPage(current); // Reset to first page on page size change
+    },
   };
-  // const [form] = Form.useForm();
-
-
-  // const deleteParents = async (id: string) => {
-  //   try {
-  //     await ParentService.parentDeleteNowDelete(id);
-  //     message.success(t('Deleted parental data!'));
-  //     parentsReq?.refetch();
-  //   } catch (e: any) {
-  //     message.error(e?.response?.data?.message);
-  //   }
-  // };
 
   const columns: ColumnsType<ParentList> = [
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
-      // render: ({}, {}, index) => {
-      //   return index + 1;
-      // },
-        render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
+      render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
     },
-
     {
       title: <span className="text-uppercase">{t('User phone number')}</span>,
       dataIndex: 'username',
@@ -69,7 +54,7 @@ const Parents: FC = (): JSX.Element => {
       dataIndex: 'status',
       key: 'status',
       render: (record) =>
-        record==="Paid" ? (
+        record === 'Paid' ? (
           <Button
             style={{
               backgroundColor: '#00E67F',
@@ -113,62 +98,16 @@ const Parents: FC = (): JSX.Element => {
       key: 'last_login',
       render: (record) => (record ? timeConverter(record) : ''),
     },
-  
-
-    // {
-    //   title: <span className="text-uppercase">{t('Profile')}</span>,
-    //   dataIndex: 'profile',
-    //   key: 'profile',
-    //   render: () => <Button icon={<UserOutlined />} shape={'circle'} />,
-    // },
-    // {
-    //   title: <span className="text-uppercase"> {t('Actions')} </span>,
-    //   key: 'action',
-    //   width: 100,
-    //   render: ({}, data) => (
-    //     <Space size="middle">
-    //       <Button
-    //         type="dashed"
-    //         onClick={() => {
-    //           setOpen({ o: true, data: data });
-    //           form?.setFieldsValue(data);
-    //         }}
-    //         icon={<EditOutlined />}
-    //       />
-    //       <Popconfirm title={t('Delete parental data?')} onConfirm={() => deleteParents(data?.guid ?? '')}>
-    //         <Button type="dashed" icon={<DeleteOutlined />} />
-    //       </Popconfirm>
-    //     </Space>
-    //   ),
-    // },
   ];
 
   return (
     <>
-      {/* <CreateOrEditParents
-        refetch={() => parentsReq?.refetch()}
-        open={open.o}
-        data={open.data}
-        setOpen={() => setOpen({ o: false, data: undefined })}
-        form={form}
-      /> */}
       <TitleCard titleName={t('Table of parents')} />
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        {/* <CreateUpdatePartner refetch={refetch} /> */}
-
-        {/* <Title level={4}>{t("Table of parents")}</Title> */}
-        {/* <Button type="primary" onClick={() => setOpen({ o: true, data: undefined })}>+ {t("Add")}</Button> */}
-      </div>
+      <div className="d-flex justify-content-between align-items-center mb-4"></div>
       {isLoading && <Loading />}
       <Card>
         {isSuccess && data?.results && (
           <Table
-            // pagination={{
-            //   pageSize: 10,
-            //   onChange: (page) => {
-            //     setCurrentPage(page);
-            //   },
-            // }}
             pagination={paginationConfig}
             columns={columns}
             bordered={false}

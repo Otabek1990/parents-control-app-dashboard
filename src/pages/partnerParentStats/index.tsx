@@ -6,7 +6,7 @@ import Empty from '@assets/animated-illusions/empty.json';
 import { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { PartnerParentStatsList, PartnerParentStatsService } from 'services/openapi/services/PartnerParentStatsService';
+import { PartnerParentStatsService } from 'services/openapi/services/PartnerParentStatsService';
 import { timeConverter } from '@utils/timeConverter';
 import { exportDatasToExcel } from '@utils/exportExcel';
 
@@ -29,11 +29,15 @@ const PartnerParentStats = () => {
   const [currentPage, setCurrentPage] = useState(1); // Pagination control
   const [pageSize, setPageSize] = useState(10); // Items per page
 
-  const { data, isLoading, isError } = useQuery(
-    ['partnerParentStats', status, currentPage, pageSize], // Add pageSize as dependency
+  const { data, isLoading } = useQuery(
+    ['partnerParentStats', status, currentPage, pageSize],
     () => PartnerParentStatsService.partnerParentDetailList(status, pageSize, (currentPage - 1) * pageSize),
     {
-      keepPreviousData: true, // Keep previous data while fetching
+      keepPreviousData: true,
+      onSuccess: (data) => {
+        console.log(data);
+        // Statuslarni hisoblashni boshlaymiz
+      },
     },
   );
 
@@ -41,12 +45,6 @@ const PartnerParentStats = () => {
     setCurrentPage(1); // Return to the first page
     setStatus(value === 'all' ? undefined : value); // Update status
   };
-
-  // const handlePageSizeChange = (value: number) => {
-  //   console.log(value);
-  //   setCurrentPage(1); // Reset to first page when page size changes
-  //   setPageSize(value); // Update page size
-  // };
 
   const columns: ColumnsType<ParentDetailListTable> = [
     {
@@ -104,18 +102,13 @@ const PartnerParentStats = () => {
         <Button onClick={() => navigate(-1)}>
           <span style={{ marginRight: '5px' }}>&lt;</span> {t('Back')}
         </Button>
-        <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
           <Select defaultValue="all" style={{ width: 130 }} onChange={handleStatusChange}>
             <Option value="all">{t('All')}</Option>
             <Option value="paid">{t('Paid')}</Option>
             <Option value="unpaid">{t('Unpaid')}</Option>
           </Select>
-          {/* <Select defaultValue={pageSize} style={{ width: 100 }} onChange={handlePageSizeChange}>
-            <Option value={10}>10</Option>
-            <Option value={25}>25</Option>
-            <Option value={50}>50</Option>
-            <Option value={100}>100</Option>
-          </Select> */}
+
           <Button type="primary" onClick={exportToExcelHandler}>
             {t('Save to Excel')}
           </Button>
@@ -129,11 +122,12 @@ const PartnerParentStats = () => {
           current: currentPage,
           pageSize,
           total: data?.count,
-          showSizeChanger: true, // SizeChanger-ni ko'rsatish
-          onChange: (page) => setCurrentPage(page), // Sahifani o'zgartirish
+          showSizeChanger: true,
+          onChange: (page) => setCurrentPage(page),
           onShowSizeChange: (current, size) => {
-            setPageSize(size); // PageSize ni o'zgartirish
-            setCurrentPage(1); // Birinchi sahifaga qaytish
+            console.log(current);
+            setPageSize(size);
+            setCurrentPage(1);
           },
         }}
         rowKey="username"
@@ -145,25 +139,6 @@ const PartnerParentStats = () => {
           ),
         }}
       />
-      {/* <Table
-        columns={columns}
-        dataSource={data?.results}
-        loading={isLoading}
-        pagination={{
-          current: currentPage,
-          pageSize,
-          total: data?.count,
-          onChange: (page) => setCurrentPage(page),
-        }}
-        rowKey="username"
-        locale={{
-          emptyText: (
-            <div className="w-25 m-auto">
-              <Lottie animationData={Empty} loop={false} />
-            </div>
-          ),
-        }}
-      /> */}
     </Card>
   );
 };

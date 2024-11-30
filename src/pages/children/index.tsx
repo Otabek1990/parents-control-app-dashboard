@@ -3,7 +3,6 @@ import { Card, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ChildList, ChildService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
-// import CreateOrEditParents from '@pages/parents/crud/createOrEdit';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import Loading from '@components/core/Loading';
@@ -11,10 +10,10 @@ import Loading from '@components/core/Loading';
 const Children: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 15;
+  const [pageSize, setPageSize] = useState(10); // Default page size
 
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['children', currentPage], // Query key includes the current page
+    queryKey: ['children', currentPage, pageSize], // Query key includes current page and page size
     queryFn: () => ChildService.childList(undefined, pageSize, (currentPage - 1) * pageSize),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
@@ -23,8 +22,11 @@ const Children: FC = (): JSX.Element => {
     current: currentPage,
     pageSize: pageSize,
     total: data?.count || 0, // Total count from API response
-    onChange: (page: number) => {
+    showSizeChanger: true, // Allows user to change page size
+    pageSizeOptions: ['10', '25', '50', '100'], // Options for page size
+    onChange: (page: number, size?: number) => {
       setCurrentPage(page); // Update page number
+      if (size) setPageSize(size); // Update page size if changed
     },
   };
 
@@ -36,8 +38,8 @@ const Children: FC = (): JSX.Element => {
           {
             title: <span className="text-uppercase">№</span>,
             key: 'id',
-            render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,          },
-
+            render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
+          },
           {
             title: <span className="text-uppercase">{t("Child's name")}</span>,
             dataIndex: 'fullname',
@@ -68,11 +70,8 @@ const Children: FC = (): JSX.Element => {
           {
             title: <span className="text-uppercase">№</span>,
             key: 'id',
-            render: ({}, {}, index) => {
-              return index + 1;
-            },
+            render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
           },
-
           {
             title: <span className="text-uppercase">{t("Child's name")}</span>,
             dataIndex: 'fullname',
@@ -92,20 +91,12 @@ const Children: FC = (): JSX.Element => {
 
   return (
     <>
-      {/* <CreateOrEditParents
-        refetch={() => refetch()}
-        open={open.o}
-        data={open.data}
-        setOpen={() => setOpen({ o: false, data: undefined })}
-        form={form}
-      /> */}
       <TitleCard titleName={t('Table of children')} />
-      <div className="d-flex justify-content-between align-items-center mb-4"></div>
       {isLoading && <Loading />}
       <Card>
         {isSuccess && data?.results && (
           <Table
-          pagination={paginationConfig}
+            pagination={paginationConfig}
             columns={columns}
             bordered={false}
             dataSource={data?.results}
