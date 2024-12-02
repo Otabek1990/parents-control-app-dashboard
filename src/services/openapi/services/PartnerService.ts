@@ -84,7 +84,7 @@ export class PartnerService {
       url: '/admin-panel-partner/list/',
      
       query: {
-        search: search,
+        q: search,
         limit: limit,
         offset: offset,
       },

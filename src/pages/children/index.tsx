@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Card, Table } from 'antd';
+import { FC, useEffect, useState } from 'react';
+import { Card, Input, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ChildList, ChildService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -11,10 +11,18 @@ const Children: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size
+  const [searchTerm, setSearchTerm] = useState(''); // Search term
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 500); // 500ms delay for debouncing
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
 
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['children', currentPage, pageSize], // Query key includes current page and page size
-    queryFn: () => ChildService.childList(undefined, pageSize, (currentPage - 1) * pageSize),
+    queryKey: ['children', currentPage, pageSize,debouncedSearch], // Query key includes current page and page size
+    queryFn: () => ChildService.childList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
 
@@ -91,7 +99,15 @@ const Children: FC = (): JSX.Element => {
 
   return (
     <>
-      <TitleCard titleName={t('Table of children')} />
+      <TitleCard titleName={t('Table of children')}>
+        <Input
+          style={{ width: '300px' }}
+          size="large"
+          placeholder={t('Search')}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+        />
+      </TitleCard>
       {isLoading && <Loading />}
       <Card>
         {isSuccess && data?.results && (

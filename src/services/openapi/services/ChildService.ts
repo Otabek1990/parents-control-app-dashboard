@@ -92,7 +92,7 @@ guid: string,
      * @throws ApiError
      */
     public static childList(
-search?: string,
+q?: string,
 limit?: number,
 offset?: number,
 ): CancelablePromise<{
@@ -106,7 +106,7 @@ results: Array<ChildList>;
             url: '/admin-panel-child/list/',
             // admin-panel-child/list/
             query: {
-                'search': search,
+                'q': q,
                 'limit': limit,
                 'offset': offset,
             },

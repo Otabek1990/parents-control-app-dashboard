@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Button, Card, Table } from 'antd';
+import { FC, useEffect, useState } from 'react';
+import { Button, Card, Input, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -11,11 +11,20 @@ import Loading from '@components/core/Loading';
 const Parents: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState(''); // Search term
+  const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search term
+
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 500); // 500ms delay for debouncing
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['parents', currentPage, pageSize], // Query key includes current page and page size
-    queryFn: () => ParentService.parentListList(undefined, pageSize, (currentPage - 1) * pageSize),
+    queryKey: ['parents', currentPage, pageSize,debouncedSearch], // Query key includes current page and page size
+    queryFn: () => ParentService.parentListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
 
@@ -102,7 +111,15 @@ const Parents: FC = (): JSX.Element => {
 
   return (
     <>
-      <TitleCard titleName={t('Table of parents')} />
+      <TitleCard titleName={t('Table of parents')}>
+        <Input
+          style={{ width: '300px' }}
+          size="large"
+          placeholder={t('Search')}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+        />
+      </TitleCard>
       <div className="d-flex justify-content-between align-items-center mb-4"></div>
       {isLoading && <Loading />}
       <Card>

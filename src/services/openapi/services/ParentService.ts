@@ -114,7 +114,7 @@ guid: string | number,
      * @throws ApiError
      */
     public static parentListList(
-search?: string,
+q?: string,
 limit?: number,
 offset?: number,
 ): CancelablePromise<{
@@ -127,7 +127,7 @@ results: Array<ParentList>;
             method: 'GET',
             url: '/admin-panel-parent/list/',
             query: {
-                'search': search,
+                'q': q,
                 'limit': limit,
                 'offset': offset,
             },
