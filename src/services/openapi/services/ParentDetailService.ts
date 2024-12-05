@@ -24,20 +24,34 @@ import { request as __request } from '../core/request';
 // };
 
 // For ADMIN role
-export type ParentDetailList = Array<{
+type ParentListType = {
   amount: number;
   payment_status: string;
   username: string;
-}>;
+};
 
+export type ParentDetailList = {
+  count: number;
+  next?: string | null;
+  previous?: string | null;
+  results: Array<ParentListType>;
+};
 
 export class ParentDetailService {
-  public static partnerDetailList(status?: string): CancelablePromise<ParentDetailList> {
-    const url = '/admin-panel-statistics/admin/parent/' 
+  public static partnerDetailList(
+    status?: string,
+    limit: number = 10,
+    offset: number = 0,
+  ): CancelablePromise<ParentDetailList> {
+    const url = '/admin-panel-statistics/admin/parent/';
     return __request(OpenAPI, {
       method: 'GET',
       url: url,
-      query: status ? { status } : {}, // Add the status parameter to the query string
+      query: {
+        ...(status ? { status } : {}),
+        limit,
+        offset,
+      },
     });
   }
 }

@@ -63,7 +63,7 @@ const Parents: FC = (): JSX.Element => {
       dataIndex: 'status',
       key: 'status',
       render: (record) =>
-        record === 'Paid' ? (
+        record?.status === 'Paid' ? (
           <Button
             style={{
               backgroundColor: '#00E67F',

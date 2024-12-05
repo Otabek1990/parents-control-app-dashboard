@@ -76,11 +76,11 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
 
   const formatDate = 'DD.MM.YYYY';
 
-  const onChangeBirthdayPicker: DatePickerProps['onChange'] = (_, dateString) => {
-    form.setFieldsValue({
-      birthday: dayjs(dateString, formatDate),
-    });
-  };
+  // const onChangeBirthdayPicker: DatePickerProps['onChange'] = (_, dateString) => {
+  //   form.setFieldsValue({
+  //     birthday: dayjs(dateString, formatDate),
+  //   });
+  // };
   const onChangePasswordPicker: DatePickerProps['onChange'] = (_, dateString) => {
     form.setFieldsValue({
       passport_data: dayjs(dateString, formatDate),
@@ -148,40 +148,9 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                 <Input className="text-capitalize" placeholder="Name" size="large" />
               </Form.Item>
             </Col>
-            <Col md={8}>
-              <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Middle name'}
-                name="middle_name"
-              >
-                <Input className="text-capitalize" placeholder="Middle name" size="large" />
-              </Form.Item>
-            </Col>
-            <Col md={8}>
-              <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Surname'}
-                name="surname"
-              >
-                <Input className="text-capitalize" placeholder="Surname" size="large" />
-              </Form.Item>
-            </Col>
-            <Col md={8}>
-              <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Birthday'}
-                name="birthday"
-              >
-                <DatePicker
-                  className="w-100"
-                  placeholder="01.01.2000"
-                  onChange={onChangeBirthdayPicker}
-                  size="large"
-                  format={formatDate}
-                  defaultValue={id ? dayjs(form.getFieldsValue(['birthday']), formatDate) : undefined}
-                />
-              </Form.Item>
-            </Col>
+          
+          
+          
             <Col md={8}>
               <Form.Item
                 rules={[{ message: 'Please fill the field!', required: true }]}
