@@ -37,7 +37,7 @@ export class PartnerService {
   public static partnerDeleteNowDelete(id: string | number): CancelablePromise<void> {
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: `/admin-panel-partner/delete/{id}/`,
+      url: `/admin-panel-partner/delete/${id}/`,
       path: {
         id: id,
       },

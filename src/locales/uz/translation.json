@@ -146,5 +146,8 @@
   "Password must be at least 5 characters long!": "Parol eng kamida 5ta belgidan iborat bo'lishi kerak!",
   "Password is incorrect": "Eski parol xato kiritildi!",
   "Save to Excel":"Excelda saqlash",
-  "Rows per page":"Qatorlar soni"
+  "Rows per page":"Qatorlar soni", 
+   "Create operator": "Operator yaratish",
+  "Edit operator": "Operatorni o'zgartirish",
+  "Daily call limit":"Kunlik telefon qilish limiti"
 }

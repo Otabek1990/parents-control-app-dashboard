@@ -5,24 +5,21 @@
 
 export type OperatorList = {
     readonly id?: number;
-    readonly guid?: string;
+    
     /**
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
     username: string;
-    partner?: string | null;
-    name: string;
-    middle_name: string;
-    surname: string;
-    birthday?: string | null;
-    readonly photo?: string | null;
+    fullname: string;
     region: OperatorList.region;
     district: OperatorList.district;
     gender?: OperatorList.gender;
     passport_seria?: string | null;
     passport_number?: number | null;
-    passport_data?: string | null;
+    passport_date?: string | null;
     created_at?: string;
+    password:string;
+    daily_call_limit:number;
 };
 
 export namespace OperatorList {

@@ -24,7 +24,7 @@ data: OperatorCreate,
 ): CancelablePromise<OperatorCreate> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/operator/create/',
+            url: '/admin-panel-operator/create/',
             body: data,
         });
     }
@@ -40,7 +40,7 @@ guid: string,
 ): CancelablePromise<OperatorList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/operator/delete/{guid}/now/',
+            url: '/admin-panel-operator/delete/{guid}/now/',
             path: {
                 'guid': guid,
             },
@@ -58,7 +58,7 @@ guid: string,
 ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/operator/delete/{guid}/now/',
+            url: '/admin-panel-operator/delete/{guid}/now/',
             path: {
                 'guid': guid,
             },
@@ -92,7 +92,7 @@ guid: string,
      * @throws ApiError
      */
     public static operatorListList(
-search?: string,
+q?: string,
 limit?: number,
 offset?: number,
 ): CancelablePromise<{
@@ -106,7 +106,7 @@ results: Array<OperatorList>;
             url: '/admin-panel-operator/list/',
             // admin-panel-operator/list/
             query: {
-                'search': search,
+                'q': q,
                 'limit': limit,
                 'offset': offset,
             },
@@ -139,14 +139,14 @@ guid: string,
      * @throws ApiError
      */
     public static operatorUpdateNowUpdate(
-guid: string,
+id: string,
 data: OperatorUpdate,
 ): CancelablePromise<OperatorUpdate> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/operator/update/{guid}/now/',
+            url: `/admin-panel-operator/update/{id}/now/`,
             path: {
-                'guid': guid,
+                'id': id,
             },
             body: data,
         });

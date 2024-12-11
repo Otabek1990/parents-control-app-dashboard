@@ -18,7 +18,7 @@ const Operators = () => {
     queryKey: ['agents'],
     queryFn: () => OperatorService.operatorListList(),
   });
-
+ console.log(data);
   const deleteAgent = async (guid: string) => {
     try {
       await OperatorService.operatorDeleteNowDelete(guid);

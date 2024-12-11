@@ -5,20 +5,17 @@
 
 export type OperatorUpdate = {
     readonly id?: number;
-    readonly guid?: string;
-    partner?: string | null;
-    name: string;
-    middle_name: string;
-    surname: string;
-    birthday?: string | null;
-    readonly photo?: string | null;
-    region: OperatorUpdate.region;
-    district: OperatorUpdate.district;
+    username: string;
+    fullname: string;
     gender?: OperatorUpdate.gender;
     passport_seria?: string | null;
     passport_number?: number | null;
-    passport_data?: string | null;
+    passport_date?: string | null;
     created_at?: string;
+    password:string;
+    daily_call_limit:number;
+    region: OperatorUpdate.region;
+    district: OperatorUpdate.district;
 };
 
 export namespace OperatorUpdate {

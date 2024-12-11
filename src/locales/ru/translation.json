@@ -146,6 +146,9 @@
   "Password must be at least 5 characters long!":"Пароль должен быть длиной не менее 5 символов!",
   "Password is incorrect":"Старый пароль неверен",
   "Save to Excel":"Сохранить в Excel",
-  "Rows per page":"Строков на странице"
+  "Rows per page":"Строков на странице",
+  "Create operator": "Создать оператора",
+  "Edit operator": "Изменить оператора",
+  "Daily call limit":"Дневной лимит звонков"
 
 }
