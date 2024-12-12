@@ -13,7 +13,6 @@ import {
   Select,
   message,
 } from 'antd';
-import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactInputMask from 'react-input-mask';
@@ -21,16 +20,16 @@ import { BaseApiService,  OperatorService, } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
 
 type Props = {
-  id?: string | number;
+  id?: string | number | undefined;
   refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseQueryResult>;
 };
 const CreateUpdateOperator = ({ id, refetch }: Props) => {
-  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [regions, setRegions] = useState<IRegion[]>([]);
   const [districts, setDistricts] = useState<IDistrict[]>([]);
+  const { t } = useTranslation();
 
   const getDistricts = async (value: number) => {
     try {
@@ -59,9 +58,9 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         let res = await OperatorService.operatorDetailNowRead(id);
         form.setFieldsValue({
           ...res,
-          passport_date: dayjs(res.passport_date, formatDate),
+    
         });
-        getDistricts(res.region);
+        getDistricts(res?.region?.id);
       } catch (e: any) {
         console.log(e?.body);
       }
@@ -84,7 +83,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
     getDistricts(value);
   };
 
-  const formatDate = 'DD.MM.YYYY';
+  // const formatDate = 'DD.MM.YYYY';
 
   // const onChangeBirthdayPicker: DatePickerProps['onChange'] = (_, dateString) => {
   //   form.setFieldsValue({
@@ -181,7 +180,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
 
-            <Col md={8}>
+            {/* <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Passport seria'}
@@ -202,7 +201,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                   <Input placeholder={t('Passport number')} size="large" />
                 </ReactInputMask>
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}

@@ -1,7 +1,7 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Card, Space, Typography, Table } from 'antd';
+import { Card, Space, Typography, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { OperatorList, OperatorService } from 'services/openapi';
 import CreateUpdateOperator from './CreateUpdateOperator';
@@ -10,6 +10,7 @@ import OperatorInformation from './OperatorInformation';
 import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
 import ConfirmModal from '@components/core/ConfirmModal';
+import { timeConverter } from '@utils/timeConverter';
 
 const Operators = () => {
   const { Title } = Typography;
@@ -19,7 +20,7 @@ const Operators = () => {
     queryKey: ['agents'],
     queryFn: () => OperatorService.operatorListList(),
   });
- console.log(data);
+
   const deleteAgent = async (id: string | number) => {
     try {
       await OperatorService.operatorDeleteNowDelete(id);
@@ -48,13 +49,18 @@ const Operators = () => {
       key: 'fullname',
       dataIndex: 'fullname',
     },
+    {
+      title: <span className="text-uppercase">{t('Daily call limit')}</span>,
+      key: 'daily_call_limit',
+      dataIndex: 'daily_call_limit',
+    },
    
     {
       title: <span className="text-uppercase">{t('Created date')}</span>,
       dataIndex: 'created_at',
       key: 'created_at',
       render: (record) => {
-        return new Date(record).toLocaleDateString();
+        return timeConverter(record);
       },
     },
     {

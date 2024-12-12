@@ -17,8 +17,23 @@ export type OperatorDetail = {
   created_at?: string;
   password: string;
   daily_call_limit: number;
-  region: OperatorDetail.region;
-  district: OperatorDetail.district;
+  region: {
+    id: number;
+    name: {
+      uz: string;
+      ru: string;
+      en: string;
+    };
+  };
+  // district: PartnerDetail.district;
+  district: {
+    id: number;
+    name: {
+      uz: string;
+      ru: string;
+      en: string;
+    };
+  };
   gender?: OperatorDetail.gender;
 };
 

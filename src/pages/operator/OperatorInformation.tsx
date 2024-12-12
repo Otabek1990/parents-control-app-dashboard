@@ -29,13 +29,13 @@ const OperatorInformation = ({ id }: Props) => {
 
   const handleClose = () => {
     setOpen(false);
-    console.log(operator)
+   
   };
   type Language = 'uz' | 'ru' | 'en';
   const isLanguage = (key: string): key is Language => {
     return ['uz', 'ru', 'en'].includes(key);
   };
-  console.log(operator);
+ 
   return (
     <>
       <Button type="dashed" size="middle" icon={<EyeOutlined className="mr-0" />} onClick={handleOpen} />
@@ -43,31 +43,27 @@ const OperatorInformation = ({ id }: Props) => {
         open={open}
         onCancel={handleClose}
         okButtonProps={{ style: { display: 'none' } }}
-        // title={t('Operator infos')}
+       
         width={1000}
       >
           <Typography.Title level={3} style={{ marginBottom: '15px', textAlign: 'center' }}>
-          {t('Partner infos')}
+          {t('Operator infos')}
         </Typography.Title>
         <Card style={{ width: '100%', borderRadius: 10, overflow: 'hidden' }}>
           <Descriptions column={1} style={{ marginTop: 20 }}>
             <Descriptions.Item label={t('Phone number')}>{operator?.username || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('F.I.O')}>{operator?.fullname}</Descriptions.Item>
-            {/* <Descriptions.Item label={t('Name')}>{operator?.name}</Descriptions.Item>
-            <Descriptions.Item label={t('Surname')}>{operator?.surname}</Descriptions.Item>
-            <Descriptions.Item label={t('Middlename')}>{operator?.middle_name}</Descriptions.Item> */}
-
-         
-  
+          
             <Descriptions.Item label={t('Passport date')}>{operator?.passport_date || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('Passport seria')}>{operator?.passport_seria || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('Passport number')}>{operator?.passport_number || '-'}</Descriptions.Item>
-            {/* <Descriptions.Item label={t('Region name')}>
+            <Descriptions.Item label={t('Region name')}>
               {operator && operator.region && isLanguage(language) ? operator.region.name[language] : '-'}
             </Descriptions.Item>
             <Descriptions.Item label={t('District name')}>
               {operator && operator.district && isLanguage(language) ? operator.district.name[language] : '-'}
-            </Descriptions.Item> */}
+            </Descriptions.Item>
+            <Descriptions.Item label={t('Daily call limit')}>{operator?.daily_call_limit}</Descriptions.Item>
             <Descriptions.Item label={t('Created Time')}>{timeConverter(operator?.created_at || '')}</Descriptions.Item>
           </Descriptions>
         </Card>

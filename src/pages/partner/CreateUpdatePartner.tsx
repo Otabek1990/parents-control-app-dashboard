@@ -215,6 +215,7 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
         onCancel={handleCancel}
         width={1000}
         footer={null}
+        
       >
         {/* <Form className="mt-4" disabled={show} form={form} requiredMark={false} onFinish={onFinish} layout="vertical"> */}
         <Form className="mt-4" form={form} requiredMark={false} onFinish={onFinish} layout="vertical">
