@@ -20,7 +20,7 @@ export class OperatorService {
      * @throws ApiError
      */
     public static operatorCreateCreate(
-data: OperatorCreate,
+data: FormData,
 ): CancelablePromise<OperatorCreate> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -54,13 +54,13 @@ guid: string,
      * @throws ApiError
      */
     public static operatorDeleteNowDelete(
-guid: string,
+id: string | number
 ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/admin-panel-operator/delete/{guid}/now/',
+            url: `/admin-panel-operator/delete/${id}/`,
             path: {
-                'guid': guid,
+                'id': id,
             },
         });
     }
@@ -72,13 +72,13 @@ guid: string,
      * @throws ApiError
      */
     public static operatorDetailNowRead(
-guid: string,
+id: string | number,
 ): CancelablePromise<OperatorDetail> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/operator/detail/{guid}/now/',
+            url: `/admin-panel-operator/detail/${id}/`,
             path: {
-                'guid': guid,
+                'id': id,
             },
         });
     }
@@ -139,8 +139,8 @@ guid: string,
      * @throws ApiError
      */
     public static operatorUpdateNowUpdate(
-id: string,
-data: OperatorUpdate,
+id: string | number,
+data: FormData,
 ): CancelablePromise<OperatorUpdate> {
         return __request(OpenAPI, {
             method: 'PUT',

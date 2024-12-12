@@ -14,12 +14,28 @@ const onRequestSuccess = (config: any) => {
   return config;
 };
 
-export const errorHandler = (err: Record<string, any>) => {
-  let error = err.response?.data || err;
+// export const errorHandler = (err: Record<string, any>) => {
+//   let error = err.response?.data || err;
+//   let output = '';
+//   for (const key in error) {
+//     output += `${Array.isArray(error[key]) ? key + ': ' + error[key].join(', ') : error[key]}\n`;
+//   }
+//   return message.error('Xatolik sababi: ' + output);
+// };
+export const errorHandler = (err: Record<string, any> | string) => {
   let output = '';
-  for (const key in error) {
-    output += `${Array.isArray(error[key]) ? key + ': ' + error[key].join(', ') : error[key]}\n`;
+
+  if (typeof err === 'string') {
+    // Agar `err` string bo'lsa, to'g'ridan-to'g'ri ishlating
+    output = err;
+  } else {
+    // Agar `err` Record bo'lsa, uni tahlil qiling
+    const error = err.response?.data || err;
+    for (const key in error) {
+      output += `${Array.isArray(error[key]) ? key + ': ' + error[key].join(', ') : error[key]}\n`;
+    }
   }
+
   return message.error('Xatolik sababi: ' + output);
 };
 

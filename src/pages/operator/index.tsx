@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import OperatorInformation from './OperatorInformation';
 import Lottie from 'lottie-react';
 import Empty from '@assets/animated-illusions/empty.json';
+import ConfirmModal from '@components/core/ConfirmModal';
 
 const Operators = () => {
   const { Title } = Typography;
@@ -19,9 +20,9 @@ const Operators = () => {
     queryFn: () => OperatorService.operatorListList(),
   });
  console.log(data);
-  const deleteAgent = async (guid: string) => {
+  const deleteAgent = async (id: string | number) => {
     try {
-      await OperatorService.operatorDeleteNowDelete(guid);
+      await OperatorService.operatorDeleteNowDelete(id);
       refetch();
     } catch (error: any) {
       errorHandler(error?.body?.detail);
@@ -38,17 +39,16 @@ const Operators = () => {
       },
     },
     {
-      title: <span className="text-uppercase">{t('Legal name')}</span>,
+      title: <span className="text-uppercase">{t('Phone number')}</span>,
       key: 'username',
       dataIndex: 'username',
     },
     {
-      title: <span className="text-uppercase">{t('FIO')}</span>,
-      key: 'name',
-      render: (record: OperatorList) => {
-        return record?.surname + ' ' + record.name + ' ' + record.middle_name;
-      },
+      title: <span className="text-uppercase">{t('F.I.O')}</span>,
+      key: 'fullname',
+      dataIndex: 'fullname',
     },
+   
     {
       title: <span className="text-uppercase">{t('Created date')}</span>,
       dataIndex: 'created_at',
@@ -62,9 +62,14 @@ const Operators = () => {
       key: 'action',
       render: (record: OperatorList) => (
         <Space size="middle">
-          <OperatorInformation id={record?.guid} />
-          <CreateUpdateOperator id={record.guid} refetch={refetch} />
-          <Button type="dashed" onClick={() => deleteAgent(record.guid as string)} icon={<DeleteOutlined />} />
+          <OperatorInformation id={record?.id} />
+          <CreateUpdateOperator id={record.id} refetch={refetch} />
+          <ConfirmModal
+            btnType="dashed"
+            icon={<DeleteOutlined />}
+            handleSubmit={() => deleteAgent(record?.id as string | number)}
+            title={t('Delete operator')}
+          />
         </Space>
       ),
     },

@@ -149,6 +149,10 @@
   "Rows per page":"Строков на странице",
   "Create operator": "Создать оператора",
   "Edit operator": "Изменить оператора",
-  "Daily call limit":"Дневной лимит звонков"
+  "Daily call limit":"Дневной лимит звонков",
+  "Operator infos": "Информация о оператора",
+  "Delete operator": "Удалить оператора",
+  "Password must be at least 8 characters long!":"Пароль должен быть длиной не менее 8 символов!",
+  "Such a phone number operator already exists!":"Оператор с таким номером уже существует!"
 
 }

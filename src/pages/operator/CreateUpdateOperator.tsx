@@ -2,16 +2,26 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { genders } from '@assets/data';
 import { errorHandler } from '@config/axios_config';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Button, Col, DatePicker, DatePickerProps, Form, Input, Modal, Radio, Row, Select, message } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Modal,
+  Radio,
+  Row,
+  Select,
+  message,
+} from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactInputMask from 'react-input-mask';
-import { BaseApiService, OperatorCreate, OperatorService, OperatorUpdate } from 'services/openapi';
+import { BaseApiService,  OperatorService, } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
 
 type Props = {
-  id?: string;
+  id?: string | number;
   refetch: ({ throwOnError }: { throwOnError: boolean }) => Promise<UseQueryResult>;
 };
 const CreateUpdateOperator = ({ id, refetch }: Props) => {
@@ -49,8 +59,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         let res = await OperatorService.operatorDetailNowRead(id);
         form.setFieldsValue({
           ...res,
-          birthday: dayjs(res.birthday, formatDate),
-          passport_data: dayjs(res.passport_data, formatDate),
+          passport_date: dayjs(res.passport_date, formatDate),
         });
         getDistricts(res.region);
       } catch (e: any) {
@@ -88,45 +97,41 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
   //   });
   // };
 
-  const onFinish = async (values: OperatorUpdate | OperatorCreate) => {
-    console.log(values);
+  const onFinish = async (values: any) => {
     setLoading(true);
 
     const formDat = new FormData();
-     for (let [key, value] of formDat.entries()) {
-      console.log(`${key}: ${value}`);
+
+    for (const [key, value] of Object.entries(values)) {
+      formDat.append(key, value);
     }
-    // for (const key in values) {
-    //   if (values.hasOwnProperty(key)) {
-    //     const value = values[key] as any;
-    //     if (value !== undefined && value !== null) {
-    //       if (key === 'birthday' || key === 'passport_date') {
-    //         formDat.append(key, dayjs(value).format(formatDate));
-    //       } else {
-    //         formDat.append(key, value.toString());
-    //       }
-    //     }
-    //   }
+    // for (let [key, value] of formDat.entries()) {
+    //   console.log(`${key}: ${value}`);
     // }
 
-   
+    try {
+      const res: any = await (id
+        ? OperatorService.operatorUpdateNowUpdate(id as string | number, formDat)
+        : OperatorService.operatorCreateCreate(formDat));
+      form.resetFields();
+      message.success(res.message);
 
-    // try {
-    //   const res: any = await (id
-    //     ? OperatorService.operatorUpdateNowUpdate(id as string | number, formDat)
-    //     : OperatorService.operatorCreateCreate(formDat));
-    //   form.resetFields();
-    //   message.success(res.message);
-    //   console.log(res);
-    //   setOpen(false);
+      setOpen(false);
 
-    //   refetch({ throwOnError: true });
-    // } catch (e: any) {
-    //   console.log(e?.body?.message);
-    //   errorHandler(e?.body?.message);
-    // } finally {
-    //   setLoading(false);
-    // }
+      refetch({ throwOnError: true });
+    } catch (e: any) {
+      console.log(e?.body?.message);
+    
+      if(e?.body?.message?.includes("password")){
+        errorHandler(t("Password must be at least 8 characters long!"))
+      }
+      if(e?.body?.message?.startsWith("duplicate key value")){
+        errorHandler(t("Such a phone number operator already exists!"));
+
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -151,10 +156,10 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
-                label={t('Username')}
+                label={t('Phone number')}
                 name="username"
               >
-                <Input placeholder={t('Username')} size="large" />
+                <Input type='tel' placeholder={t('Phone number')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -182,9 +187,9 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                 label={'Passport seria'}
                 name="passport_seria"
               >
-                <ReactInputMask placeholder="Passport" className="text-uppercase" mask="aa">
+                <ReactInputMask placeholder="Passport seria" className="text-uppercase" mask="aa">
                   <Input placeholder="Passport seria" size="large" />
-                </ReactInputMask>{' '}
+                </ReactInputMask>
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -213,7 +218,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                   }}
                   type="date"
                   name="passport_data"
-                  onChange={e=>console.log(e.target.value)}
+                  onChange={(e) => console.log(e.target.value)}
                   defaultValue={form?.getFieldsValue(['passport_date'])}
                 />
               </Form.Item>
@@ -297,7 +302,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                 label={t('Daily call limit')}
                 name="daily_call_limit"
               >
-                <Input type='number' placeholder={t('Daily call limit')} size="large" />
+                <Input type="number" placeholder={t('Daily call limit')} size="large" />
               </Form.Item>
             </Col>
           </Row>

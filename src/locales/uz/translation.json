@@ -145,9 +145,14 @@
   "Failed to change password": "Parol o'zgartirishda xatolik sodir bo'ldi",
   "Password must be at least 5 characters long!": "Parol eng kamida 5ta belgidan iborat bo'lishi kerak!",
   "Password is incorrect": "Eski parol xato kiritildi!",
-  "Save to Excel":"Excelda saqlash",
-  "Rows per page":"Qatorlar soni", 
-   "Create operator": "Operator yaratish",
+  "Save to Excel": "Excelda saqlash",
+  "Rows per page": "Qatorlar soni",
+  "Create operator": "Operator yaratish",
   "Edit operator": "Operatorni o'zgartirish",
-  "Daily call limit":"Kunlik telefon qilish limiti"
+  "Daily call limit": "Kunlik telefon qilish limiti",
+  "Operator infos": "Operator ma'lumotlari",
+  "Delete operator": "Operatorni o'chirish",
+  "Password must be at least 8 characters long!": "Parol eng kamida 8ta belgidan iborat bo'lishi kerak!",
+    "Such a phone number operator already exists!":"Bunday telefon raqamli operator allaqachon mavjud!"
+
 }
