@@ -2,21 +2,11 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { genders } from '@assets/data';
 import { errorHandler } from '@config/axios_config';
 import { UseQueryResult } from '@tanstack/react-query';
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Modal,
-  Radio,
-  Row,
-  Select,
-  message,
-} from 'antd';
+import { Button, Col, Form, Input, Modal, Radio, Row, Select, message } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactInputMask from 'react-input-mask';
-import { BaseApiService,  OperatorService, } from 'services/openapi';
+import { BaseApiService, OperatorService } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
 
 type Props = {
@@ -58,7 +48,6 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         let res = await OperatorService.operatorDetailNowRead(id);
         form.setFieldsValue({
           ...res,
-    
         });
         getDistricts(res?.region?.id);
       } catch (e: any) {
@@ -101,8 +90,16 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
 
     const formDat = new FormData();
 
+    // for (const [key, value] of Object.entries(values)) {
+    //   formDat.append(key, value);
+    // }
     for (const [key, value] of Object.entries(values)) {
-      formDat.append(key, value);
+      if (typeof value === 'string' || value instanceof Blob) {
+        formDat.append(key, value);
+      } else {
+        formDat.append(key, String(value));
+        // console.error(`Invalid value for key "${key}":`, value);
+      }
     }
     // for (let [key, value] of formDat.entries()) {
     //   console.log(`${key}: ${value}`);
@@ -120,13 +117,12 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
       refetch({ throwOnError: true });
     } catch (e: any) {
       console.log(e?.body?.message);
-    
-      if(e?.body?.message?.includes("password")){
-        errorHandler(t("Password must be at least 8 characters long!"))
-      }
-      if(e?.body?.message?.startsWith("duplicate key value")){
-        errorHandler(t("Such a phone number operator already exists!"));
 
+      if (e?.body?.message?.includes('password')) {
+        errorHandler(t('Password must be at least 8 characters long!'));
+      }
+      if (e?.body?.message?.startsWith('duplicate key value')) {
+        errorHandler(t('Such a phone number operator already exists!'));
       }
     } finally {
       setLoading(false);
@@ -136,6 +132,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
   return (
     <>
       <Button
+        disabled={id ? true : false}
         type={id ? 'dashed' : 'primary'}
         size={id ? 'middle' : 'large'}
         icon={id ? <EditOutlined /> : <PlusOutlined />}
@@ -158,7 +155,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                 label={t('Phone number')}
                 name="username"
               >
-                <Input type='tel' placeholder={t('Phone number')} size="large" />
+                <Input type="tel" placeholder={t('Phone number')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -180,7 +177,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
 
-            {/* <Col md={8}>
+            <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Passport seria'}
@@ -201,7 +198,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                   <Input placeholder={t('Passport number')} size="large" />
                 </ReactInputMask>
               </Form.Item>
-            </Col> */}
+            </Col>
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
