@@ -144,7 +144,7 @@ data: FormData,
 ): CancelablePromise<OperatorUpdate> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: `/admin-panel-operator/update/{id}/now/`,
+            url: `/admin-panel-operator/update/{id}/`,
             path: {
                 'id': id,
             },

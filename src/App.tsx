@@ -27,7 +27,8 @@ function App() {
         } catch (e: any) {
           store?.setAuth({ isAuth: false, role: '' });
           localStorage.removeItem(ACCESS_TOKEN);
-          message.error(e?.response?.data?.message);
+          // message.error(e?.response?.data?.message);
+          message.error("Ulanishda hatolik boldi!")
           setLoading(false);
         }
       })();

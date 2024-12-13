@@ -2,21 +2,11 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { genders } from '@assets/data';
 import { errorHandler } from '@config/axios_config';
 import { UseQueryResult } from '@tanstack/react-query';
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Modal,
-  Radio,
-  Row,
-  Select,
-  message,
-} from 'antd';
+import { Button, Col, Form, Input, Modal, Radio, Row, Select, message } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactInputMask from 'react-input-mask';
-import { BaseApiService,  OperatorService, } from 'services/openapi';
+import { BaseApiService, OperatorService } from 'services/openapi';
 import { IDistrict, IRegion } from 'types';
 
 type Props = {
@@ -58,7 +48,9 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         let res = await OperatorService.operatorDetailNowRead(id);
         form.setFieldsValue({
           ...res,
-    
+          passport_number: String(res?.passport_number),
+          region: res.region?.id || 1,
+          district: res?.district?.id || 1,
         });
         getDistricts(res?.region?.id);
       } catch (e: any) {
@@ -102,11 +94,12 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
     const formDat = new FormData();
 
     for (const [key, value] of Object.entries(values)) {
-      formDat.append(key, value);
+      if (typeof value === 'string' || value instanceof Blob) {
+        formDat.append(key, value);
+      } else {
+        formDat.append(key, String(value));
+      }
     }
-    // for (let [key, value] of formDat.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
 
     try {
       const res: any = await (id
@@ -120,13 +113,12 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
       refetch({ throwOnError: true });
     } catch (e: any) {
       console.log(e?.body?.message);
-    
-      if(e?.body?.message?.includes("password")){
-        errorHandler(t("Password must be at least 8 characters long!"))
-      }
-      if(e?.body?.message?.startsWith("duplicate key value")){
-        errorHandler(t("Such a phone number operator already exists!"));
 
+      if (e?.body?.message?.includes('password')) {
+        errorHandler(t('Password must be at least 8 characters long!'));
+      }
+      if (e?.body?.message?.startsWith('duplicate key value')) {
+        errorHandler(t('Such a phone number operator already exists!'));
       }
     } finally {
       setLoading(false);
@@ -136,6 +128,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
   return (
     <>
       <Button
+        // disabled={id ? true : false}
         type={id ? 'dashed' : 'primary'}
         size={id ? 'middle' : 'large'}
         icon={id ? <EditOutlined /> : <PlusOutlined />}
@@ -158,7 +151,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                 label={t('Phone number')}
                 name="username"
               >
-                <Input type='tel' placeholder={t('Phone number')} size="large" />
+                <Input type="tel" placeholder={t('Phone number')} size="large" />
               </Form.Item>
             </Col>
             <Col md={8}>
@@ -180,7 +173,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
               </Form.Item>
             </Col>
 
-            {/* <Col md={8}>
+            <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={'Passport seria'}
@@ -201,40 +194,15 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                   <Input placeholder={t('Passport number')} size="large" />
                 </ReactInputMask>
               </Form.Item>
-            </Col> */}
+            </Col>
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: false }]}
                 label={t('Passport date')}
                 name="passport_date"
               >
-                <input
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    borderRadius: '5px',
-                    border: '0.5px solid rgba(0,0,0,0.12)',
-                  }}
-                  type="date"
-                  name="passport_data"
-                  onChange={(e) => console.log(e.target.value)}
-                  defaultValue={form?.getFieldsValue(['passport_date'])}
-                />
+                <Input size="large" type="date" />
               </Form.Item>
-              {/* <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Passport date'}
-                name="passport_date"
-              >
-                <DatePicker
-                  className="w-100"
-                  placeholder="01.01.2000"
-                  onChange={onChangePasswordPicker}
-                  size="large"
-                  format={formatDate}
-                  defaultValue={id ? dayjs(form.getFieldsValue(['passport_data']), formatDate) : undefined}
-                />
-              </Form.Item> */}
             </Col>
             <Col md={8}>
               <Form.Item
@@ -288,7 +256,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
               >
                 <Radio.Group size="large" optionType="button" buttonStyle="solid">
                   {genders.map((el) => (
-                    <Radio key={el.value} value={el.value}>
+                    <Radio key={el.value} value={el.label}>
                       {t(`${el.label}`)}
                     </Radio>
                   ))}
@@ -314,7 +282,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
 
             <Col span="12">
               <Button size="large" htmlType="submit" className="w-100" type="primary" loading={loading}>
-                {t('Save')}
+                {id ? t('Edit') : t('Save')}
               </Button>
             </Col>
           </Row>
