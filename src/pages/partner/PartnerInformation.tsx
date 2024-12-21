@@ -15,7 +15,7 @@ const PartnerInformation = ({ id }: Props) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState<boolean>(false);
 
-  const handleCopy = (link:string) => {
+  const handleCopy = (link: string) => {
     navigator.clipboard.writeText(link).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000); // 2 soniyadan keyin statusni qaytaradi
@@ -69,7 +69,10 @@ const PartnerInformation = ({ id }: Props) => {
               <a href={partner?.download_link || ''} target="_blank">
                 {partner?.download_link || ''}
               </a>{' '}
-              <CopyOutlined  onClick={()=>handleCopy(partner?.download_link || "")} style={{ cursor: 'pointer', marginLeft: '10px' }} />
+              <CopyOutlined
+                onClick={() => handleCopy(partner?.download_link || '')}
+                style={{ cursor: 'pointer', marginLeft: '10px' }}
+              />
               {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied!</span>}
             </Descriptions.Item>
             <Descriptions.Item label={t('Appstore Id')}>{partner?.appstore_id || ''} </Descriptions.Item>
@@ -83,6 +86,9 @@ const PartnerInformation = ({ id }: Props) => {
             <Descriptions.Item label={t('District name')}>
               {partner && partner.district && isLanguage(language) ? partner.district.name[language] : '-'}
             </Descriptions.Item>
+            {/* <Descriptions.Item label={t('Gender')}>
+              {(partner?.gender == '1' ? t('Man') : t('Woman')) || '-'}
+            </Descriptions.Item> */}
             <Descriptions.Item label={t('Created Time')}>{timeConverter(partner?.created_at || '')}</Descriptions.Item>
           </Descriptions>
         </Card>

@@ -28,7 +28,7 @@ const Partners = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-    }, 500); // 500ms delay for debouncing
+    }, 400); // 500ms delay for debouncing
     return () => clearTimeout(handler);
   }, [searchTerm]);
 

@@ -48,6 +48,12 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         let res = await OperatorService.operatorDetailNowRead(id);
         form.setFieldsValue({
           ...res,
+<<<<<<< HEAD
+=======
+          passport_number: String(res?.passport_number),
+          region: res.region?.id || 1,
+          district: res?.district?.id || 1,
+>>>>>>> 1a03c636b5c0e68b94711f069eec0565930b400e
         });
         getDistricts(res?.region?.id);
       } catch (e: any) {
@@ -98,12 +104,12 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         formDat.append(key, value);
       } else {
         formDat.append(key, String(value));
+<<<<<<< HEAD
         // console.error(`Invalid value for key "${key}":`, value);
+=======
+>>>>>>> 1a03c636b5c0e68b94711f069eec0565930b400e
       }
     }
-    // for (let [key, value] of formDat.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
 
     try {
       const res: any = await (id
@@ -132,7 +138,11 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
   return (
     <>
       <Button
+<<<<<<< HEAD
         disabled={id ? true : false}
+=======
+        // disabled={id ? true : false}
+>>>>>>> 1a03c636b5c0e68b94711f069eec0565930b400e
         type={id ? 'dashed' : 'primary'}
         size={id ? 'middle' : 'large'}
         icon={id ? <EditOutlined /> : <PlusOutlined />}
@@ -205,33 +215,8 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
                 label={t('Passport date')}
                 name="passport_date"
               >
-                <input
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    borderRadius: '5px',
-                    border: '0.5px solid rgba(0,0,0,0.12)',
-                  }}
-                  type="date"
-                  name="passport_data"
-                  onChange={(e) => console.log(e.target.value)}
-                  defaultValue={form?.getFieldsValue(['passport_date'])}
-                />
+                <Input size="large" type="date" />
               </Form.Item>
-              {/* <Form.Item
-                rules={[{ message: 'Please fill the field!', required: true }]}
-                label={'Passport date'}
-                name="passport_date"
-              >
-                <DatePicker
-                  className="w-100"
-                  placeholder="01.01.2000"
-                  onChange={onChangePasswordPicker}
-                  size="large"
-                  format={formatDate}
-                  defaultValue={id ? dayjs(form.getFieldsValue(['passport_data']), formatDate) : undefined}
-                />
-              </Form.Item> */}
             </Col>
             <Col md={8}>
               <Form.Item
@@ -285,7 +270,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
               >
                 <Radio.Group size="large" optionType="button" buttonStyle="solid">
                   {genders.map((el) => (
-                    <Radio key={el.value} value={el.value}>
+                    <Radio key={el.value} value={el.label}>
                       {t(`${el.label}`)}
                     </Radio>
                   ))}
@@ -311,7 +296,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
 
             <Col span="12">
               <Button size="large" htmlType="submit" className="w-100" type="primary" loading={loading}>
-                {t('Save')}
+                {id ? t('Edit') : t('Save')}
               </Button>
             </Col>
           </Row>
