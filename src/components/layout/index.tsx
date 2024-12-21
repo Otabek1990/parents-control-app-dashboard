@@ -23,7 +23,6 @@ import { routeType } from '../../routes/types';
 import './index.scss';
 import { IconComponent } from '@components/custom_icons/iconComponent';
 import donIcon from '../../assets/images/load_app_img.svg';
-
 import { ACCESS_TOKEN, USERNAME } from '@config/constants';
 import { useAuthStore } from '../../store/authStore';
 import Language from '@components/layout/header/language';

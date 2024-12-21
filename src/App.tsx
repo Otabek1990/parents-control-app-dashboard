@@ -1,5 +1,5 @@
 import { Login } from 'pages';
-import './App.css';
+// import './App.css';
 import { useAuthStore } from './store/authStore';
 import RenderRoutes from './routes/renderRoutes';
 import { useEffect, useState } from 'react';

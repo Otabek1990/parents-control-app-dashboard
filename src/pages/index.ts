@@ -15,3 +15,4 @@ export { default as Click } from './click';
 export { default as PaymentToPartner } from './paymentToPartner';
 export { default as Banner } from './banner';
 export { default as AddPlan } from './addPlan';
+export { default as Messages } from './messages';

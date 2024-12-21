@@ -12,7 +12,8 @@ import {
   Banner,
   AddPlan,
   Paynet,
-  Click
+  Click,
+  Messages
 } from 'pages';
 import { routeType } from './types';
 import { HomeFilled } from '@ant-design/icons';
@@ -276,6 +277,18 @@ export const routes: Array<routeType> = [
         roles:['ADMIN']
       },
     ],
+    roles:['ADMIN']
+  },
+  {
+    name: 'Send message to parents',
+    path: '/message',
+    element: Messages,
+    icon: { name: 'main' },
+    config: {
+      key: 'message_page',
+      isShowInMenu: true,
+    },
+    children: [],
     roles:['ADMIN']
   },
 ];

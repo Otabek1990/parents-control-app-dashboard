@@ -153,6 +153,9 @@
   "Operator infos": "Operator ma'lumotlari",
   "Delete operator": "Operatorni o'chirish",
   "Password must be at least 8 characters long!": "Parol eng kamida 8ta belgidan iborat bo'lishi kerak!",
-    "Such a phone number operator already exists!":"Bunday telefon raqamli operator allaqachon mavjud!"
+    "Such a phone number operator already exists!":"Bunday telefon raqamli operator allaqachon mavjud!",
+    "Send message to parents":"Ota onaga xabar yuborish",
+    "Send message":"Xabar yuborish",
+    "Messages":"Yuborilgan xabarlar"
 
 }

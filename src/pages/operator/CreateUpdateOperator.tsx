@@ -48,12 +48,9 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         let res = await OperatorService.operatorDetailNowRead(id);
         form.setFieldsValue({
           ...res,
-<<<<<<< HEAD
-=======
           passport_number: String(res?.passport_number),
           region: res.region?.id || 1,
           district: res?.district?.id || 1,
->>>>>>> 1a03c636b5c0e68b94711f069eec0565930b400e
         });
         getDistricts(res?.region?.id);
       } catch (e: any) {
@@ -104,10 +101,6 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
         formDat.append(key, value);
       } else {
         formDat.append(key, String(value));
-<<<<<<< HEAD
-        // console.error(`Invalid value for key "${key}":`, value);
-=======
->>>>>>> 1a03c636b5c0e68b94711f069eec0565930b400e
       }
     }
 
@@ -138,11 +131,7 @@ const CreateUpdateOperator = ({ id, refetch }: Props) => {
   return (
     <>
       <Button
-<<<<<<< HEAD
-        disabled={id ? true : false}
-=======
         // disabled={id ? true : false}
->>>>>>> 1a03c636b5c0e68b94711f069eec0565930b400e
         type={id ? 'dashed' : 'primary'}
         size={id ? 'middle' : 'large'}
         icon={id ? <EditOutlined /> : <PlusOutlined />}

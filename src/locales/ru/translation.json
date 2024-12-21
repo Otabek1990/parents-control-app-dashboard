@@ -153,6 +153,8 @@
   "Operator infos": "Информация о оператора",
   "Delete operator": "Удалить оператора",
   "Password must be at least 8 characters long!":"Пароль должен быть длиной не менее 8 символов!",
-  "Such a phone number operator already exists!":"Оператор с таким номером уже существует!"
-
+  "Such a phone number operator already exists!":"Оператор с таким номером уже существует!",
+  "Send message":"Отправить сообщение",
+  "Send message to parents":"Отправить сообщение родителям",
+   "Messages":"Сообщения"
 }
