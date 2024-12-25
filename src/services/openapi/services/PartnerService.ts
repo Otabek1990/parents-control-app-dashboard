@@ -70,9 +70,12 @@ export class PartnerService {
    * @throws ApiError
    */
   public static partnerListList(
-    search?: string,
+   
+    q?: string,
     limit?: number,
     offset?: number,
+    startDate?:string,
+    endDate?:string
   ): CancelablePromise<{
     count: number;
     next?: string | null;
@@ -84,9 +87,11 @@ export class PartnerService {
       url: '/admin-panel-partner/list/',
      
       query: {
-        q: search,
+        q: q,
         limit: limit,
         offset: offset,
+        start_date:startDate,
+        end_date:endDate
       },
     });
   }

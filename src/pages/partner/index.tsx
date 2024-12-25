@@ -35,7 +35,7 @@ const Partners = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['partners', currentPage, pageSize, debouncedSearch],
     queryFn: () =>
-      PartnerService.partnerListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
+      PartnerService.partnerListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize,"04-12-2024","24-12-2024"),
     keepPreviousData: true,
   });
 

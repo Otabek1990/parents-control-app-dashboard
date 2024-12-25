@@ -1,4 +1,4 @@
-import { message } from 'antd';
+// import { message } from 'antd';
 import axios, { AxiosError } from 'axios';
 import { ACCESS_TOKEN, API_URL } from './constants';
 
@@ -36,7 +36,7 @@ export const errorHandler = (err: Record<string, any> | string) => {
     }
   }
 
-  return message.error('Xatolik sababi: ' + output);
+  // return message.error('Xatolik sababi: ' + output);
 };
 
 const onRequestError = (config: AxiosError) => {
