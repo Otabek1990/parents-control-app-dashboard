@@ -1,47 +1,72 @@
-import { Card, Space, Table, Select, Pagination, Input } from 'antd';
+import React, { useState, useEffect } from 'react';
+import {
+  Card,
+  Space,
+  Table,
+  Select,
+  Pagination,
+  Input,
+  DatePicker,
+} from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined } from '@ant-design/icons';
+import Lottie from 'lottie-react';
+import dayjs from 'dayjs';
+
 import { errorHandler } from '@config/axios_config';
 import { PartnerList, PartnerService } from 'services/openapi';
-import CreateUpdatePartner from './CreateUpdatePartner';
-import ConfirmModal from '@components/core/ConfirmModal';
-import { useTranslation } from 'react-i18next';
-import PartnerInformation from './PartnerInformation';
-import Lottie from 'lottie-react';
-import Empty from '@assets/animated-illusions/empty.json';
-
 import TitleCard from '@components/core/TitleCard';
-import { months } from './months';
-import { useState, useEffect } from 'react';
+import ConfirmModal from '@components/core/ConfirmModal';
+import Empty from '@assets/animated-illusions/empty.json';
+import CreateUpdatePartner from './CreateUpdatePartner';
+import PartnerInformation from './PartnerInformation';
 
-const Partners = () => {
+const { RangePicker } = DatePicker;
+
+const Partners: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Default page size
-  const [searchTerm, setSearchTerm] = useState(''); // Search term
-  const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search term
-  const { t } = useTranslation();
-  const time = new Date();
-  const month = months[time.getMonth()];
+  const [pageSize, setPageSize] = useState(10);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [dateRange, setDateRange] = useState<string[]>(['', '']);
 
-  // Debouncing for search term
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-    }, 400); // 500ms delay for debouncing
+    }, 400);
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['partners', currentPage, pageSize, debouncedSearch],
+    queryKey: ['partners', currentPage, pageSize, debouncedSearch, dateRange],
     queryFn: () =>
-      PartnerService.partnerListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize,"04-12-2024","24-12-2024"),
+      PartnerService.partnerListList(
+        debouncedSearch,
+        pageSize,
+        (currentPage - 1) * pageSize,
+        dateRange[0] || '',
+        dateRange[1] || ''
+      ),
     keepPreviousData: true,
   });
 
+  const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null) => {
+    if (dates) {
+      const [startDate, endDate] = dates;
+      setDateRange([
+        startDate ? startDate.format('DD-MM-YYYY') : '',
+        endDate ? endDate.format('DD-MM-YYYY') : '',
+      ]);
+    } else {
+      setDateRange(['', '']);
+    }
+    setCurrentPage(1);
+  };
+
   const handlePageSizeChange = (value: number) => {
     setPageSize(value);
-    setCurrentPage(1); // Reset to the first page
+    setCurrentPage(1);
   };
 
   const deletePartner = async (id: string | number) => {
@@ -57,44 +82,36 @@ const Partners = () => {
     {
       title: <span className="text-sm">id</span>,
       key: 'id',
-      render: ({}, {}, index) => (currentPage - 1) * pageSize + index + 1,
+      render: (_: any, __: any, index: number) =>
+        (currentPage - 1) * pageSize + index + 1,
     },
     {
-      title: <span className="text-sm">{t('Username')}</span>,
+      title: <span className="text-sm">Username</span>,
       key: 'username',
       dataIndex: 'username',
     },
     {
-      title: <span className="text-sm">{t('F.I.O')}</span>,
+      title: <span className="text-sm">F.I.O</span>,
       key: 'fullname',
       dataIndex: 'fullname',
     },
     {
-      title: <span className="text-sm">{t('Birthday')}</span>,
+      title: <span className="text-sm">Birthday</span>,
       key: 'birthday',
       render: (record: PartnerList) => record?.birthday || '-',
     },
     {
-      title: <span className="text-sm">{t('Appstore Id')}</span>,
+      title: <span className="text-sm">Appstore Id</span>,
       key: 'appstore_id',
       render: (record: PartnerList) => record?.appstore_id || '-',
     },
     {
-      title: <span className="text-sm">{t('Playstore Id')}</span>,
+      title: <span className="text-sm">Playstore Id</span>,
       key: 'playstore_id',
       render: (record: PartnerList) => record?.playstore_id || '-',
     },
     {
-      title: <span className="text-sm">{t('Work percentage')}</span>,
-      dataIndex: 'monthly_percentages',
-      key: 'monthly_percentages',
-      render: (record) => {
-        const hasPercent = record.length && record.find((item: { month: string }) => item.month === month);
-        return hasPercent ? `${hasPercent?.percentage}%` : '50%';
-      },
-    },
-    {
-      title: <span className="text-sm">{t('Actions')}</span>,
+      title: <span className="text-sm">Actions</span>,
       key: 'action',
       render: (record: PartnerList) => (
         <Space size="middle">
@@ -104,22 +121,25 @@ const Partners = () => {
             btnType="dashed"
             icon={<DeleteOutlined />}
             handleSubmit={() => deletePartner(record?.id as string | number)}
-            title={t('Delete partner')}
+            title="Delete partner"
           />
         </Space>
       ),
     },
   ];
 
+  const dateFormat = 'DD-MM-YYYY';
+
   return (
     <>
       <TitleCard titleName="Table of partners">
+        <RangePicker size="large" format={dateFormat} onChange={handleDateChange} />
         <Input
           style={{ width: '300px' }}
           size="large"
-          placeholder={t('Search')}
+          placeholder="Search"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <CreateUpdatePartner refetch={refetch} />
       </TitleCard>
@@ -140,7 +160,7 @@ const Partners = () => {
           scroll={{ x: 1000 }}
           size="small"
           style={{ textTransform: 'capitalize' }}
-          pagination={false} // Disable built-in pagination
+          pagination={false}
         />
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '1rem' }}>
           <Pagination
