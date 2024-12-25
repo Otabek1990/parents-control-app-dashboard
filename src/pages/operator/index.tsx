@@ -13,7 +13,8 @@ import ConfirmModal from '@components/core/ConfirmModal';
 import { timeConverter } from '@utils/timeConverter';
 import { useEffect, useState } from 'react';
 import TitleCard from '@components/core/TitleCard';
-import dayjs from 'dayjs';
+import  { Dayjs } from 'dayjs';
+import { RangeValue } from 'rc-picker/lib/interface';
 
 const { RangePicker } = DatePicker;
 
@@ -45,7 +46,7 @@ const Operators = () => {
       ),
     keepPreviousData: true,
   });
-    const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]) => {
+    const handleDateChange = (dates: RangeValue<Dayjs>) => {
     if (dates) {
       const [startDate, endDate] = dates;
       setDateRange([startDate ? startDate.format('DD-MM-YYYY') : '',
