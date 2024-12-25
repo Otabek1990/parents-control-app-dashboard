@@ -1,7 +1,7 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import { errorHandler } from '@config/axios_config';
 import { useQuery } from '@tanstack/react-query';
-import { Card, Space,  Table, Pagination, Select, Input } from 'antd';
+import { Card, Space, Table, Pagination, Select, Input, DatePicker } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { OperatorList, OperatorService } from 'services/openapi';
 import CreateUpdateOperator from './CreateUpdateOperator';
@@ -13,30 +13,54 @@ import ConfirmModal from '@components/core/ConfirmModal';
 import { timeConverter } from '@utils/timeConverter';
 import { useEffect, useState } from 'react';
 import TitleCard from '@components/core/TitleCard';
+import dayjs from 'dayjs';
+
+const { RangePicker } = DatePicker;
 
 const Operators = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size
   const [searchTerm, setSearchTerm] = useState(''); // Search term
   const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search term
-
+  const [dateRange, setDateRange] = useState<string[]>(['', '']);
   const { t } = useTranslation();
+
   // Debouncing for search term
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchTerm);
-    }, 400); // 500ms delay for debouncing
+    }, 400); // 400ms delay for debouncing
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['operators', currentPage, pageSize,debouncedSearch],
-    queryFn: () => OperatorService.operatorListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
+    queryKey: ['operators', currentPage, pageSize, debouncedSearch, dateRange],
+    queryFn: () =>
+      OperatorService.operatorListList(
+        debouncedSearch,
+        pageSize,
+        (currentPage - 1) * pageSize,
+        dateRange[0] || '',
+        dateRange[1] || '',
+      ),
+    keepPreviousData: true,
   });
+    const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null]) => {
+    if (dates) {
+      const [startDate, endDate] = dates;
+      setDateRange([startDate ? startDate.format('DD-MM-YYYY') : '',
+         endDate ? endDate.format('DD-MM-YYYY') : '']);
+    } else {
+      setDateRange(['', '']);
+    }
+    setCurrentPage(1);
+  };
+  
   const handlePageSizeChange = (value: number) => {
     setPageSize(value);
     setCurrentPage(1); // Reset to the first page
   };
+
   const deleteAgent = async (id: string | number) => {
     try {
       await OperatorService.operatorDeleteNowDelete(id);
@@ -70,7 +94,6 @@ const Operators = () => {
       key: 'daily_call_limit',
       dataIndex: 'daily_call_limit',
     },
-
     {
       title: <span className="text-uppercase">{t('Created date')}</span>,
       dataIndex: 'created_at',
@@ -96,11 +119,15 @@ const Operators = () => {
       ),
     },
   ];
-
+  const dateFormat = 'DD-MM-YYYY';
   return (
     <>
-     
       <TitleCard titleName="Table of Operators">
+        {/* values: RangeValue<DateType>, formatString: [string, string]) => void; */}
+        <RangePicker
+         size="large"
+         format={dateFormat}
+         onChange={handleDateChange} />
         <Input
           style={{ width: '300px' }}
           size="large"
@@ -108,6 +135,7 @@ const Operators = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} // Update search term
         />
+
         <CreateUpdateOperator refetch={refetch} />
       </TitleCard>
       <Card>

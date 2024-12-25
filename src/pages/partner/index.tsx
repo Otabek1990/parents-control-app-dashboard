@@ -133,7 +133,8 @@ const Partners: React.FC = () => {
   return (
     <>
       <TitleCard titleName="Table of partners">
-        <RangePicker size="large" format={dateFormat} onChange={handleDateChange} />
+        <RangePicker size="large" format={dateFormat}
+         onChange={handleDateChange} />
         <Input
           style={{ width: '300px' }}
           size="large"

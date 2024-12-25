@@ -95,6 +95,8 @@ id: string | number,
 q?: string,
 limit?: number,
 offset?: number,
+startDate?:string,
+endDate?:string
 ): CancelablePromise<{
 count: number;
 next?: string | null;
@@ -109,6 +111,8 @@ results: Array<OperatorList>;
                 'q': q,
                 'limit': limit,
                 'offset': offset,
+                'start_date':startDate,
+                'end_date':endDate
             },
         });
     }
