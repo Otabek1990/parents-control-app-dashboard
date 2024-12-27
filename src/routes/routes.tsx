@@ -13,7 +13,9 @@ import {
   AddPlan,
   Paynet,
   Click,
-  Messages
+  Messages,
+  ContactedParents,
+  UnContactedParents
 } from 'pages';
 import { routeType } from './types';
 import { HomeFilled } from '@ant-design/icons';
@@ -76,7 +78,7 @@ export const routes: Array<routeType> = [
           isShowInMenu: true,
         },
         children: [],
-        roles:['ADMIN','PARTNER']
+        roles:['ADMIN','PARTNER',]
       },
       {
         name: 'Children',
@@ -290,6 +292,42 @@ export const routes: Array<routeType> = [
     },
     children: [],
     roles:['ADMIN']
+  },
+  {
+    name: 'Parents',
+    path: '/parents',
+    element: Parents,
+    icon: { name: 'ota_ona' },
+    config: {
+      key: 'parents_page',
+      isShowInMenu: true,
+    },
+    children: [],
+    roles:['OPERATOR']
+  },
+  {
+    name: 'Contacted parents',
+    path: '/contactedParents',
+    element: ContactedParents,
+    icon: { name: 'main' },
+    config: {
+      key: 'contacted_parents',
+      isShowInMenu: true,
+    },
+    children: [],
+    roles:['OPERATOR']
+  },
+  {
+    name: 'Uncontacted parents',
+    path: '/uncontactedParents',
+    element: UnContactedParents,
+    icon: { name: 'main' },
+    config: {
+      key: 'uncontacted_parents',
+      isShowInMenu: true,
+    },
+    children: [],
+    roles:['OPERATOR']
   },
 ];
 export const filterRoutesByRole = (routes: Array<routeType>, role: string): Array<routeType> => {

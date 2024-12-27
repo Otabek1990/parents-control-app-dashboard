@@ -194,7 +194,7 @@ const Dashboard: React.FC = (): JSX.Element => {
             </div>
             <div className="more">
               <div className="tag">
-                <span className="one">Bolalar: </span>
+                <span className="one">O'gil bolalar: </span>
                 <span className="two">
                   {(isSuccess && statistics?.overall_stats?.all_boys) ||
                     (isSuccessStatPartner && statisticsPartner?.overall_statistics?.total_boys)}{' '}

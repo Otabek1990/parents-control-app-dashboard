@@ -13,11 +13,13 @@ import userIcon from "@assets/icons/username-icon.svg"
 import userPassword from "@assets/icons/password.svg"
 import Language from "@components/layout/header/language";
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Login: FC = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const setAuth = useAuthStore((s: any) => s.setAuth);
   const {t} = useTranslation();
+  const navigate=useNavigate()
 
   const onFinish = async (values: { username: string; password: string }) => {
     setLoading(true);
@@ -32,6 +34,7 @@ const Login: FC = (): JSX.Element => {
         localStorage.setItem(USERNAME, data.username);
         localStorage.setItem("role", data.role);
         OpenAPI.TOKEN = data.access;
+        navigate("/parents")
       } else {
         throw new Error('Error logging in');
       }

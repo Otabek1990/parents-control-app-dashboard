@@ -11,9 +11,11 @@ import Loading from '@components/core/Loading';
 function App() {
   const store: any = useAuthStore((state) => state);
   const [loading, setLoading] = useState(false);
+  console.log(store);
 
   useEffect(() => {
     let token = localStorage.getItem(ACCESS_TOKEN);
+    
     if (token) {
       (async () => {
         try {

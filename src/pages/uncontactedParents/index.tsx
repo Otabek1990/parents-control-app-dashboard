@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Card, DatePicker, Input, Table } from 'antd';
+import { Button, Card, Input, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -7,17 +7,14 @@ import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
 import Loading from '@components/core/Loading';
-import dayjs from 'dayjs';
 
-const { RangePicker } = DatePicker;
-
-const Parents: FC = (): JSX.Element => {
+const UnContactedParents: FC = (): JSX.Element => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState(''); // Search term
-  const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search ter
+  const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search term
+
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
-  const [dateRange, setDateRange] = useState<string[]>(['', '']);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -26,26 +23,11 @@ const Parents: FC = (): JSX.Element => {
     return () => clearTimeout(handler);
   }, [searchTerm]);
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['parents', currentPage, pageSize, debouncedSearch, dateRange], // Query key includes current page and page size
-    queryFn: () =>
-      ParentService.parentListList(
-        debouncedSearch,
-        pageSize,
-        (currentPage - 1) * pageSize,
-        dateRange[0] || '',
-        dateRange[1] || '',
-      ),
+    queryKey: ['parents', currentPage, pageSize,debouncedSearch], // Query key includes current page and page size
+    queryFn: () => ParentService.parentListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
-  const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null) => {
-    if (dates) {
-      const [startDate, endDate] = dates;
-      setDateRange([startDate ? startDate.format('DD-MM-YYYY') : '', endDate ? endDate.format('DD-MM-YYYY') : '']);
-    } else {
-      setDateRange(['', '']);
-    }
-    setCurrentPage(1);
-  };
+console.log(data);
   const paginationConfig = {
     current: currentPage,
     pageSize: pageSize,
@@ -144,11 +126,10 @@ const Parents: FC = (): JSX.Element => {
       render: (record) => (record ? timeConverter(record) : ''),
     },
   ];
-  const dateFormat = 'DD-MM-YYYY';
+
   return (
     <>
-      <TitleCard titleName={t('Table of parents')}>
-        <RangePicker size="large" format={dateFormat} onChange={handleDateChange} />
+      <TitleCard titleName={t('Uncontacted parents')}>
         <Input
           style={{ width: '300px' }}
           size="large"
@@ -178,4 +159,4 @@ const Parents: FC = (): JSX.Element => {
   );
 };
 
-export default Parents;
+export default UnContactedParents;

@@ -169,7 +169,9 @@ const LayoutCustom = ({ children }: any) => {
       >
         {!isMobile && (
           <div className="demo-logo-vertical">
-            <Link to={"/"} className="sidebar-logo-cls">Anor</Link>
+            <Link to={role === 'OPERATOR' ? '/parents' : '/'} className="sidebar-logo-cls">
+              Anor
+            </Link>
           </div>
         )}
         <Menu
@@ -244,7 +246,9 @@ const LayoutCustom = ({ children }: any) => {
                     height: 40,
                   }}
                 />
-                <Link to={"/"} className="sidebar-logo-cls">Anor</Link>
+                <Link to={'/'} className="sidebar-logo-cls">
+                  Anor
+                </Link>
               </div>
             )}
 
@@ -310,7 +314,9 @@ const LayoutCustom = ({ children }: any) => {
       <Drawer
         title={
           <div className="demo-logo-vertical">
-           <Link to={"/"} className="sidebar-logo-cls">Anor</Link>
+            <Link to={'/'} className="sidebar-logo-cls">
+              Anor
+            </Link>
           </div>
         }
         placement="left"
