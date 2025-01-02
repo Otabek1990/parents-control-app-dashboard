@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Card, Input, Table } from 'antd';
+import { Card, Input, Pagination, Select, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ChildList, ChildService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -25,18 +25,7 @@ const Children: FC = (): JSX.Element => {
     queryFn: () => ChildService.childList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
-
-  const paginationConfig = {
-    current: currentPage,
-    pageSize: pageSize,
-    total: data?.count || 0, // Total count from API response
-    showSizeChanger: true, // Allows user to change page size
-    pageSizeOptions: ['10', '25', '50', '100'], // Options for page size
-    onChange: (page: number, size?: number) => {
-      setCurrentPage(page); // Update page number
-      if (size) setPageSize(size); // Update page size if changed
-    },
-  };
+console.log(data);
 
   const role = localStorage.getItem('role');
 
@@ -96,7 +85,10 @@ const Children: FC = (): JSX.Element => {
             key: 'parent_phone',
           },
         ];
-
+        const handlePageSizeChange = (value: number) => {
+          setPageSize(value);
+          setCurrentPage(1);
+        };
   return (
     <>
       <TitleCard titleName={t('Table of children')}>
@@ -111,8 +103,31 @@ const Children: FC = (): JSX.Element => {
       {isLoading && <Loading />}
       <Card>
         {isSuccess && data?.results && (
+          <>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBlock: '1rem' }}>
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={data?.count || 0}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false} // Disable default page size changer
+                showQuickJumper={false} // Disable quick jumper
+              />
+              <Select
+                defaultValue={10}
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                options={[
+                  { value: 10, label: '10' },
+                  { value: 25, label: '25' },
+                  { value: 50, label: '50' },
+                  { value: 100, label: '100' },
+                ]}
+                style={{ width: 100 }}
+              />
+            </div>
           <Table
-            pagination={paginationConfig}
+            pagination={false}
             columns={columns}
             bordered={false}
             dataSource={data?.results}
@@ -120,7 +135,30 @@ const Children: FC = (): JSX.Element => {
             rowKey="id"
             scroll={{ x: 1400 }}
             size="small"
-          />
+            />
+              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '1rem' }}>
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={data?.count || 0}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false} // Disable default page size changer
+                showQuickJumper={false} // Disable quick jumper
+              />
+              <Select
+                defaultValue={10}
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                options={[
+                  { value: 10, label: '10' },
+                  { value: 25, label: '25' },
+                  { value: 50, label: '50' },
+                  { value: 100, label: '100' },
+                ]}
+                style={{ width: 100 }}
+              />
+            </div>
+            </>
         )}
       </Card>
     </>

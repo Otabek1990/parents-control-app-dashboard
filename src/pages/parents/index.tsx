@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Card, DatePicker, Input, Table } from 'antd';
+import { Button, Card, DatePicker, Empty, Input, notification, Pagination, Select, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
@@ -8,6 +8,10 @@ import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
 import Loading from '@components/core/Loading';
 import dayjs from 'dayjs';
+import Lottie from 'lottie-react';
+import instance from '@config/axios_config';
+import axios from 'axios';
+import { ACCESS_TOKEN, API_URL } from '@config/constants';
 
 const { RangePicker } = DatePicker;
 
@@ -18,6 +22,7 @@ const Parents: FC = (): JSX.Element => {
   const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search ter
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
   const [dateRange, setDateRange] = useState<string[]>(['', '']);
+  const role = localStorage.getItem('role') || 'ADMIN';
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -37,6 +42,7 @@ const Parents: FC = (): JSX.Element => {
       ),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
+  console.log(data);
   const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null) => {
     if (dates) {
       const [startDate, endDate] = dates;
@@ -46,18 +52,43 @@ const Parents: FC = (): JSX.Element => {
     }
     setCurrentPage(1);
   };
-  const paginationConfig = {
-    current: currentPage,
-    pageSize: pageSize,
-    total: data?.count || 0, // Total count from API response
-    pageSizeOptions: ['10', '25', '50', '100'], // Set available page sizes
-    onChange: (page: number) => {
-      setCurrentPage(page); // Update page number
-    },
-    onShowSizeChange: (current: number, size: number) => {
-      setPageSize(size); // Update page size
-      setCurrentPage(current); // Reset to first page on page size change
-    },
+  // const paginationConfig = {
+  //   current: currentPage,
+  //   pageSize: pageSize,
+  //   total: data?.count || 0, // Total count from API response
+  //   pageSizeOptions: ['10', '25', '50', '100'], // Set available page sizes
+  //   onChange: (page: number) => {
+  //     setCurrentPage(page); // Update page number
+  //   },
+  //   onShowSizeChange: (current: number, size: number) => {
+  //     setPageSize(size); // Update page size
+  //     setCurrentPage(current); // Reset to first page on page size change
+  //   },
+  // };
+  const handleReserveClick = async (parentId: number) => {
+    console.log(parentId);
+    try {
+      const token = localStorage.getItem(ACCESS_TOKEN); // Bearer token olish
+      const response = await axios.post(
+        `https://production.bosstrackergroup.uz/api/v1/admin-panel-operator/assign-parent/`,
+        { parent_id: parentId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Tokenni so'rovga qo'shish
+          },
+        }
+      );
+      console.log(response);
+      notification.success({
+        message: 'Success',
+        description: 'Parent successfully reserved.',
+      });
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: 'Failed to reserve parent.',
+      });
+    }
   };
 
   const columns: ColumnsType<ParentList> = [
@@ -68,8 +99,33 @@ const Parents: FC = (): JSX.Element => {
     },
     {
       title: <span className="text-uppercase">{t('User phone number')}</span>,
-      dataIndex: 'username',
+      // dataIndex: 'username',
       key: 'username',
+      render: (record) => (
+        <>
+          <span>{record?.username}</span>
+          {role === 'OPERATOR' ? (
+            <>
+              <Button
+                size="small"
+                type="primary"
+                style={{ marginInline: '8px', fontSize: '12px' }}
+                onClick={() => handleReserveClick(record.id)}
+              >
+                {t('Reserve')}
+              </Button>
+              <Button
+                style={{ fontSize: '12px' }}
+                size="small"
+                type="default"
+                onClick={() => alert(t('Called action triggered!'))}
+              >
+                {t('Called')}
+              </Button>
+            </>
+          ) : null}
+        </>
+      ),
     },
     {
       title: <span className="text-uppercase">{t('Abonent code')}</span>,
@@ -119,12 +175,16 @@ const Parents: FC = (): JSX.Element => {
       key: 'tariff_expiry_time',
       render: (record) => (record ? timeConverter(record) : '-'),
     },
-    {
-      title: <span className="text-uppercase">{t('Partner')}</span>,
-      dataIndex: 'partner',
-      key: 'partner',
-      render: (record) => record || '-',
-    },
+    ...(role !== 'OPERATOR'
+      ? [
+          {
+            title: <span className="text-uppercase">{t('Partner')}</span>,
+            dataIndex: 'partner',
+            key: 'partner',
+            render: (record: ParentList) => record.partner || '-',
+          },
+        ]
+      : []),
     {
       title: <span className="text-uppercase">{t('Operator')}</span>,
       dataIndex: 'operator',
@@ -145,6 +205,10 @@ const Parents: FC = (): JSX.Element => {
     },
   ];
   const dateFormat = 'DD-MM-YYYY';
+  const handlePageSizeChange = (value: number) => {
+    setPageSize(value);
+    setCurrentPage(1);
+  };
   return (
     <>
       <TitleCard titleName={t('Table of parents')}>
@@ -161,17 +225,70 @@ const Parents: FC = (): JSX.Element => {
       {isLoading && <Loading />}
       <Card>
         {isSuccess && data?.results && (
-          <Table
-            pagination={paginationConfig}
-            columns={columns}
-            bordered={false}
-            dataSource={isSuccess ? data?.results : []}
-            loading={isLoading}
-            rowKey="id"
-            scroll={{ x: 1400 }}
-            size="small"
-            className="text-uppercase"
-          />
+          <>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBlock: '1rem' }}>
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={data?.count || 0}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false} // Disable default page size changer
+                showQuickJumper={false} // Disable quick jumper
+              />
+              <Select
+                defaultValue={10}
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                options={[
+                  { value: 10, label: '10' },
+                  { value: 25, label: '25' },
+                  { value: 50, label: '50' },
+                  { value: 100, label: '100' },
+                ]}
+                style={{ width: 100 }}
+              />
+            </div>
+            <Table
+              locale={{
+                emptyText: (
+                  <div className="w-25 m-auto">
+                    <Lottie animationData={Empty} loop={false} />
+                  </div>
+                ),
+              }}
+              pagination={false}
+              columns={columns}
+              bordered={false}
+              dataSource={isSuccess ? data?.results : []}
+              loading={isLoading}
+              rowKey="id"
+              scroll={{ x: 1400 }}
+              size="small"
+              className="text-uppercase"
+            />
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '1rem' }}>
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={data?.count || 0}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false} // Disable default page size changer
+                showQuickJumper={false} // Disable quick jumper
+              />
+              <Select
+                defaultValue={10}
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                options={[
+                  { value: 10, label: '10' },
+                  { value: 25, label: '25' },
+                  { value: 50, label: '50' },
+                  { value: 100, label: '100' },
+                ]}
+                style={{ width: 100 }}
+              />
+            </div>
+          </>
         )}
       </Card>
     </>

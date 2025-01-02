@@ -9,9 +9,10 @@ export type ParentList = {
     /**
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      */
-    username: string;
+    username?: string;
     child_code: string;
     created_at?: string;
-    abonent_code?:string
+    abonent_code?:string;
+    partner?:string | null;
 
 };

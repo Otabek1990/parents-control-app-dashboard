@@ -152,6 +152,28 @@ console.log(data);
         <CreateUpdatePartner refetch={refetch} />
       </TitleCard>
       <Card>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBlock: '1rem' }}>
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={data?.count || 0}
+            onChange={(page) => setCurrentPage(page)}
+            showSizeChanger={false} // Disable default page size changer
+            showQuickJumper={false} // Disable quick jumper
+          />
+          <Select
+            defaultValue={10}
+            value={pageSize}
+            onChange={handlePageSizeChange}
+            options={[
+              { value: 10, label: '10' },
+              { value: 25, label: '25' },
+              { value: 50, label: '50' },
+              { value: 100, label: '100' },
+            ]}
+            style={{ width: 100 }}
+          />
+        </div>
         <Table
           columns={columns}
           bordered={false}

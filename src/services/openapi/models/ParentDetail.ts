@@ -13,4 +13,5 @@ export type ParentDetail = {
     password: string;
     child_code: string;
     created_at?: string;
+    partner?:string | null;
 };
