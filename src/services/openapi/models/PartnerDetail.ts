@@ -11,6 +11,7 @@ export type PartnerDetail = {
    */
   fullname: string;
   username: string;
+  phone_number?:string | null;
   password: string;
   name: string;
   middle_name: string;

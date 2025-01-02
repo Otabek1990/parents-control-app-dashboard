@@ -21,6 +21,7 @@ import ConfirmModal from '@components/core/ConfirmModal';
 import Empty from '@assets/animated-illusions/empty.json';
 import CreateUpdatePartner from './CreateUpdatePartner';
 import PartnerInformation from './PartnerInformation';
+import { useTranslation } from 'react-i18next';
 
 const { RangePicker } = DatePicker;
 
@@ -30,6 +31,7 @@ const Partners: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [dateRange, setDateRange] = useState<string[]>(['', '']);
+   const { t } = useTranslation();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -50,7 +52,7 @@ const Partners: React.FC = () => {
       ),
     keepPreviousData: true,
   });
-
+console.log(data);
   const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null) => {
     if (dates) {
       const [startDate, endDate] = dates;
@@ -86,17 +88,22 @@ const Partners: React.FC = () => {
         (currentPage - 1) * pageSize + index + 1,
     },
     {
-      title: <span className="text-sm">Username</span>,
+      title: <span className="text-sm">{t("Username")}</span>,
       key: 'username',
       dataIndex: 'username',
     },
     {
-      title: <span className="text-sm">F.I.O</span>,
+      title: <span className="text-sm">{t("F.I.O")}</span>,
       key: 'fullname',
       dataIndex: 'fullname',
     },
     {
-      title: <span className="text-sm">Birthday</span>,
+      title: <span className="text-sm">{t("Phone number")}</span>,
+      key: 'phone_number',
+      render: (record: PartnerList) => record?.phone_number || '-',
+    },
+    {
+      title: <span className="text-sm">{t("Birthday")}</span>,
       key: 'birthday',
       render: (record: PartnerList) => record?.birthday || '-',
     },

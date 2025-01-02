@@ -154,10 +154,11 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
     if (formData.avatar) {
       formDat.append('avatar', formData.avatar);
     }
-    // for (let [key, value] of formDat.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
     formDat.append('playstore_id', 'uz.bosstracker.parent');
+    for (let [key, value] of formDat.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
 
     try {
       const res: any = await (id
@@ -223,8 +224,17 @@ const CreateUpdatePartner = ({ id, refetch }: Props) => {
             <Col md={8}>
               <Form.Item
                 rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
-                label={t('Phone number')}
+                label={t('Username')}
                 name="username"
+              >
+                <Input type='tel' placeholder={t('Username')} />
+              </Form.Item>
+            </Col>
+            <Col md={8}>
+              <Form.Item
+                rules={[{ message: t('Please fill the field'), required: id ? false : true }]}
+                label={t('Phone number')}
+                name="phone_number"
               >
                 <Input type='tel' placeholder={t('Phone number')} />
               </Form.Item>

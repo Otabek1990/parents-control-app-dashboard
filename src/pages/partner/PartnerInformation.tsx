@@ -53,6 +53,7 @@ const PartnerInformation = ({ id }: Props) => {
           <Descriptions column={1} style={{ marginTop: 20 }}>
             <Descriptions.Item label={t('Username')}>{partner?.username || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('F.I.O')}>{partner?.fullname}</Descriptions.Item>
+            <Descriptions.Item label={t('Phone number')}>{partner?.phone_number}</Descriptions.Item>
             {/* <Descriptions.Item label={t('Name')}>{partner?.name}</Descriptions.Item>
             <Descriptions.Item label={t('Surname')}>{partner?.surname}</Descriptions.Item>
             <Descriptions.Item label={t('Middlename')}>{partner?.middle_name}</Descriptions.Item> */}
