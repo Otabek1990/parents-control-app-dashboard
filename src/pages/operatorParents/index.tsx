@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Card, DatePicker, Empty, Input, notification, Pagination, Select, Table } from 'antd';
+import { Button, Card, DatePicker, Empty, Input,  Pagination, Select, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
@@ -9,17 +9,12 @@ import Loading from '@components/core/Loading';
 import dayjs from 'dayjs';
 import Lottie from 'lottie-react';
 
-import axios from 'axios';
-import { ACCESS_TOKEN, API_URL } from '@config/constants';
 import { OperatorParentsList, OperatorParentsService } from 'services/openapi/services/OperatorParentService';
+import ReserveCallButtons from './ReserveCallButtons';
 
 const { RangePicker } = DatePicker;
 
 const OperatorParents: FC = (): JSX.Element => {
-  const [isReserveLoading, setIsReserveLoading] = useState(false);
-  const [isCallLoading, setIsCallLoading] = useState(false);
-  const [isReserveDisabled, setIsReserveDisabled] = useState(false);
-  const [isCallDisabled, setIsCallDisabled] = useState(false);
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState(''); // Search term
@@ -68,62 +63,6 @@ const OperatorParents: FC = (): JSX.Element => {
   //     setCurrentPage(current); // Reset to first page on page size change
   //   },
   // };
-  const handleReserveClick = async (parentId: number) => {
-    setIsReserveLoading(true);
-    try {
-      const token = localStorage.getItem(ACCESS_TOKEN); // Bearer token olish
-      const response = await axios.post(
-        `${API_URL}/v1/admin-panel-operator/assign-parent/`,
-        { parent_id: parentId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Tokenni so'rovga qo'shish
-          },
-        },
-      );
-
-      notification.success({
-        message: 'Success',
-        description: 'Parent successfully reserved.',
-      });
-      setIsReserveDisabled(true);
-    } catch (error) {
-      notification.error({
-        message: 'Error',
-        description: 'Failed to reserve parent.',
-      });
-    } finally {
-      setIsReserveLoading(false);
-    }
-  };
-  const handleCallClick = async (parentId: number) => {
-    setIsCallLoading(true);
-    try {
-      const token = localStorage.getItem(ACCESS_TOKEN); // Bearer token olish
-      const response = await axios.post(
-        `${API_URL}/v1/admin-panel-operator/call-to-parent/`,
-        { parent_id: parentId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Tokenni so'rovga qo'shish
-          },
-        },
-      );
-
-      notification.success({
-        message: 'Success',
-        description: 'Parent successfully called.',
-      });
-      setIsCallDisabled(true);
-    } catch (error) {
-      notification.error({
-        message: 'Error',
-        description: 'Failed to call parent.',
-      });
-    } finally {
-      setIsCallLoading(false);
-    }
-  };
 
   const columns: ColumnsType<OperatorParentsList> = [
     {
@@ -139,37 +78,7 @@ const OperatorParents: FC = (): JSX.Element => {
         <>
           <span>{record?.username}</span>
 
-          <>
-            <Button
-              size="small"
-              type="primary"
-              style={{
-                marginInline: '8px',
-                fontSize: '12px',
-                backgroundColor: isReserveDisabled ? '#d9d9d9' : '#1890ff',
-                borderColor: isReserveDisabled ? '#d9d9d9' : '#1890ff',
-              }}
-              loading={isReserveLoading}
-              disabled={record.is_called}
-              onClick={() => handleReserveClick(record.id)}
-            >
-              {isReserveDisabled ? t('Reserved') : t('Reserve')}
-            </Button>
-            <Button
-              style={{
-                fontSize: '12px',
-                backgroundColor: isCallDisabled ? '#d9d9d9' : '#52c41a',
-                borderColor: isCallDisabled ? '#d9d9d9' : '#52c41a',
-              }}
-              loading={isCallLoading}
-              disabled={isCallDisabled}
-              size="small"
-              type="default"
-              onClick={() => handleCallClick(record.id)}
-            >
-              {record.is_called ? t('Called') : t('Call')}
-            </Button>
-          </>
+          <ReserveCallButtons parentData={record} />
         </>
       ),
     },

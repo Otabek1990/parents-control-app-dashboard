@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
 import { timeConverter } from '@utils/timeConverter';
 import Loading from '@components/core/Loading';
+import { OperatorParentsList, OperatorParentsService } from 'services/openapi/services/OperatorParentService';
 
 const ContactedParents: FC = (): JSX.Element => {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ const ContactedParents: FC = (): JSX.Element => {
   const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search term
 
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
+  const [dateRange, setDateRange] = useState<string[]>(['', '']);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -24,7 +26,13 @@ const ContactedParents: FC = (): JSX.Element => {
   }, [searchTerm]);
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: ['parents', currentPage, pageSize,debouncedSearch], // Query key includes current page and page size
-    queryFn: () => ParentService.parentListList(debouncedSearch, pageSize, (currentPage - 1) * pageSize),
+    queryFn: () => OperatorParentsService.ParentsCallStatusList(
+      // debouncedSearch,
+      // pageSize,
+      // (currentPage - 1) * pageSize,
+      // dateRange[0] || '',
+      // dateRange[1] || '',
+      "True"),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
 console.log(data);
@@ -42,7 +50,7 @@ console.log(data);
     },
   };
 
-  const columns: ColumnsType<ParentList> = [
+  const columns: ColumnsType<OperatorParentsList> = [
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
@@ -101,12 +109,7 @@ console.log(data);
       key: 'tariff_expiry_time',
       render: (record) => (record ? timeConverter(record) : '-'),
     },
-    {
-      title: <span className="text-uppercase">{t('Partner')}</span>,
-      dataIndex: 'partner',
-      key: 'partner',
-      render: (record) => record || '-',
-    },
+  
     {
       title: <span className="text-uppercase">{t('Operator')}</span>,
       dataIndex: 'operator',
