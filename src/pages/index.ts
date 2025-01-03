@@ -16,5 +16,6 @@ export { default as PaymentToPartner } from './paymentToPartner';
 export { default as Banner } from './banner';
 export { default as AddPlan } from './addPlan';
 export { default as Messages } from './messages';
+export { default as OperatorParents } from './operatorParents';
 export { default as ContactedParents } from './contactedParents';
 export { default as UnContactedParents } from './uncontactedParents';

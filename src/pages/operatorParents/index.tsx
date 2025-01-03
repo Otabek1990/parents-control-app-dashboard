@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Card, DatePicker, Empty, Input,  Pagination, Select, Table } from 'antd';
+import { Button, Card, DatePicker, Empty, Input, notification, Pagination, Select, Table } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-import { ParentList, ParentService } from '../../services/openapi';
 import { ColumnsType } from 'antd/es/table';
 import { useTranslation } from 'react-i18next';
 import TitleCard from '@components/core/TitleCard';
@@ -10,10 +9,17 @@ import Loading from '@components/core/Loading';
 import dayjs from 'dayjs';
 import Lottie from 'lottie-react';
 
+import axios from 'axios';
+import { ACCESS_TOKEN, API_URL } from '@config/constants';
+import { OperatorParentsList, OperatorParentsService } from 'services/openapi/services/OperatorParentService';
 
 const { RangePicker } = DatePicker;
 
-const Parents: FC = (): JSX.Element => {
+const OperatorParents: FC = (): JSX.Element => {
+  const [isReserveLoading, setIsReserveLoading] = useState(false);
+  const [isCallLoading, setIsCallLoading] = useState(false);
+  const [isReserveDisabled, setIsReserveDisabled] = useState(false);
+  const [isCallDisabled, setIsCallDisabled] = useState(false);
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState(''); // Search term
@@ -28,9 +34,9 @@ const Parents: FC = (): JSX.Element => {
     return () => clearTimeout(handler);
   }, [searchTerm]);
   const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['parents', currentPage, pageSize, debouncedSearch, dateRange], // Query key includes current page and page size
+    queryKey: ['operator-parents', currentPage, pageSize, debouncedSearch, dateRange], // Query key includes current page and page size
     queryFn: () =>
-      ParentService.parentListList(
+      OperatorParentsService.operatorParentsList(
         debouncedSearch,
         pageSize,
         (currentPage - 1) * pageSize,
@@ -39,7 +45,7 @@ const Parents: FC = (): JSX.Element => {
       ),
     keepPreviousData: true, // Keeps previous data while fetching the new page
   });
-  
+  console.log(data);
   const handleDateChange = (dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null) => {
     if (dates) {
       const [startDate, endDate] = dates;
@@ -62,8 +68,64 @@ const Parents: FC = (): JSX.Element => {
   //     setCurrentPage(current); // Reset to first page on page size change
   //   },
   // };
+  const handleReserveClick = async (parentId: number) => {
+    setIsReserveLoading(true);
+    try {
+      const token = localStorage.getItem(ACCESS_TOKEN); // Bearer token olish
+      const response = await axios.post(
+        `${API_URL}/v1/admin-panel-operator/assign-parent/`,
+        { parent_id: parentId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Tokenni so'rovga qo'shish
+          },
+        },
+      );
 
-  const columns: ColumnsType<ParentList> = [
+      notification.success({
+        message: 'Success',
+        description: 'Parent successfully reserved.',
+      });
+      setIsReserveDisabled(true);
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: 'Failed to reserve parent.',
+      });
+    } finally {
+      setIsReserveLoading(false);
+    }
+  };
+  const handleCallClick = async (parentId: number) => {
+    setIsCallLoading(true);
+    try {
+      const token = localStorage.getItem(ACCESS_TOKEN); // Bearer token olish
+      const response = await axios.post(
+        `${API_URL}/v1/admin-panel-operator/call-to-parent/`,
+        { parent_id: parentId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Tokenni so'rovga qo'shish
+          },
+        },
+      );
+
+      notification.success({
+        message: 'Success',
+        description: 'Parent successfully called.',
+      });
+      setIsCallDisabled(true);
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: 'Failed to call parent.',
+      });
+    } finally {
+      setIsCallLoading(false);
+    }
+  };
+
+  const columns: ColumnsType<OperatorParentsList> = [
     {
       title: <span className="text-uppercase">№</span>,
       key: 'id',
@@ -73,7 +135,43 @@ const Parents: FC = (): JSX.Element => {
       title: <span className="text-uppercase">{t('User phone number')}</span>,
       // dataIndex: 'username',
       key: 'username',
-      dataIndex: 'username',
+      render: (record) => (
+        <>
+          <span>{record?.username}</span>
+
+          <>
+            <Button
+              size="small"
+              type="primary"
+              style={{
+                marginInline: '8px',
+                fontSize: '12px',
+                backgroundColor: isReserveDisabled ? '#d9d9d9' : '#1890ff',
+                borderColor: isReserveDisabled ? '#d9d9d9' : '#1890ff',
+              }}
+              loading={isReserveLoading}
+              disabled={record.is_called}
+              onClick={() => handleReserveClick(record.id)}
+            >
+              {isReserveDisabled ? t('Reserved') : t('Reserve')}
+            </Button>
+            <Button
+              style={{
+                fontSize: '12px',
+                backgroundColor: isCallDisabled ? '#d9d9d9' : '#52c41a',
+                borderColor: isCallDisabled ? '#d9d9d9' : '#52c41a',
+              }}
+              loading={isCallLoading}
+              disabled={isCallDisabled}
+              size="small"
+              type="default"
+              onClick={() => handleCallClick(record.id)}
+            >
+              {record.is_called ? t('Called') : t('Call')}
+            </Button>
+          </>
+        </>
+      ),
     },
     {
       title: <span className="text-uppercase">{t('Abonent code')}</span>,
@@ -122,13 +220,6 @@ const Parents: FC = (): JSX.Element => {
       dataIndex: 'tariff_expiry_time',
       key: 'tariff_expiry_time',
       render: (record) => (record ? timeConverter(record) : '-'),
-    },
-
-    {
-      title: <span className="text-uppercase">{t('Partner')}</span>,
-      dataIndex: 'partner',
-      key: 'partner',
-      render: (record: ParentList) => record.partner || '-',
     },
 
     {
@@ -241,4 +332,4 @@ const Parents: FC = (): JSX.Element => {
   );
 };
 
-export default Parents;
+export default OperatorParents;

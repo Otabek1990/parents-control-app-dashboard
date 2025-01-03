@@ -169,7 +169,7 @@ const LayoutCustom = ({ children }: any) => {
       >
         {!isMobile && (
           <div className="demo-logo-vertical">
-            <Link to={role === 'OPERATOR' ? '/parents' : '/'} className="sidebar-logo-cls">
+            <Link to={role === 'OPERATOR' ? '/operatorParents' : '/'} className="sidebar-logo-cls">
               Anor
             </Link>
           </div>

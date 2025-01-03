@@ -14,6 +14,7 @@ import {
   Paynet,
   Click,
   Messages,
+  OperatorParents,
   ContactedParents,
   UnContactedParents
 } from 'pages';
@@ -295,11 +296,11 @@ export const routes: Array<routeType> = [
   },
   {
     name: 'Parents',
-    path: '/parents',
-    element: Parents,
+    path: '/operatorParents',
+    element: OperatorParents,
     icon: { name: 'ota_ona' },
     config: {
-      key: 'parents_page',
+      key: 'operator_parents_page',
       isShowInMenu: true,
     },
     children: [],
